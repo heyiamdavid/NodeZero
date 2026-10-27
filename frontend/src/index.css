@@ -1,0 +1,64 @@
+/* Design System & Core Tokens for NodeZero */
+:root {
+  --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Tactical Color Palette */
+  --bg-deep: #060911;
+  --bg-surface: #0a0f1d;
+  --bg-card: rgba(15, 23, 42, 0.75);
+  --bg-card-hover: rgba(30, 41, 59, 0.85);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-glow: rgba(56, 189, 248, 0.3);
+
+  /* States */
+  --color-susceptible: #10b981; /* 🟢 Sano */
+  --color-exposed: #f59e0b;     /* 🟡 Mordido */
+  --color-infectious: #ef4444;  /* 🔴 Zombie */
+  --color-recovered: #06b6d4;   /* 🔵 Exorcizado / Inmune */
+
+  /* Theme Accents */
+  --cyan-primary: #06b6d4;
+  --cyan-bright: #38bdf8;
+  --crimson-glow: #ef4444;
+  --emerald-bright: #10b981;
+  --violet-accent: #8b5cf6;
+
+  /* Text */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Tactical Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}

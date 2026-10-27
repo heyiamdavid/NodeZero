@@ -1,0 +1,372 @@
+/* Dedicated Map Stylesheet for Manta Epidemiological Command Center */
+
+.map-view-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.map-view-container.map-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--bg-deep);
+  padding: 16px;
+  border-radius: 0;
+}
+
+/* Encabezado del Mapa */
+.map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.map-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.map-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #f8fafc;
+}
+
+.map-badge-strategy {
+  font-size: 10px;
+  padding: 3px 8px;
+  background: rgba(56, 189, 248, 0.12);
+  color: var(--cyan-bright);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+.map-badge-disease {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.map-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Barra de Herramientas de Tamaño y Zoom */
+.map-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(10, 15, 29, 0.85);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 2px 6px;
+}
+
+.map-tool-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 5px 7px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  transition: all 0.2s;
+}
+
+.map-tool-btn:hover {
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--cyan-bright);
+}
+
+.map-tool-btn.active {
+  background: rgba(6, 182, 212, 0.25);
+  color: var(--cyan-bright);
+  font-weight: 700;
+}
+
+.map-size-selector {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-left: 6px;
+  border-left: 1px solid var(--border-subtle);
+}
+
+.size-pill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #0f172a;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.size-pill:hover {
+  color: #f8fafc;
+}
+
+.size-pill.active {
+  background: var(--cyan-bright);
+  color: #060911;
+  font-weight: 700;
+  border-color: var(--cyan-bright);
+}
+
+/* Leyenda de Estados */
+.state-legend {
+  display: flex;
+  gap: 10px;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dot-green { background: var(--color-susceptible); box-shadow: 0 0 6px var(--color-susceptible); }
+.dot-amber { background: var(--color-exposed); box-shadow: 0 0 6px var(--color-exposed); }
+.dot-red { background: var(--color-infectious); box-shadow: 0 0 6px var(--color-infectious); }
+.dot-blue { background: var(--color-recovered); box-shadow: 0 0 6px var(--color-recovered); }
+
+/* Contenedor del Canvas SVG */
+.map-canvas-wrapper {
+  position: relative;
+  flex: 1;
+  background: #080d1a;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 420px;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
+  cursor: grab;
+}
+
+.map-canvas-wrapper:active {
+  cursor: grabbing;
+}
+
+.manta-tactical-svg {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.15s ease-out;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Capas flotantes y overlays */
+.map-floating-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(10, 15, 29, 0.85);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--cyan-bright);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.map-zoom-indicator {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(10, 15, 29, 0.85);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Animaciones del Mapa */
+.pulse-circle {
+  animation: pulse-ring 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  transform-origin: center;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.9; }
+  50% { transform: scale(1.4); opacity: 0.3; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.rotate-ring {
+  animation: rotate-dashed 8s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes rotate-dashed {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animated-edge-risk {
+  animation: dash 1.5s linear infinite;
+}
+
+@keyframes dash {
+  to { stroke-dashoffset: -20; }
+}
+
+/* Tarjeta de Inspección Flotante */
+.node-detail-card {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  background: rgba(10, 15, 29, 0.94);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  z-index: 10;
+}
+
+.card-header-badge {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sector-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--cyan-bright);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.sector-name {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.sector-type {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.stats-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.stat-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.stat-pill.green { border-left: 3px solid var(--color-susceptible); color: var(--color-susceptible); }
+.stat-pill.amber { border-left: 3px solid var(--color-exposed); color: var(--color-exposed); }
+.stat-pill.red { border-left: 3px solid var(--color-infectious); color: var(--color-infectious); }
+.stat-pill.cyan { border-left: 3px solid var(--color-recovered); color: var(--color-recovered); }
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-info .lbl {
+  font-size: 9px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.stat-info .val {
+  font-size: 12px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: #f8fafc;
+}
+
+.node-pop-breakdown {
+  width: 100%;
+}
+
+.breakdown-bar {
+  display: flex;
+  height: 5px;
+  width: 100%;
+  border-radius: 3px;
+  overflow: hidden;
+  background: #1e293b;
+}
+
+.seg-s { background: var(--color-susceptible); }
+.seg-e { background: var(--color-exposed); }
+.seg-i { background: var(--color-infectious); }
+.seg-r { background: var(--color-recovered); }
+
+.sector-footer-hint {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
