@@ -1,4 +1,4 @@
-# 🛡️ NodeZero Manta · Centro de Mando y Decisión Epidemiológica
+# 🛡️ NodeZero
 > **Reto Track B: Comité de Contención Epidemiológica**  
 > **Hackathon AWS · Universidad Laica Eloy Alfaro de Manabí (ULEAM)**  
 > **Región AWS:** `us-east-1` | **Presupuesto AWS Budget:** `$5.00 USD` (Alerta activa al 80%)
@@ -6,7 +6,7 @@
 ---
 
 ## 📌 1. ¿Qué hace el proyecto?
-**NodeZero Manta** es un sistema de simulación y soporte de decisiones en salud pública diseñado para contener brotes epidémicos y plagas zombi en el cantón **Manta, Manabí**. 
+**NodeZero** es un sistema de simulación y soporte de decisiones en salud pública diseñado para contener brotes epidémicos y plagas zombi en el cantón **Manta, Manabí**. 
 
 Ante recursos limitados (vacunas $K$ por día y presupuesto municipal restringido), la herramienta modela la propagación estocástica del patógeno a través de la red de transporte y contacto de las parroquias urbanas (*Tarqui, Centro, Los Esteros, Eloy Alfaro, ULEAM, Terminal El Palmar, San Mateo*). Permite a las autoridades probar y contrastar su estrategia en tiempo real frente a dos líneas base obligatorias: **no intervenir** e **intervenir al azar**.
 
@@ -125,5 +125,3 @@ npm run dev
 
 ## 👥 Equipo
 * **Track:** B - Comité de Contención Epidemiológica
-* **Evento:** Hackathon AWS ULEAM 2026
-* **Campus:** Universidad Laica Eloy Alfaro de Manabí (Manta, Ecuador)
