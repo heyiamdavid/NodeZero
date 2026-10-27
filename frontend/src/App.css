@@ -128,6 +128,41 @@
   color: var(--cyan-bright);
 }
 
+.backend-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid var(--border-subtle);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.backend-status-badge.connected {
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #6ee7b7;
+}
+
+.backend-status-badge.offline {
+  border-color: rgba(148, 163, 184, 0.2);
+  color: var(--text-muted);
+}
+
+.backend-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-susceptible);
+  box-shadow: 0 0 6px var(--color-susceptible);
+}
+
+.backend-status-badge.offline .backend-dot {
+  background: #64748b;
+  box-shadow: none;
+}
+
 .seed-controller {
   display: flex;
   align-items: center;

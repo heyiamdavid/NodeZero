@@ -9,6 +9,7 @@ import MayorReportModal from './components/MayorReportModal';
 import DiseaseCatalogModal from './components/DiseaseCatalogModal';
 import { runComparativeSimulation, runMonteCarlo } from './simulation/engine';
 import { DISEASES_CATALOG } from './data/diseasesCatalog';
+import { checkBackendHealth } from './services/api';
 import './App.css';
 
 export default function App() {
@@ -16,6 +17,14 @@ export default function App() {
   const [activeDisease, setActiveDisease] = useState(DISEASES_CATALOG[0]);
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
   const [layoutMode, setLayoutMode] = useState('split'); // 'split' | 'map_only' | 'curves_only'
+  const [isBackendConnected, setIsBackendConnected] = useState(false);
+
+  // Verificar conexión con el backend de Python
+  useEffect(() => {
+    checkBackendHealth().then((res) => {
+      setIsBackendConnected(res.connected);
+    });
+  }, []);
 
   const [config, setConfig] = useState({
     seed: 42,
@@ -144,6 +153,7 @@ export default function App() {
         onOpenCatalog={() => setIsCatalogOpen(true)}
         activeDisease={activeDisease}
         isSimulating={isPlaying}
+        isBackendConnected={isBackendConnected}
       />
 
       {/* Cuerpo Principal del War Room */}

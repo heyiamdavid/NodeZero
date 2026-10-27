@@ -10,6 +10,7 @@ export default function Navbar({
   onOpenCatalog,
   activeDisease,
   isSimulating,
+  isBackendConnected,
 }) {
   return (
     <header className="navbar-container">
@@ -52,6 +53,15 @@ export default function Navbar({
           <span className="aws-pill">AWS us-east-1</span>
           <span className="aws-dot"></span>
           <span className="aws-budget">Budget: $5.00 Activo</span>
+        </div>
+
+        {/* Backend Python Status */}
+        <div
+          className={`backend-status-badge ${isBackendConnected ? 'connected' : 'offline'}`}
+          title={isBackendConnected ? 'Conectado a la API FastAPI en Python (AWS Lambda Ready)' : 'Operando con motor client-side'}
+        >
+          <span className="backend-dot"></span>
+          <span className="backend-text">{isBackendConnected ? 'Python API: Activa' : 'Motor Local'}</span>
         </div>
 
         {/* Control de Semilla Reproducible */}
