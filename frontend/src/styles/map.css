@@ -263,72 +263,160 @@
   to { stroke-dashoffset: -20; }
 }
 
-/* Tarjeta de Inspección Flotante */
+/* Herramientas Flotantes de Zoom */
+.map-floating-tools {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(10, 15, 29, 0.82);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 8px;
+  padding: 3px 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.map-glass-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.map-glass-btn:hover {
+  background: rgba(56, 189, 248, 0.2);
+  color: var(--cyan-bright);
+}
+
+.map-glass-btn.active-fs {
+  background: rgba(6, 182, 212, 0.3);
+  color: var(--cyan-bright);
+}
+
+.map-zoom-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--cyan-bright);
+  padding: 0 4px;
+  min-width: 36px;
+  text-align: center;
+}
+
+/* Tarjeta de Inspección Flotante Compacta */
 .node-detail-card {
   position: absolute;
-  bottom: 12px;
-  left: 12px;
-  right: 12px;
-  background: rgba(10, 15, 29, 0.94);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  bottom: 14px;
+  left: 14px;
+  width: 290px;
+  max-width: calc(100vw - 28px);
+  background: rgba(8, 12, 22, 0.88);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   border: 1px solid rgba(56, 189, 248, 0.3);
   border-radius: 10px;
-  padding: 12px 16px;
+  padding: 10px 14px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-  z-index: 10;
+  gap: 8px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(6, 182, 212, 0.1);
+  z-index: 20;
+  animation: fadeInCard 0.2s ease-out;
+}
+
+@keyframes fadeInCard {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .card-header-badge {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
-  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.header-left-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
 }
 
 .sector-tag {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 8.5px;
+  font-weight: 800;
   color: var(--cyan-bright);
-  font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
 }
 
 .sector-name {
   font-family: var(--font-display);
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 800;
   color: #ffffff;
+  line-height: 1.2;
 }
 
 .sector-type {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-muted);
 }
 
+.btn-close-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.btn-close-card:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+/* 2x2 Mini Grid for Stats inside Card */
 .stats-mini-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
 }
 
 .stat-pill {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
+  gap: 6px;
+  padding: 5px 8px;
   border-radius: 6px;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.stat-pill.green { border-left: 3px solid var(--color-susceptible); color: var(--color-susceptible); }
-.stat-pill.amber { border-left: 3px solid var(--color-exposed); color: var(--color-exposed); }
-.stat-pill.red { border-left: 3px solid var(--color-infectious); color: var(--color-infectious); }
-.stat-pill.cyan { border-left: 3px solid var(--color-recovered); color: var(--color-recovered); }
+.stat-pill.green { border-left: 3px solid #10b981; }
+.stat-pill.amber { border-left: 3px solid #f59e0b; }
+.stat-pill.red { border-left: 3px solid #ef4444; }
+.stat-pill.cyan { border-left: 3px solid #06b6d4; }
 
 .stat-info {
   display: flex;
@@ -336,9 +424,10 @@
 }
 
 .stat-info .lbl {
-  font-size: 9px;
+  font-size: 8.5px;
   color: var(--text-muted);
   font-family: var(--font-mono);
+  text-transform: uppercase;
 }
 
 .stat-info .val {
@@ -354,19 +443,52 @@
 
 .breakdown-bar {
   display: flex;
-  height: 5px;
+  height: 4px;
   width: 100%;
-  border-radius: 3px;
+  border-radius: 2px;
   overflow: hidden;
-  background: #1e293b;
+  background: rgba(255, 255, 255, 0.08);
 }
 
-.seg-s { background: var(--color-susceptible); }
-.seg-e { background: var(--color-exposed); }
-.seg-i { background: var(--color-infectious); }
-.seg-r { background: var(--color-recovered); }
+.seg-s { background: #10b981; }
+.seg-e { background: #f59e0b; }
+.seg-i { background: #ef4444; }
+.seg-r { background: #06b6d4; }
 
-.sector-footer-hint {
+/* Botón flotante para reabrir datos de la parroquia */
+.btn-reopen-card {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  z-index: 20;
+  background: rgba(8, 12, 22, 0.85);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 20px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  font-family: var(--font-display);
   font-size: 11px;
-  color: var(--text-secondary);
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s;
+}
+
+.btn-reopen-card:hover {
+  background: rgba(14, 23, 42, 0.95);
+  border-color: var(--cyan-bright);
+}
+
+.badge-reopen {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
 }

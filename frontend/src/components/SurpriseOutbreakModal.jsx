@@ -12,32 +12,32 @@ export default function SurpriseOutbreakModal({
   const presets = [
     {
       id: 'double_contagion',
-      title: '🎃 Variante Hipercontagiosa (Doble Contagio)',
-      description: 'El virus muta y duplica su transmisibilidad (β: 0.72). El jurado busca ver si la estrategia de anillo aún resiste.',
+      title: '🎃 Horda Hipercontagiosa (Mordedura Doble)',
+      description: 'La cepa zombie muta y duplica la transmisibilidad (β: 0.72). ¿Puede el cerco perimetral de NodeZero contener la avalancha?',
       patch: { beta: 0.72, incubationDays: 2 },
-      badge: 'Transmisión x2',
+      badge: 'Mordedura x2',
       color: 'crimson',
     },
     {
       id: 'supply_crisis',
-      title: '📦 Crisis de Suministros (50% de Vacunas)',
-      description: 'Retraso logístico nacional: solo se dispone de 250 dosis al día. El algoritmo debe priorizar solo los cuellos de botella más críticos.',
+      title: '📦 Escasez Crítica de Vacunas (Solo 250 dosis/día)',
+      description: 'Recursos extremadamente limitados: solo 250 vacunas al día. El algoritmo focaliza las dosis estrictamente en los cuellos de botella de transporte.',
       patch: { dailyVaccines: 250 },
-      badge: 'Vacunas -50%',
+      badge: 'Vacunas -60%',
       color: 'amber',
     },
     {
       id: 'market_epicenter',
-      title: '🏬 Epicentro en Mercado Nuevo Tarqui',
-      description: 'El brote se desata un domingo en el mercado de mayor afluencia de Manta con 20 casos iniciales simultáneos.',
+      title: '🏬 Epicentro en Mercado Nuevo Tarqui (20 Zombies)',
+      description: 'El brote inicia un domingo en el centro de abasto más transitado de Manta con 20 zombies activos simultáneos.',
       patch: { patientZeroNode: 'tarqui', initialZombies: 20 },
       badge: 'Epicentro Tarqui',
       color: 'violet',
     },
     {
       id: 'variant_evasion',
-      title: '🧬 Variante Evasiva (Eficacia al 50%)',
-      description: 'Una mutación en la proteína Spike reduce la protección de la vacuna a la mitad (Eficacia: 50%).',
+      title: '🧬 Resistencia Viral (Vacuna al 50% de Eficacia)',
+      description: 'Una mutación reduce la efectividad de la dosis a la mitad (50%). Demuestra si el cortafuegos de NodeZero aún salva la ciudad.',
       patch: { vaccineEfficacy: 0.50, beta: 0.50 },
       badge: 'Eficacia 50%',
       color: 'blue',
@@ -53,9 +53,9 @@ export default function SurpriseOutbreakModal({
               <Zap size={22} className="text-crimson" />
             </div>
             <div>
-              <div className="modal-title">🎃 SIMULADOR DE BROTE SORPRESA</div>
+              <div className="modal-title">🎃 SIMULADOR DE BROTE SORPRESA (PRUEBA EN VIVO)</div>
               <div className="modal-sub">
-                Prueba de Fuego en Vivo · 5 Minutos para reconfigurar y mostrar la nueva recomendación
+                Reto Track B: Demostración en vivo ante el jurado en 5 minutos para evaluar resiliencia
               </div>
             </div>
           </div>

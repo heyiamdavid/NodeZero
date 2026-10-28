@@ -1,39 +1,25 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import Navbar from './components/Navbar';
-import Controls from './components/Controls';
+import GameTopBar from './components/GameTopBar';
+import NewsTicker from './components/NewsTicker';
 import MantaMap from './components/MantaMap';
-import CurvesChart from './components/CurvesChart';
-import KpiMetrics from './components/KpiMetrics';
-import SurpriseOutbreakModal from './components/SurpriseOutbreakModal';
-import MayorReportModal from './components/MayorReportModal';
-import DiseaseCatalogModal from './components/DiseaseCatalogModal';
-import { runComparativeSimulation, runMonteCarlo } from './simulation/engine';
-import { DISEASES_CATALOG } from './data/diseasesCatalog';
-import { checkBackendHealth } from './services/api';
+import GameBottomBar from './components/GameBottomBar';
+import FearAndHungerCoin from './components/FearAndHungerCoin';
+import ConfigDrawer from './components/ConfigDrawer';
+import ComparisonModal from './components/ComparisonModal';
+import { runComparativeSimulation } from './simulation/engine';
+import { soundFx } from './utils/soundFx';
 import './App.css';
 
 export default function App() {
   const [seed, setSeed] = useState(42);
-  const [activeDisease, setActiveDisease] = useState(DISEASES_CATALOG[0]);
-  const [isCatalogOpen, setIsCatalogOpen] = useState(false);
-  const [layoutMode, setLayoutMode] = useState('split'); // 'split' | 'map_only' | 'curves_only'
-  const [isBackendConnected, setIsBackendConnected] = useState(false);
-
-  // Verificar conexión con el backend de Python
-  useEffect(() => {
-    checkBackendHealth().then((res) => {
-      setIsBackendConnected(res.connected);
-    });
-  }, []);
-
   const [config, setConfig] = useState({
     seed: 42,
     days: 40,
-    beta: DISEASES_CATALOG[0].beta,
-    incubationDays: DISEASES_CATALOG[0].incubationDays,
-    recoveryDays: DISEASES_CATALOG[0].recoveryDays,
+    beta: 0.38,
+    incubationDays: 3,
+    recoveryDays: 14,
     dailyVaccines: 600,
-    vaccineEfficacy: DISEASES_CATALOG[0].vaccineEfficacy,
+    vaccineEfficacy: 0.95,
     patientZeroNode: 'tarqui',
     initialZombies: 5,
     budgetLimit: 250000,
@@ -43,12 +29,14 @@ export default function App() {
   const [currentDay, setCurrentDay] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
-  const [activeViewStrategy, setActiveViewStrategy] = useState('nodezero');
+  const [activeStrategy, setActiveStrategy] = useState('nodezero');
   const [selectedNodeId, setSelectedNodeId] = useState('tarqui');
 
-  const [isMonteCarloActive, setIsMonteCarloActive] = useState(false);
-  const [isSurpriseOpen, setIsSurpriseOpen] = useState(false);
-  const [isMayorReportOpen, setIsMayorReportOpen] = useState(false);
+  // Modales y Drawers no sobrecargados
+  const [isCoinOpen, setIsCoinOpen] = useState(false);
+  const [isConfigOpen, setIsConfigOpen] = useState(false);
+  const [isComparisonOpen, setIsComparisonOpen] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
 
   // Sincronizar semilla con la configuración
   useEffect(() => {
@@ -60,11 +48,9 @@ export default function App() {
     return runComparativeSimulation(config);
   }, [config]);
 
-  // Cálculo de Monte Carlo bajo demanda
-  const monteCarloData = useMemo(() => {
-    if (!isMonteCarloActive) return null;
-    return runMonteCarlo(config, 20);
-  }, [config, isMonteCarloActive]);
+  // Snapshot del día actual para la estrategia seleccionada
+  const activeHistory = simResults[activeStrategy]?.history || [];
+  const currentDayData = activeHistory[currentDay] || activeHistory[0];
 
   // Bucle de reproducción temporal
   const timerRef = useRef(null);
@@ -78,7 +64,11 @@ export default function App() {
             setIsPlaying(false);
             return config.days;
           }
-          return prev + 1;
+          const nextDay = prev + 1;
+          if (nextDay % 8 === 0) {
+            soundFx.playHeartbeat();
+          }
+          return nextDay;
         });
       }, intervalMs);
     } else {
@@ -89,10 +79,12 @@ export default function App() {
     };
   }, [isPlaying, playbackSpeed, config.days]);
 
-  // Controles de reproducción
   const handleTogglePlay = () => {
     if (currentDay >= config.days) {
       setCurrentDay(0);
+    }
+    if (!isPlaying) {
+      soundFx.playBiohazardAlert();
     }
     setIsPlaying(!isPlaying);
   };
@@ -102,161 +94,79 @@ export default function App() {
     setCurrentDay(0);
   };
 
-  const handleStepForward = () => {
-    if (currentDay < config.days) {
-      setCurrentDay((prev) => prev + 1);
-    }
+  const handleToggleSound = () => {
+    const muted = soundFx.toggleMute();
+    setIsMuted(muted);
   };
-
-  const handleRandomSeed = () => {
-    const newSeed = Math.floor(Math.random() * 90000) + 1000;
-    setSeed(newSeed);
-    setCurrentDay(0);
-    setIsPlaying(false);
-  };
-
-  const handleSelectDisease = (disease) => {
-    setActiveDisease(disease);
-    setConfig((prev) => ({
-      ...prev,
-      beta: disease.beta,
-      incubationDays: disease.incubationDays,
-      recoveryDays: disease.recoveryDays,
-      vaccineEfficacy: disease.vaccineEfficacy,
-    }));
-    setCurrentDay(0);
-    setIsPlaying(false);
-  };
-
-  const handleApplySurprisePreset = (patch) => {
-    setConfig((prev) => ({
-      ...prev,
-      ...patch,
-    }));
-    setCurrentDay(0);
-    setIsPlaying(true);
-  };
-
-  // Extraer el snapshot del día actual según la estrategia activa seleccionada
-  const activeHistory = simResults[activeViewStrategy]?.history || [];
-  const currentDayData = activeHistory[currentDay] || activeHistory[0];
 
   return (
-    <div className="app-container">
-      {/* Barra de Navegación Táctica */}
-      <Navbar
-        seed={seed}
-        setSeed={setSeed}
-        onRandomSeed={handleRandomSeed}
-        onOpenSurprise={() => setIsSurpriseOpen(true)}
-        onOpenMayorReport={() => setIsMayorReportOpen(true)}
-        onOpenCatalog={() => setIsCatalogOpen(true)}
-        activeDisease={activeDisease}
-        isSimulating={isPlaying}
-        isBackendConnected={isBackendConnected}
+    <div className="game-app-container">
+      {/* 1. HUD Superior del Juego */}
+      <GameTopBar
+        currentDay={currentDay}
+        totalDays={config.days}
+        isPlaying={isPlaying}
+        onTogglePlay={handleTogglePlay}
+        onReset={handleReset}
+        playbackSpeed={playbackSpeed}
+        setPlaybackSpeed={setPlaybackSpeed}
+        currentDayData={currentDayData}
+        totalPopulation={248000}
+        onOpenCoinModal={() => setIsCoinOpen(true)}
+        onOpenConfigDrawer={() => setIsConfigOpen(true)}
+        onOpenComparisonModal={() => setIsComparisonOpen(true)}
+        isMuted={isMuted}
+        onToggleSound={handleToggleSound}
       />
 
-      {/* Cuerpo Principal del War Room */}
-      <main className="main-layout">
-        {/* Barra Lateral de Parámetros y Controles */}
-        <Controls
-          config={config}
-          setConfig={setConfig}
-          currentDay={currentDay}
-          totalDays={config.days}
-          isPlaying={isPlaying}
-          onTogglePlay={handleTogglePlay}
-          onReset={handleReset}
-          onStepForward={handleStepForward}
-          playbackSpeed={playbackSpeed}
-          setPlaybackSpeed={setPlaybackSpeed}
-          activeViewStrategy={activeViewStrategy}
-          setActiveViewStrategy={setActiveViewStrategy}
+      {/* 2. Ticker de Noticias de Manta estilo Plague Inc. */}
+      <NewsTicker
+        currentDay={currentDay}
+        activeStrategy={activeStrategy}
+        simResults={simResults}
+      />
+
+      {/* 3. Escenario Central: El Mapa Táctico de Manta */}
+      <main className="game-map-stage">
+        <MantaMap
+          currentDayData={currentDayData}
+          activeStrategy={activeStrategy}
+          selectedNodeId={selectedNodeId}
+          setSelectedNodeId={setSelectedNodeId}
         />
-
-        {/* Área Central de Visualización y Análisis */}
-        <section className="visualization-area">
-          {/* Barra de Modos de Vista */}
-          <div className="layout-modes-bar">
-            <div className="modes-tab-group">
-              <button
-                onClick={() => setLayoutMode('split')}
-                className={`mode-tab-btn ${layoutMode === 'split' ? 'active' : ''}`}
-                title="Ver Mapa de Manta y Curvas SEIR lado a lado"
-              >
-                📊 Vista Dual (Mapa + Curvas)
-              </button>
-              <button
-                onClick={() => setLayoutMode('map_only')}
-                className={`mode-tab-btn ${layoutMode === 'map_only' ? 'active' : ''}`}
-                title="Maximizar el Mapa de Manta al 100% del ancho para análisis territorial"
-              >
-                🗺️ Centro Cartográfico Táctico (Solo Mapa)
-              </button>
-              <button
-                onClick={() => setLayoutMode('curves_only')}
-                className={`mode-tab-btn ${layoutMode === 'curves_only' ? 'active' : ''}`}
-                title="Maximizar las Curvas SEIR y datos epidemiológicos"
-              >
-                📈 Análisis Epidemiológico (Solo Curvas)
-              </button>
-            </div>
-          </div>
-
-          <div className={`grid-split-view ${layoutMode === 'map_only' || layoutMode === 'curves_only' ? 'grid-full-view' : ''}`}>
-            {/* Mapa de Manta */}
-            {layoutMode !== 'curves_only' && (
-              <div className={`grid-pane ${layoutMode === 'map_only' ? 'pane-full-width' : ''}`}>
-                <MantaMap
-                  currentDayData={currentDayData}
-                  activeStrategy={activeViewStrategy}
-                  selectedNodeId={selectedNodeId}
-                  setSelectedNodeId={setSelectedNodeId}
-                  activeDisease={activeDisease}
-                />
-              </div>
-            )}
-
-            {/* Curvas Epidémicas vs Líneas Base */}
-            {layoutMode !== 'map_only' && (
-              <div className={`grid-pane ${layoutMode === 'curves_only' ? 'pane-full-width' : ''}`}>
-                <CurvesChart
-                  simResults={simResults}
-                  currentDay={currentDay}
-                  onSelectDay={(d) => setCurrentDay(d)}
-                  monteCarloData={monteCarloData}
-                  isMonteCarloActive={isMonteCarloActive}
-                  setIsMonteCarloActive={setIsMonteCarloActive}
-                />
-              </div>
-            )}
-          </div>
-
-          {/* Tarjetas KPI y Tabla de Rúbrica */}
-          <KpiMetrics simResults={simResults} />
-        </section>
       </main>
 
-      {/* Modales de Emergencia y Catálogo */}
-      <DiseaseCatalogModal
-        isOpen={isCatalogOpen}
-        onClose={() => setIsCatalogOpen(false)}
-        activeDiseaseId={activeDisease?.id}
-        onSelectDisease={handleSelectDisease}
-      />
-
-      <SurpriseOutbreakModal
-        isOpen={isSurpriseOpen}
-        onClose={() => setIsSurpriseOpen(false)}
-        currentConfig={config}
-        onApplyPreset={handleApplySurprisePreset}
-      />
-
-      <MayorReportModal
-        isOpen={isMayorReportOpen}
-        onClose={() => setIsMayorReportOpen(false)}
+      {/* 4. Command Deck Inferior: Las 3 Estrategias y Resultados */}
+      <GameBottomBar
+        activeStrategy={activeStrategy}
+        setActiveStrategy={setActiveStrategy}
         simResults={simResults}
+        currentDay={currentDay}
+        totalDays={config.days}
+        onSelectDay={(day) => setCurrentDay(day)}
+      />
+
+      {/* Modales Desacoplados (Cero Sobrecarga en Pantalla) */}
+      <FearAndHungerCoin
+        isOpen={isCoinOpen}
+        onClose={() => setIsCoinOpen(false)}
+      />
+
+      <ConfigDrawer
+        isOpen={isConfigOpen}
+        onClose={() => setIsConfigOpen(false)}
         config={config}
+        setConfig={setConfig}
+        seed={seed}
+        setSeed={setSeed}
+      />
+
+      <ComparisonModal
+        isOpen={isComparisonOpen}
+        onClose={() => setIsComparisonOpen(false)}
+        simResults={simResults}
+        currentDay={currentDay}
+        onSelectDay={(day) => setCurrentDay(day)}
       />
     </div>
   );

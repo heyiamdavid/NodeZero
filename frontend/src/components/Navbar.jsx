@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldAlert, Zap, FileText, Dice5, Cloud, Activity, BookOpen, Thermometer } from './Icons';
+import { ShieldAlert, Zap, FileText, Dice5, Cloud, Activity, BookOpen, Thermometer, Dna, Volume2, VolumeX } from './Icons';
 
 export default function Navbar({
   seed,
@@ -8,6 +8,9 @@ export default function Navbar({
   onOpenSurprise,
   onOpenMayorReport,
   onOpenCatalog,
+  onOpenDna,
+  isMuted,
+  onToggleSound,
   activeDisease,
   isSimulating,
   isBackendConnected,
@@ -24,7 +27,7 @@ export default function Navbar({
             <span className="brand-accent">ZERO</span>
             <span className="brand-tag">MANTA</span>
           </div>
-          <div className="brand-sub">Comité de Contención Epidemiológica · ULEAM Track B</div>
+          <div className="brand-sub">Simulador de Plaga Zombie · Reto Track B AWS</div>
         </div>
       </div>
 
@@ -86,6 +89,26 @@ export default function Navbar({
       </div>
 
       <div className="navbar-right">
+        {/* Toggle Sonido SFX Plague Inc. */}
+        <button
+          onClick={onToggleSound}
+          className={`btn-action btn-sound ${isMuted ? 'btn-sound-muted' : ''}`}
+          title={isMuted ? 'Activar sonido táctico Plague Inc.' : 'Silenciar efectos'}
+        >
+          {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} className="text-cyan" />}
+          <span>{isMuted ? 'Mute' : 'SFX'}</span>
+        </button>
+
+        {/* Laboratorio de Mutaciones & Cerco estilo Plague Inc. */}
+        <button
+          onClick={onOpenDna}
+          className="btn-action btn-dna"
+          title="Ver árbol genético de transmisión y contramedidas (Plague Inc.)"
+        >
+          <Dna size={16} className="text-crimson pulse-crimson" />
+          <span>🧬 Laboratorio</span>
+        </button>
+
         {/* Catálogo de Enfermedades */}
         <button
           onClick={onOpenCatalog}
@@ -93,7 +116,7 @@ export default function Navbar({
           title="Ver catálogo de patógenos (Dengue, COVID, Sarampión, Cólera, Zombie)"
         >
           <BookOpen size={16} />
-          <span>Catálogo</span>
+          <span>Patógenos</span>
         </button>
 
         {/* Botón Brote Sorpresa */}

@@ -27,14 +27,14 @@ export default function Controls({
     <aside className="controls-sidebar">
       <div className="sidebar-section-title">
         <Sliders size={16} className="text-emerald" />
-        <span>PARÁMETROS DE LA PLAGA</span>
+        <span>PARÁMETROS DE LA PLAGA ZOMBIE</span>
       </div>
 
       {/* Epicentro inicial */}
       <div className="control-group">
         <label className="control-label">
           <MapPin size={14} className="text-crimson" />
-          <span>PUNTO CERO (ORIGEN)</span>
+          <span>EPICENTRO DEL BROTE (PACIENTE CERO)</span>
         </label>
         <select
           value={config.patientZeroNode}
@@ -55,7 +55,7 @@ export default function Controls({
       {/* Tasa de Contagio Beta */}
       <div className="control-group">
         <div className="control-header-flex">
-          <label className="control-label">TASA DE CONTAGIO (β)</label>
+          <label className="control-label">TASA DE MORDEDURA / CONTAGIO (β)</label>
           <span className="control-value-badge text-crimson">{config.beta}</span>
         </div>
         <input
@@ -68,16 +68,16 @@ export default function Controls({
           className="control-range range-crimson"
         />
         <div className="control-minmax">
-          <span>0.10 (Bajo)</span>
-          <span>0.38 (COVID/Influenza)</span>
-          <span>0.80 (Severo)</span>
+          <span>0.10 (Baja)</span>
+          <span>0.38 (Brote Estándar)</span>
+          <span>0.80 (Horda Extrema)</span>
         </div>
       </div>
 
       {/* Incubación (Días como Mordido) */}
       <div className="control-group">
         <div className="control-header-flex">
-          <label className="control-label">INCUBACIÓN (MORDIDO 🟡)</label>
+          <label className="control-label">INCUBACIÓN DE MORDEDURA (ESTADO E 🟡)</label>
           <span className="control-value-badge text-amber">{config.incubationDays} días</span>
         </div>
         <input
@@ -90,21 +90,21 @@ export default function Controls({
           className="control-range range-amber"
         />
         <div className="control-minmax">
-          <span>1 día (Rápido)</span>
-          <span>3 días (Típico)</span>
-          <span>7 días (Lento)</span>
+          <span>1 día (Mutación Rápida)</span>
+          <span>3 días (Típico Z-Virus)</span>
+          <span>7 días (Resistencia)</span>
         </div>
       </div>
 
       <div className="sidebar-section-title mt-4">
         <Syringe size={16} className="text-cyan" />
-        <span>RECURSOS & INTERVENCIÓN</span>
+        <span>RECURSOS LIMITADOS & VACUNAS</span>
       </div>
 
       {/* Vacunas por día */}
       <div className="control-group">
         <div className="control-header-flex">
-          <label className="control-label">DOSIS VACUNAS / DÍA (K)</label>
+          <label className="control-label">VACUNAS DISPONIBLES / DÍA (K)</label>
           <span className="control-value-badge text-cyan">{config.dailyVaccines} dosis</span>
         </div>
         <input
@@ -117,9 +117,9 @@ export default function Controls({
           className="control-range range-cyan"
         />
         <div className="control-minmax">
-          <span>100 (Escaso)</span>
+          <span>100 (Muy Escaso)</span>
           <span>600 (Recomendado)</span>
-          <span>2,000 (Masivo)</span>
+          <span>2,000 (Abundante)</span>
         </div>
       </div>
 
@@ -128,7 +128,7 @@ export default function Controls({
         <div className="control-header-flex">
           <label className="control-label">
             <DollarSign size={13} className="text-emerald" />
-            <span>PRESUPUESTO TOPE</span>
+            <span>PRESUPUESTO TOPE MUNICIPAL</span>
           </label>
           <span className="control-value-badge text-emerald">
             ${(config.budgetLimit / 1000).toFixed(0)}k USD
@@ -152,20 +152,23 @@ export default function Controls({
           <button
             onClick={() => setActiveViewStrategy('nodezero')}
             className={`pill-btn ${activeViewStrategy === 'nodezero' ? 'active-nodezero' : ''}`}
+            title="Estrategia Inteligente: Anillo perimetral y cortafuegos en hubs de transporte"
           >
-            🛡️ NodeZero
+            🛡️ 1. NodeZero (Anillo)
           </button>
           <button
             onClick={() => setActiveViewStrategy('random')}
             className={`pill-btn ${activeViewStrategy === 'random' ? 'active-random' : ''}`}
+            title="Línea Base 2: Vacunación al azar sin planificación territorial"
           >
-            🎲 Al Azar
+            🎲 2. Vacunar al Azar
           </button>
           <button
             onClick={() => setActiveViewStrategy('none')}
             className={`pill-btn ${activeViewStrategy === 'none' ? 'active-none' : ''}`}
+            title="Línea Base 1: Propagación libre sin vacunar a nadie"
           >
-            ⚠️ Sin Intervención
+            💀 3. No Vacunar
           </button>
         </div>
       </div>

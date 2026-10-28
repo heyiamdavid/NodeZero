@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { MANTA_NODES, MANTA_EDGES } from '../data/mantaNetwork';
+import { soundFx } from '../utils/soundFx';
 import {
   ShieldCheck,
   Skull,
@@ -14,6 +15,7 @@ import {
   Layers,
   MapPin,
   Move,
+  X,
 } from './Icons';
 
 export default function MantaMap({
@@ -24,6 +26,7 @@ export default function MantaMap({
   activeDisease,
 }) {
   const [hoveredNodeId, setHoveredNodeId] = useState(null);
+  const [isCardDismissed, setIsCardDismissed] = useState(false);
 
   // Estados de control de tamaño interactivo ("ajustar tamaño a voluntad")
   const [mapHeight, setMapHeight] = useState(480); // Altura en píxeles
@@ -86,110 +89,40 @@ export default function MantaMap({
 
   return (
     <div className={`map-view-container ${isFullscreen ? 'map-fullscreen' : ''}`}>
-      {/* Encabezado del Mapa */}
-      <div className="map-header">
-        <div className="map-title-row">
-          <Navigation size={18} className="text-cyan" />
-          <span className="map-title">MAPA TÁCTICO DE MANTA · RED DE PROPAGACIÓN</span>
-          <span className="map-badge-strategy">
-            Estrategia: <strong>{activeStrategy.toUpperCase()}</strong>
-          </span>
-          {activeDisease && (
-            <span className="map-badge-disease" style={{ borderColor: activeDisease.badgeColor }}>
-              {activeDisease.icon} {activeDisease.name.split(' (')[0]}
-            </span>
-          )}
-        </div>
-
-        <div className="map-header-actions">
-          {/* Leyenda de Estados */}
-          <div className="state-legend">
-            <div className="legend-item" title="Sanos Susceptibles">
-              <span className="dot dot-green"></span>
-              <span>🟢 Sano</span>
-            </div>
-            <div className="legend-item" title="Mordidos / En Incubación">
-              <span className="dot dot-amber"></span>
-              <span>🟡 Mordido</span>
-            </div>
-            <div className="legend-item" title="Zombies Activos">
-              <span className="dot dot-red"></span>
-              <span>🔴 Zombie</span>
-            </div>
-            <div className="legend-item" title="Inmunizados / Recuperados">
-              <span className="dot dot-blue"></span>
-              <span>🔵 Inmune</span>
-            </div>
-          </div>
-
-          {/* Barra de Herramientas de Tamaño y Zoom */}
-          <div className="map-toolbar">
-            {/* Controles de Zoom */}
-            <button onClick={handleZoomOut} className="map-tool-btn" title="Alejar mapa">
-              <ZoomOut size={15} />
-            </button>
-            <span className="map-zoom-text" style={{ fontSize: '10px', minWidth: '35px', textAlign: 'center' }}>
-              {(zoom * 100).toFixed(0)}%
-            </span>
-            <button onClick={handleZoomIn} className="map-tool-btn" title="Acercar mapa">
-              <ZoomIn size={15} />
-            </button>
-            <button onClick={handleResetZoomPan} className="map-tool-btn" title="Restablecer vista centrada">
-              <RotateCcw size={13} />
-            </button>
-
-            {/* Selector de Tamaño a Voluntad */}
-            <div className="map-size-selector">
-              <span style={{ fontSize: '9px', color: 'var(--text-muted)', marginRight: '2px' }}>TAMAÑO:</span>
-              <button
-                onClick={() => setMapHeight(420)}
-                className={`size-pill ${mapHeight === 420 && !isFullscreen ? 'active' : ''}`}
-                title="Tamaño Compacto (420px)"
-              >
-                M
-              </button>
-              <button
-                onClick={() => setMapHeight(560)}
-                className={`size-pill ${mapHeight === 560 && !isFullscreen ? 'active' : ''}`}
-                title="Tamaño Grande (560px)"
-              >
-                L
-              </button>
-              <button
-                onClick={() => setMapHeight(700)}
-                className={`size-pill ${mapHeight === 700 && !isFullscreen ? 'active' : ''}`}
-                title="Tamaño Gigante (700px)"
-              >
-                XL
-              </button>
-            </div>
-
-            {/* Alternar Pantalla Completa */}
-            <button
-              onClick={() => setIsFullscreen(!isFullscreen)}
-              className={`map-tool-btn ${isFullscreen ? 'active' : ''}`}
-              title={isFullscreen ? 'Salir de pantalla completa' : 'Pantalla Completa War Room'}
-            >
-              {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Contenedor del Canvas SVG con Zoom y Paneo */}
+      {/* Contenedor del Canvas SVG con Zoom y Paneo Flexible */}
       <div
         ref={wrapperRef}
         className="map-canvas-wrapper"
-        style={{ height: isFullscreen ? 'calc(100vh - 120px)' : `${mapHeight}px` }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
         onWheel={handleWheel}
       >
-        {/* Badge Flotante de Coordenadas y Estado */}
+        {/* Herramientas de Zoom Flotantes en la Esquina Superior Derecha */}
+        <div className="map-floating-tools">
+          <button onClick={handleZoomOut} className="map-glass-btn" title="Alejar mapa">
+            <ZoomOut size={13} />
+          </button>
+          <span className="map-zoom-label">{(zoom * 100).toFixed(0)}%</span>
+          <button onClick={handleZoomIn} className="map-glass-btn" title="Acercar mapa">
+            <ZoomIn size={13} />
+          </button>
+          <button onClick={handleResetZoomPan} className="map-glass-btn" title="Centrar mapa">
+            <RotateCcw size={12} />
+          </button>
+          <button
+            onClick={() => setIsFullscreen(!isFullscreen)}
+            className={`map-glass-btn ${isFullscreen ? 'active-fs' : ''}`}
+            title={isFullscreen ? 'Salir' : 'Pantalla Completa'}
+          >
+            {isFullscreen ? <Minimize2 size={13} /> : <Maximize2 size={13} />}
+          </button>
+        </div>
+
+        {/* Badge Flotante Discreto de Ubicación */}
         <div className="map-floating-badge">
-          <MapPin size={12} className="text-cyan" />
+          <MapPin size={11} className="text-cyan" />
           <span>MANTA, ECUADOR · SECTOR COSTA DEL PACÍFICO</span>
         </div>
 
@@ -405,7 +338,11 @@ export default function MantaMap({
               <g
                 key={node.id}
                 transform={`translate(${nx}, ${ny})`}
-                onClick={() => setSelectedNodeId(node.id)}
+                onClick={() => {
+                  setSelectedNodeId(node.id);
+                  setIsCardDismissed(false);
+                  soundFx.playBubblePop();
+                }}
                 onMouseEnter={() => setHoveredNodeId(node.id)}
                 onMouseLeave={() => setHoveredNodeId(null)}
                 className="svg-node-group"
@@ -467,6 +404,40 @@ export default function MantaMap({
                   {state.I > 999 ? `${(state.I / 1000).toFixed(1)}k` : state.I}
                 </text>
 
+                {/* Burbuja Biohazard Roja estilo Plague Inc. */}
+                {state.I > 5 && (
+                  <g
+                    className="plague-bubble-group plague-bubble-red"
+                    transform={`translate(${radius * 0.75}, ${-radius * 0.75})`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      soundFx.playBubblePop();
+                      setSelectedNodeId(node.id);
+                    }}
+                  >
+                    <circle r="13" fill="#ef4444" className="biohazard-pulse-ring" />
+                    <circle r="10" fill="#dc2626" stroke="#ffffff" strokeWidth="1.5" />
+                    <text textAnchor="middle" dy="0.32em" fontSize="8" fill="#ffffff" fontWeight="bold">☣️</text>
+                  </g>
+                )}
+
+                {/* Burbuja Azul de Vacuna / Cura estilo Plague Inc. */}
+                {state.R > 200 && (
+                  <g
+                    className="plague-bubble-group plague-bubble-blue"
+                    transform={`translate(${-radius * 0.75}, ${-radius * 0.75})`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      soundFx.playCureChime();
+                      setSelectedNodeId(node.id);
+                    }}
+                  >
+                    <circle r="11" fill="#06b6d4" className="cure-pulse-ring" />
+                    <circle r="8.5" fill="#0891b2" stroke="#ffffff" strokeWidth="1.5" />
+                    <text textAnchor="middle" dy="0.34em" fontSize="7" fill="#ffffff">💉</text>
+                  </g>
+                )}
+
                 {/* Nombre de la Parroquia */}
                 <text
                   y={radius + 20}
@@ -484,80 +455,97 @@ export default function MantaMap({
           })}
         </svg>
 
-        {/* Panel Táctico Flotante de la Parroquia Seleccionada */}
-        <div className="node-detail-card">
-          <div className="card-header-badge">
-            <div className="sector-tag">PARROQUIA SELECCIONADA</div>
-            <div className="sector-name">{activeNode.name}</div>
-            <div className="sector-type">
-              {activeNode.category} · Densidad {activeNode.density} · Población: {activeNode.population.toLocaleString()} habs
+        {/* Panel Táctico Flotante Compacto de la Parroquia Seleccionada */}
+        {!isCardDismissed ? (
+          <div className="node-detail-card compact-card">
+            <div className="card-header-badge">
+              <div className="header-left-info">
+                <span className="sector-tag">PARROQUIA SELECCIONADA</span>
+                <span className="sector-name">{activeNode.name}</span>
+                <span className="sector-type">
+                  {activeNode.category} · {activeNode.population.toLocaleString()} habs
+                </span>
+              </div>
+              <button
+                onClick={() => setIsCardDismissed(true)}
+                className="btn-close-card"
+                title="Minimizar panel táctico"
+              >
+                <X size={14} />
+              </button>
             </div>
-          </div>
 
-          <div className="stats-mini-grid">
-            <div className="stat-pill green">
-              <ShieldCheck size={14} />
-              <div className="stat-info">
-                <span className="lbl">Sanos (S)</span>
-                <span className="val">{nodeStats.S.toLocaleString()}</span>
+            <div className="stats-mini-grid">
+              <div className="stat-pill green" title="Sanos Susceptibles">
+                <ShieldCheck size={13} />
+                <div className="stat-info">
+                  <span className="lbl">Sanos</span>
+                  <span className="val">{nodeStats.S.toLocaleString()}</span>
+                </div>
+              </div>
+
+              <div className="stat-pill amber" title="Mordidos en incubación">
+                <AlertTriangle size={13} />
+                <div className="stat-info">
+                  <span className="lbl">Mordidos</span>
+                  <span className="val">{nodeStats.E.toLocaleString()}</span>
+                </div>
+              </div>
+
+              <div className="stat-pill red" title="Zombies activos">
+                <Skull size={13} />
+                <div className="stat-info">
+                  <span className="lbl">Zombies</span>
+                  <span className="val">{nodeStats.I.toLocaleString()}</span>
+                </div>
+              </div>
+
+              <div className="stat-pill cyan" title="Vacunados / Inmunes">
+                <HeartPulse size={13} />
+                <div className="stat-info">
+                  <span className="lbl">Inmunes</span>
+                  <span className="val">{nodeStats.R.toLocaleString()}</span>
+                </div>
               </div>
             </div>
 
-            <div className="stat-pill amber">
-              <AlertTriangle size={14} />
-              <div className="stat-info">
-                <span className="lbl">Mordidos (E)</span>
-                <span className="val">{nodeStats.E.toLocaleString()}</span>
-              </div>
-            </div>
-
-            <div className="stat-pill red">
-              <Skull size={14} />
-              <div className="stat-info">
-                <span className="lbl">Zombies (I)</span>
-                <span className="val">{nodeStats.I.toLocaleString()}</span>
-              </div>
-            </div>
-
-            <div className="stat-pill cyan">
-              <HeartPulse size={14} />
-              <div className="stat-info">
-                <span className="lbl">Inmunes (R)</span>
-                <span className="val">{nodeStats.R.toLocaleString()}</span>
+            {/* Barra de Proporción del Sector */}
+            <div className="node-pop-breakdown">
+              <div className="breakdown-bar">
+                <div
+                  className="seg seg-s"
+                  style={{ width: `${(nodeStats.S / activeNode.population) * 100}%` }}
+                  title={`Sanos: ${nodeStats.S.toLocaleString()}`}
+                ></div>
+                <div
+                  className="seg seg-e"
+                  style={{ width: `${(nodeStats.E / activeNode.population) * 100}%` }}
+                  title={`Mordidos: ${nodeStats.E.toLocaleString()}`}
+                ></div>
+                <div
+                  className="seg seg-i"
+                  style={{ width: `${(nodeStats.I / activeNode.population) * 100}%` }}
+                  title={`Zombies: ${nodeStats.I.toLocaleString()}`}
+                ></div>
+                <div
+                  className="seg seg-r"
+                  style={{ width: `${(nodeStats.R / activeNode.population) * 100}%` }}
+                  title={`Inmunes: ${nodeStats.R.toLocaleString()}`}
+                ></div>
               </div>
             </div>
           </div>
-
-          {/* Barra de Proporción del Sector */}
-          <div className="node-pop-breakdown">
-            <div className="breakdown-bar">
-              <div
-                className="seg seg-s"
-                style={{ width: `${(nodeStats.S / activeNode.population) * 100}%` }}
-                title={`Sanos: ${nodeStats.S}`}
-              ></div>
-              <div
-                className="seg seg-e"
-                style={{ width: `${(nodeStats.E / activeNode.population) * 100}%` }}
-                title={`Mordidos: ${nodeStats.E}`}
-              ></div>
-              <div
-                className="seg seg-i"
-                style={{ width: `${(nodeStats.I / activeNode.population) * 100}%` }}
-                title={`Zombies: ${nodeStats.I}`}
-              ></div>
-              <div
-                className="seg seg-r"
-                style={{ width: `${(nodeStats.R / activeNode.population) * 100}%` }}
-                title={`Inmunes: ${nodeStats.R}`}
-              ></div>
-            </div>
-          </div>
-
-          <div className="sector-footer-hint">
-            📍 <em>Contexto cantonal:</em> {activeNode.description}
-          </div>
-        </div>
+        ) : (
+          <button
+            className="btn-reopen-card"
+            onClick={() => setIsCardDismissed(false)}
+            title="Ver telemetría de la parroquia"
+          >
+            <MapPin size={12} className="text-cyan" />
+            <span>{activeNode.name.split(' (')[0]}</span>
+            <span className="badge-reopen">{nodeStats.I.toLocaleString()} 🧟</span>
+          </button>
+        )}
       </div>
     </div>
   );

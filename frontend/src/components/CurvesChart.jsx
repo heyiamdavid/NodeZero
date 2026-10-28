@@ -79,7 +79,7 @@ export default function CurvesChart({
       <div className="chart-header-row">
         <div className="chart-title-group">
           <TrendingUp size={18} className="text-cyan" />
-          <span className="chart-title">PRUEBA DE FUEGO: CURVA DE CONTAGIOS VS LÍNEAS BASE</span>
+          <span className="chart-title">COMPARATIVA DE CURVAS: BROTE ZOMBIE VS ESTRATEGIAS</span>
         </div>
 
         <div className="chart-actions">
@@ -99,19 +99,19 @@ export default function CurvesChart({
       <div className="chart-legend-row">
         <div className="chart-legend-tag tag-none">
           <span className="line-indicator line-red"></span>
-          <span>Sin Intervención (Línea Base 1)</span>
+          <span>💀 1. Sin Intervención (No Vacunar)</span>
           <strong className="tag-val text-crimson">{pointNone.totalI?.toLocaleString()} zombies</strong>
         </div>
 
         <div className="chart-legend-tag tag-random">
           <span className="line-indicator line-amber"></span>
-          <span>Intervención al Azar (Línea Base 2)</span>
+          <span>🎲 2. Vacunación al Azar</span>
           <strong className="tag-val text-amber">{pointRandom.totalI?.toLocaleString()} zombies</strong>
         </div>
 
         <div className="chart-legend-tag tag-nodezero">
           <span className="line-indicator line-cyan"></span>
-          <span>Estrategia NodeZero (Óptima)</span>
+          <span>🛡️ 3. NodeZero (Anillo + Hubs)</span>
           <strong className="tag-val text-cyan">{pointNodeZero.totalI?.toLocaleString()} zombies</strong>
         </div>
       </div>
@@ -261,9 +261,10 @@ export default function CurvesChart({
           <div className="banner-left">
             <CheckCircle2 size={16} className="text-emerald" />
             <span>
-              <strong>Validación Rúbrica:</strong> La estrategia NodeZero aplana el pico epidémico en un{' '}
-              <strong className="text-emerald">{simResults.metrics?.peakReductionPct}%</strong> y salva a{' '}
-              <strong className="text-cyan">{simResults.metrics?.livesSavedVsNone?.toLocaleString()}</strong> personas frente a no intervenir.
+              <strong>Validación Track B:</strong> La estrategia NodeZero aplana el pico zombie en un{' '}
+              <strong className="text-emerald">{simResults.metrics?.peakReductionPct}%</strong>, salvando a{' '}
+              <strong className="text-cyan">{simResults.metrics?.livesSavedVsNone?.toLocaleString()}</strong> personas vs. no intervenir y{' '}
+              <strong className="text-emerald">+{simResults.metrics?.livesSavedVsRandom?.toLocaleString()}</strong> más que al azar.
             </span>
           </div>
           <div className="banner-right">
