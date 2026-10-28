@@ -64,7 +64,9 @@ export default function NewsTicker({ currentDay, activeStrategy, simResults }) {
       <div className="ticker-left-badge pipboy-ticker-badge">
         <span className="live-dot pulse-hazard"></span>
         <span className="ticker-badge-text ticker-badge-desktop">RADIO MANTA 87.5 FM // TRANSMISIÓN COE:</span>
-        <span className="ticker-badge-text ticker-badge-mobile">📻 COE:</span>
+        <span className="ticker-badge-text ticker-badge-mobile flex items-center gap-1">
+          <Radio size={12} /> COE:
+        </span>
       </div>
 
       <div className="ticker-content" key={headlineIndex}>

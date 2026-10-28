@@ -96,9 +96,21 @@ export default function App() {
 
   // 4. Modales y menús tácticos
   const [isCoinOpen, setIsCoinOpen] = useState(false);
-  const [isConfigOpen, setIsConfigOpen] = useState(false);
+  const [isConfigOpen, setIsConfigOpen] = useState(() => {
+    try {
+      const saved = localStorage.getItem('nodezero_config_drawer_open');
+      if (saved !== null) return JSON.parse(saved);
+    } catch {}
+    return true; // Ventana persistente por defecto
+  });
   const [isComparisonOpen, setIsComparisonOpen] = useState(false);
   const [isSurpriseOpen, setIsSurpriseOpen] = useState(false);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('nodezero_config_drawer_open', JSON.stringify(isConfigOpen));
+    } catch {}
+  }, [isConfigOpen]);
 
   // 5. Preferencias audiovisuales persistidas
   const [isMuted, setIsMuted] = useState(() => {
@@ -263,15 +275,9 @@ export default function App() {
       <GameTopBar
         currentDay={currentDay}
         totalDays={config.days}
-        isPlaying={isPlaying}
-        onTogglePlay={handleTogglePlay}
-        onReset={handleReset}
-        playbackSpeed={playbackSpeed}
-        setPlaybackSpeed={setPlaybackSpeed}
         currentDayData={currentDayData}
         totalPopulation={248000}
         onOpenCoinModal={() => setIsCoinOpen(true)}
-        onOpenConfigDrawer={() => setIsConfigOpen(true)}
         onOpenComparisonModal={() => setIsComparisonOpen(true)}
         onOpenSurpriseModal={() => setIsSurpriseOpen(true)}
         isMuted={isMuted}
@@ -289,12 +295,13 @@ export default function App() {
         simResults={simResults}
       />
 
-      {/* 3. Escenario Central: El Mapa Táctico de Manta con Capa CRT */}
+      {/* 3. Escenario Central: El Mapa Táctico de Manta con Capa CRT y Panel Persistente */}
       <main className="game-map-stage">
         <MantaMap
           currentDayData={currentDayData}
           selectedNodeId={selectedNodeId}
           setSelectedNodeId={setSelectedNodeId}
+          isDrawerOpen={isConfigOpen}
         />
 
         {/* Efecto CRT posicionado exclusivamente encima del mapa y detrás del resto de la interfaz */}
@@ -305,9 +312,22 @@ export default function App() {
             <div className="pipboy-crt-vignette" />
           </div>
         )}
+
+        {/* Ventana Persistente de Parámetros con Etiqueta de Flecha Ocultable */}
+        <ConfigDrawer
+          isOpen={isConfigOpen}
+          onToggle={() => setIsConfigOpen((prev) => !prev)}
+          onClose={() => setIsConfigOpen(false)}
+          config={config}
+          setConfig={setConfig}
+          seed={seed}
+          setSeed={setSeed}
+          onRestoreDefaults={handleRestoreDefaults}
+          onOpenSurprise={() => setIsSurpriseOpen(true)}
+        />
       </main>
 
-      {/* 4. Command Deck Inferior: Las 3 Estrategias y Resultados */}
+      {/* 4. Command Deck Inferior: Las 3 Estrategias, Controles de Reproducción y Cronología */}
       <GameBottomBar
         activeStrategy={activeStrategy}
         setActiveStrategy={setActiveStrategy}
@@ -315,23 +335,17 @@ export default function App() {
         currentDay={currentDay}
         totalDays={config.days}
         onSelectDay={(day) => setCurrentDay(day)}
+        isPlaying={isPlaying}
+        onTogglePlay={handleTogglePlay}
+        onReset={handleReset}
+        playbackSpeed={playbackSpeed}
+        setPlaybackSpeed={setPlaybackSpeed}
       />
 
       {/* Modales Desacoplados (Cero Sobrecarga en Pantalla) */}
       <FearAndHungerCoin
         isOpen={isCoinOpen}
         onClose={() => setIsCoinOpen(false)}
-      />
-
-      <ConfigDrawer
-        isOpen={isConfigOpen}
-        onClose={() => setIsConfigOpen(false)}
-        config={config}
-        setConfig={setConfig}
-        seed={seed}
-        setSeed={setSeed}
-        onRestoreDefaults={handleRestoreDefaults}
-        onOpenSurprise={() => setIsSurpriseOpen(true)}
       />
 
       <ComparisonModal

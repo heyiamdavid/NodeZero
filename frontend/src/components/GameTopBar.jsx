@@ -1,18 +1,12 @@
 import React from 'react';
-import { Play, Pause, RotateCcw, Volume2, VolumeX, Sliders, Award, Biohazard, Coins, Zap } from './Icons';
+import { Volume2, VolumeX, Award, Biohazard, Coins, Zap } from './Icons';
 
 export default function GameTopBar({
   currentDay,
   totalDays,
-  isPlaying,
-  onTogglePlay,
-  onReset,
-  playbackSpeed,
-  setPlaybackSpeed,
   currentDayData,
   totalPopulation = 248000,
   onOpenCoinModal,
-  onOpenConfigDrawer,
   onOpenComparisonModal,
   onOpenSurpriseModal,
   isMuted,
@@ -32,7 +26,7 @@ export default function GameTopBar({
 
   return (
     <header className="game-top-bar pipboy-header" role="banner">
-      {/* 1. Left: Brand & Player Controls */}
+      {/* 1. Left: Brand & Telemetría de Día */}
       <div className="game-top-left">
         <div className="pipboy-logo-badge">
           <span className="pipboy-logo-icon"><Biohazard size={18} /></span>
@@ -48,38 +42,6 @@ export default function GameTopBar({
           <span className="pipboy-day-num">{String(currentDay).padStart(2, '0')}</span>
           <span className="pipboy-day-sep">/</span>
           <span className="pipboy-day-max">{String(totalDays).padStart(2, '0')}</span>
-        </div>
-
-        {/* Controles del Reproductor */}
-        <div className="game-player-controls">
-          <button
-            onClick={onReset}
-            className="pipboy-ctrl-btn"
-            title="Reiniciar simulación al Día 0"
-          >
-            <RotateCcw size={12} />
-          </button>
-          <button
-            onClick={onTogglePlay}
-            className={`pipboy-ctrl-btn pipboy-btn-execute ${isPlaying ? 'is-executing' : ''}`}
-            title={isPlaying ? 'Pausar Simulación' : 'Ejecutar Simulación'}
-          >
-            {isPlaying ? <Pause size={12} /> : <Play size={12} />}
-            <span className="btn-full-text">{isPlaying ? 'PAUSA' : 'SIMULAR'}</span>
-            <span className="btn-short-text">{isPlaying ? 'PAUSA' : 'SIM'}</span>
-          </button>
-          <div className="pipboy-speed-selector">
-            {[1, 2, 5].map((spd) => (
-              <button
-                key={spd}
-                onClick={() => setPlaybackSpeed(spd)}
-                className={`pipboy-speed-pill ${playbackSpeed === spd ? 'active-speed' : ''}`}
-                title={`Velocidad de simulación ${spd}x`}
-              >
-                {spd}X
-              </button>
-            ))}
-          </div>
         </div>
       </div>
 
@@ -121,17 +83,6 @@ export default function GameTopBar({
           <Award size={12} />
           <span className="btn-full-text">[ COMPARATIVA ]</span>
           <span className="btn-short-text">[ EVAL ]</span>
-        </button>
-
-        {/* Parámetros del Brote */}
-        <button
-          onClick={onOpenConfigDrawer}
-          className="pipboy-action-btn"
-          title="Modificar parámetros del brote, vacunas y presupuesto"
-        >
-          <Sliders size={12} />
-          <span className="btn-full-text">[ PARÁMETROS ]</span>
-          <span className="btn-short-text">[ CFG ]</span>
         </button>
 
         {/* Brote Sorpresa - Prueba en Vivo */}

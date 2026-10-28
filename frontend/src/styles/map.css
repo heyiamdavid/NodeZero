@@ -288,6 +288,11 @@
   border: 1px solid var(--border-subtle);
   padding: 3px 6px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
+  transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.map-floating-tools.tools-drawer-open {
+  right: 415px;
 }
 
 .map-glass-btn {
@@ -331,51 +336,59 @@
 
 .node-detail-card {
   position: absolute;
-  bottom: 12px;
-  left: 12px;
-  width: 300px;
-  max-width: calc(100vw - 24px);
-  background: rgba(4, 14, 7, 0.96);
-  border: 1px solid var(--primary-color);
+  bottom: 14px;
+  left: 14px;
+  width: 310px;
+  max-width: calc(100vw - 28px);
+  background: rgba(3, 10, 5, 0.97) !important;
+  border: 2px solid var(--primary-color) !important;
+  border-radius: 0 !important;
   padding: 12px 14px;
   display: flex;
   flex-direction: column;
   gap: 8px;
   box-shadow: 
-    0 12px 30px rgba(0, 0, 0, 0.9), 
-    0 0 15px var(--primary-faint),
-    inset 0 0 12px rgba(26, 255, 116, 0.08);
+    0 0 0 1px #000000,
+    0 16px 45px rgba(0, 0, 0, 0.95), 
+    0 0 25px var(--primary-faint) !important;
   z-index: 25;
   animation: fadeInCard 0.2s ease-out;
 }
 
-/* Corchetes esquineros de encuadre táctico */
-.node-detail-card::before {
-  content: "┌                      ┐";
+.node-detail-card .terminal-corner {
   position: absolute;
-  top: -9px;
-  left: 4px;
-  right: 4px;
-  color: var(--primary-color);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 12px;
+  width: 12px;
+  height: 12px;
   pointer-events: none;
-  opacity: 0.8;
+  z-index: 10;
 }
 
-.node-detail-card::after {
-  content: "└                      ┘";
-  position: absolute;
-  bottom: -9px;
-  left: 4px;
-  right: 4px;
-  color: var(--primary-color);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 12px;
-  pointer-events: none;
-  opacity: 0.8;
+.node-detail-card .terminal-corner.corner-tl {
+  top: -2px;
+  left: -2px;
+  border-top: 3px solid var(--primary-bright);
+  border-left: 3px solid var(--primary-bright);
+}
+
+.node-detail-card .terminal-corner.corner-tr {
+  top: -2px;
+  right: -2px;
+  border-top: 3px solid var(--primary-bright);
+  border-right: 3px solid var(--primary-bright);
+}
+
+.node-detail-card .terminal-corner.corner-bl {
+  bottom: -2px;
+  left: -2px;
+  border-bottom: 3px solid var(--primary-bright);
+  border-left: 3px solid var(--primary-bright);
+}
+
+.node-detail-card .terminal-corner.corner-br {
+  bottom: -2px;
+  right: -2px;
+  border-bottom: 3px solid var(--primary-bright);
+  border-right: 3px solid var(--primary-bright);
 }
 
 @keyframes fadeInCard {

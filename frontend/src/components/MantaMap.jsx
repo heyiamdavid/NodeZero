@@ -29,6 +29,7 @@ export default function MantaMap({
   currentDayData,
   selectedNodeId,
   setSelectedNodeId,
+  isDrawerOpen = false,
 }) {
   const [hoveredNodeId, setHoveredNodeId] = useState(null);
   const [isCardDismissed, setIsCardDismissed] = useState(false);
@@ -109,7 +110,7 @@ export default function MantaMap({
         onWheel={handleWheel}
       >
         {/* Herramientas de Zoom Flotantes en la Esquina Superior Derecha */}
-        <div className="map-floating-tools">
+        <div className={`map-floating-tools ${isDrawerOpen ? 'tools-drawer-open' : ''}`}>
           <button onClick={handleZoomOut} className="map-glass-btn" title="Alejar mapa">
             <ZoomOut size={13} />
           </button>
@@ -520,10 +521,16 @@ export default function MantaMap({
 
         {/* Panel Táctico Flotante Compacto de la Parroquia Seleccionada */}
         {!isCardDismissed ? (
-          <div className="node-detail-card compact-card">
+          <div className="node-detail-card compact-card modal-terminal-square">
+            {/* Retículas tácticas cuadradas de las 4 esquinas */}
+            <div className="terminal-corner corner-tl" aria-hidden="true" />
+            <div className="terminal-corner corner-tr" aria-hidden="true" />
+            <div className="terminal-corner corner-bl" aria-hidden="true" />
+            <div className="terminal-corner corner-br" aria-hidden="true" />
+
             <div className="card-header-badge">
               <div className="header-left-info">
-                <span className="sector-tag">PARROQUIA SELECCIONADA</span>
+                <span className="sector-tag">[ PARROQUIA SELECCIONADA ]</span>
                 <span className="sector-name">{activeNode.name}</span>
                 <span className="sector-type">
                   {activeNode.category} · {activeNode.population.toLocaleString()} habs

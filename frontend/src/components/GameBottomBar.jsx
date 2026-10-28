@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, Shield, Coins, Skull } from './Icons';
+import { Award, Shield, Coins, Skull, Play, Pause, RotateCcw } from './Icons';
 
 export default function GameBottomBar({
   activeStrategy,
@@ -8,6 +8,11 @@ export default function GameBottomBar({
   currentDay,
   totalDays,
   onSelectDay,
+  isPlaying,
+  onTogglePlay,
+  onReset,
+  playbackSpeed,
+  setPlaybackSpeed,
 }) {
   const metrics = simResults?.metrics || {};
 
@@ -64,28 +69,62 @@ export default function GameBottomBar({
         </button>
       </div>
 
-      {/* Scrubber Temporal de Frecuencia / Día */}
-      <div className="game-timeline-scrubber pipboy-timeline-dial">
-        <div className="scrubber-header pipboy-dial-header">
-          <span className="scrubber-label">CRONOLOGÍA // DÍA DEL BROTE</span>
-          <span className="scrubber-day">
-            [{String(currentDay).padStart(2, '0')} / {String(totalDays).padStart(2, '0')}]
-          </span>
+      {/* Controles del Reproductor y Cronología de Simulación */}
+      <div className="game-playback-cluster">
+        <div className="game-player-controls deck-player-controls">
+          <button
+            onClick={onReset}
+            className="pipboy-ctrl-btn"
+            title="Reiniciar simulación al Día 0"
+          >
+            <RotateCcw size={12} />
+          </button>
+          <button
+            onClick={onTogglePlay}
+            className={`pipboy-ctrl-btn pipboy-btn-execute ${isPlaying ? 'is-executing' : ''}`}
+            title={isPlaying ? 'Pausar Simulación' : 'Ejecutar Simulación'}
+          >
+            {isPlaying ? <Pause size={12} /> : <Play size={12} />}
+            <span className="btn-full-text">{isPlaying ? 'PAUSA' : 'SIMULAR'}</span>
+            <span className="btn-short-text">{isPlaying ? 'PAUSA' : 'SIM'}</span>
+          </button>
+          <div className="pipboy-speed-selector">
+            {[1, 2, 5].map((spd) => (
+              <button
+                key={spd}
+                onClick={() => setPlaybackSpeed(spd)}
+                className={`pipboy-speed-pill ${playbackSpeed === spd ? 'active-speed' : ''}`}
+                title={`Velocidad de simulación ${spd}x`}
+              >
+                {spd}X
+              </button>
+            ))}
+          </div>
         </div>
-        <input
-          type="range"
-          min="0"
-          max={totalDays}
-          value={currentDay}
-          onChange={(e) => onSelectDay(parseInt(e.target.value))}
-          className="scrubber-slider pipboy-range"
-        />
-        <div className="pipboy-dial-ticks" aria-hidden="true">
-          <span>|0</span>
-          <span>|10</span>
-          <span>|20</span>
-          <span>|30</span>
-          <span>|40</span>
+
+        {/* Scrubber Temporal de Frecuencia / Día */}
+        <div className="game-timeline-scrubber pipboy-timeline-dial">
+          <div className="scrubber-header pipboy-dial-header">
+            <span className="scrubber-label">CRONOLOGÍA // DÍA</span>
+            <span className="scrubber-day">
+              [{String(currentDay).padStart(2, '0')} / {String(totalDays).padStart(2, '0')}]
+            </span>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max={totalDays}
+            value={currentDay}
+            onChange={(e) => onSelectDay(parseInt(e.target.value))}
+            className="scrubber-slider pipboy-range"
+          />
+          <div className="pipboy-dial-ticks" aria-hidden="true">
+            <span>|0</span>
+            <span>|10</span>
+            <span>|20</span>
+            <span>|30</span>
+            <span>|40</span>
+          </div>
         </div>
       </div>
 

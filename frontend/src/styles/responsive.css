@@ -109,8 +109,13 @@
     gap: 6px;
   }
 
-  .game-timeline-scrubber.pipboy-timeline-dial {
+  .game-playback-cluster {
     width: 100%;
+    justify-content: space-between;
+  }
+
+  .game-timeline-scrubber.pipboy-timeline-dial {
+    flex: 1;
   }
 
   .game-impact-banner.pipboy-impact-holotape {
