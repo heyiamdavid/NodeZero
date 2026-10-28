@@ -84,7 +84,7 @@ El sistema está diseñado bajo una arquitectura de alta resiliencia sin servido
 
 * **Amazon S3 Bucket:** Alojamiento estático de la Single Page Application (React 19 + Vite), empaquetada en un bundle ultra optimizado (~1.2 MB).
 * **Amazon CloudFront:** Red de distribución de contenido (CDN) global con certificado SSL/TLS (HTTPS), compresión en el Edge y mitigación DDoS, garantizando latencia mínima y 99.99% de disponibilidad.
-* **AWS Budgets:** Control preventivo de gasto con 3 umbrales de alerta configurados (50%, 80% y 100% de $5.00 USD).
+* **AWS Budgets:** Control preventivo de gasto con 3 umbrales de alerta configurados (50%, 80% y 100% de $15.00 USD).
 * **Motor Epidemiológico Client-Side Autónomo:** El modelo estocástico SEIR y la heurística de contención en anillo corren directamente en el navegador del usuario mediante JavaScript optimizado. Esto elimina tiempos de inicio en frío (*cold starts*), evita costos de cómputo en la nube y permite que la aplicación continúe operando al 100% incluso sin conexión a internet.
 
 Consulte los detalles complementarios en:
