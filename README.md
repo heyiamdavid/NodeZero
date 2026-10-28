@@ -89,6 +89,12 @@ Consulte los detalles completos en:
 * **Costo Operativo Mensual Estimado:** **$0.02 USD / mes** (100% cubierto por el AWS Free Tier para Lambda, CloudFront, S3 y API Gateway).
 * **Gasto Real durante el Desarrollo y Evaluación:** **< $0.05 USD**.
 
+<img width="1365" height="682" alt="image" src="https://github.com/user-attachments/assets/69f219f8-52b4-4c1d-ae87-f1ed9b12314c" />
+
+<img width="1365" height="683" alt="image" src="https://github.com/user-attachments/assets/864d6684-344a-42de-aa23-447c84f67e67" />
+
+
+
 ---
 
 ## 🚀 8. Cómo Ejecutar Localmente
