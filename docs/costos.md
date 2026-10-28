@@ -35,6 +35,8 @@
 
 ![Evidencia de Alertas en AWS Budgets](aws-budgets.png)
 
+<img width="1365" height="683" alt="Detalle de Costos AWS" src="https://github.com/user-attachments/assets/864d6684-344a-42de-aa23-447c84f67e67" />
+
 ---
 
 ## 3. Resiliencia y Cero Puntos Únicos de Falla
