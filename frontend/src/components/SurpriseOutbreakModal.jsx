@@ -1,10 +1,9 @@
 import React from 'react';
-import { X, Zap, AlertTriangle, ShieldCheck, ArrowRight, Flame, Skull, Box, Store, Dna, Lightbulb } from './Icons';
+import { X, Zap, ArrowRight, Skull, Box, Store, Pill, Lightbulb } from './Icons';
 
 export default function SurpriseOutbreakModal({
   isOpen,
   onClose,
-  currentConfig,
   onApplyPreset,
 }) {
   if (!isOpen) return null;
@@ -40,7 +39,7 @@ export default function SurpriseOutbreakModal({
     {
       id: 'variant_evasion',
       title: 'Resistencia Viral (Vacuna al 50% de Eficacia)',
-      Icon: Dna,
+      Icon: Pill,
       description: 'Una mutación reduce la efectividad de la dosis a la mitad (50%). Demuestra si el cortafuegos de NodeZero aún salva la ciudad.',
       patch: { vaccineEfficacy: 0.50, beta: 0.50 },
       badge: 'Eficacia 50%',
@@ -70,7 +69,7 @@ export default function SurpriseOutbreakModal({
 
         <div className="modal-body">
           <div className="surprise-alert-box">
-            <Flame size={18} className="text-amber" />
+            <Zap size={15} className="text-amber shrink-0" />
             <span>
               <strong>Criterio del Jurado (25% de la nota):</strong> Durante la demo, el jurado cambiará
               las condiciones del brote para probar la resiliencia de su equipo. Seleccione un escenario
@@ -107,7 +106,8 @@ export default function SurpriseOutbreakModal({
 
         <div className="modal-footer">
           <div className="footer-hint">
-            <span className="flex items-center gap-1.5"><Lightbulb size={14} className="text-amber shrink-0" /><span>Al aplicar cualquier preset</span></span>, la semilla actual se conserva para garantizar total reproducibilidad.
+            <Lightbulb size={14} className="text-amber shrink-0" />
+            <span>Al aplicar cualquier preset, la semilla actual se conserva para garantizar total reproducibilidad.</span>
           </div>
           <button onClick={onClose} className="btn-secondary">
             Cerrar

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TrendingUp, Layers, CheckCircle2, AlertCircle, Skull, Dice5, Shield } from './Icons';
+import { TrendingUp, Layers, CheckCircle2, Skull, Dice5, Shield } from './Icons';
 
 export default function CurvesChart({
   simResults,

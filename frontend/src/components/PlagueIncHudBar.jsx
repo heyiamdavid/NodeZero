@@ -1,7 +1,7 @@
 import React from 'react';
-import { Skull, Shield, HeartPulse, AlertTriangle, Activity, Biohazard } from './Icons';
+import { Skull, Shield, Biohazard } from './Icons';
 
-export default function PlagueIncHudBar({ currentDayData, totalPopulation = 248000, activeStrategy }) {
+export default function PlagueIncHudBar({ currentDayData, totalPopulation = 248000 }) {
   if (!currentDayData) return null;
 
   const totalS = currentDayData.totalS || 0;
@@ -10,9 +10,7 @@ export default function PlagueIncHudBar({ currentDayData, totalPopulation = 2480
   const totalR = currentDayData.totalR || 0;
 
   const infectedPct = ((totalI / totalPopulation) * 100).toFixed(1);
-  const exposedPct = ((totalE / totalPopulation) * 100).toFixed(1);
   const immunePct = ((totalR / totalPopulation) * 100).toFixed(1);
-  const healthyPct = ((totalS / totalPopulation) * 100).toFixed(1);
 
   // Nivel de amenaza estilo Plague Inc.
   let threatLevel = 'CONTROLADO';

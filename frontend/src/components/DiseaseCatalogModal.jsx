@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { X, Search, ShieldAlert, Zap, ArrowRight, Check, Activity, AlertTriangle, Info, Thermometer, MapPin, Lightbulb, Bug, Lungs, Bird, Droplet, CircleDot, Biohazard } from './Icons';
+import { X, Search, ArrowRight, Check, Info, Thermometer, MapPin, Lightbulb, Bug, Lungs, Bird, Droplet, CircleDot, Biohazard } from './Icons';
 const renderDiseaseIcon = (type) => {
   switch (type) {
     case 'bug': return <Bug size={20} className="text-amber" />;

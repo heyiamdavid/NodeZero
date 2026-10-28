@@ -152,7 +152,7 @@ export function runSimulation(config) {
     recordDayHistory(day);
   }
 
-  function applyIntervention(day) {
+  function applyIntervention(_day) {
     let availableDoses = dailyVaccines;
 
     if (strategy === 'random') {

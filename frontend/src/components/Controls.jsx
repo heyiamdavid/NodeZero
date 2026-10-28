@@ -1,5 +1,5 @@
 import React from 'react';
-import { Play, Pause, RotateCcw, StepForward, FastForward, Sliders, MapPin, Syringe, DollarSign, Shield, Dice5, Skull } from './Icons';
+import { Play, Pause, RotateCcw, StepForward, Sliders, MapPin, Syringe, DollarSign, Shield, Dice5, Skull } from './Icons';
 import { MANTA_NODES } from '../data/mantaNetwork';
 
 export default function Controls({

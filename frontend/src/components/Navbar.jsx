@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldAlert, Zap, FileText, Dice5, Cloud, Activity, BookOpen, Thermometer, Dna, Volume2, VolumeX } from './Icons';
+import { ShieldAlert, Zap, FileText, Dice5, Cloud, BookOpen, Dna, Volume2, VolumeX } from './Icons';
 
 export default function Navbar({
   seed,

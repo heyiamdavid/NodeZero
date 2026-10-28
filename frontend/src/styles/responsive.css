@@ -1,202 +1,623 @@
-/* Responsive Styles & Map Expansion Layouts */
+/* =====================================================================
+   NODEZERO RESPONSIVE & MOBILE DESIGN SYSTEM
+   Optimizado para Smartphones (320px - 640px), Tablets y Laptops
+   ===================================================================== */
 
-/* Barra de Modos de Vista (Dual, Mapa Táctico, Curvas) */
-.layout-modes-bar {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin-bottom: 2px;
-}
+/* 1. Clases Auxiliares de Adaptabilidad */
+.badge-desktop { display: inline; }
+.badge-mobile { display: none; }
 
-.modes-tab-group {
-  display: flex;
-  gap: 6px;
-  background: rgba(10, 15, 29, 0.85);
-  border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  padding: 4px;
-}
+.ticker-badge-desktop { display: inline; }
+.ticker-badge-mobile { display: none; }
 
-.mode-tab-btn {
-  background: transparent;
-  border: none;
-  color: var(--text-secondary);
-  font-family: var(--font-display);
-  font-size: 11px;
-  font-weight: 700;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+.btn-full-text { display: inline; }
+.btn-short-text { display: none; }
 
-.mode-tab-btn:hover {
-  color: #f8fafc;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.mode-tab-btn.active {
-  background: rgba(6, 182, 212, 0.2);
-  border: 1px solid rgba(6, 182, 212, 0.4);
-  color: var(--cyan-bright);
-}
-
-/* Modos de Pantalla Completa y Ancho Total */
-.grid-full-view {
-  grid-template-columns: 1fr !important;
-}
-
-.pane-full-width {
-  width: 100%;
-}
-
-.btn-expand-map {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid var(--border-subtle);
-  color: var(--cyan-bright);
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-expand-map:hover {
-  background: rgba(56, 189, 248, 0.2);
-  border-color: var(--cyan-bright);
-}
-
-.map-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.map-badge-disease {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid;
-  color: #f8fafc;
-}
-
-/* ------------------- MEDIA QUERIES RESPONSIVE ------------------- */
-
-/* Pantallas Medianas / Laptops (<= 1200px) */
-@media (max-width: 1200px) {
-  .grid-split-view {
-    grid-template-columns: 1fr;
+/* ---------------------------------------------------------------------
+   2. LAPTOPS Y PANTALLAS COMPACTAS (<= 1380px)
+   --------------------------------------------------------------------- */
+@media (max-width: 1380px) {
+  .btn-full-text {
+    display: none;
   }
-
-  .kpi-cards-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .btn-short-text {
+    display: inline;
   }
-
-  .catalog-cards-grid {
-    grid-template-columns: 1fr;
+  .pipboy-brand-sub {
+    display: none;
   }
 }
 
-/* Tablets (<= 992px) */
-@media (max-width: 992px) {
-  .main-layout {
-    flex-direction: column;
-    padding: 12px;
+@media (max-width: 1100px) {
+  .pip-capsule-lbl {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   3. TABLETS Y VISTAS MEDIANAS (<= 960px)
+   --------------------------------------------------------------------- */
+@media (max-width: 960px) {
+  .game-app-container {
+    height: 100dvh;
+    min-height: 100vh;
+    overflow: hidden;
   }
 
-  .controls-sidebar {
-    width: 100%;
-  }
-
-  .navbar-container {
+  /* Header Superior en 2/3 filas tácticas */
+  .game-top-bar.pipboy-header {
+    height: auto;
+    min-height: 0;
+    padding: 6px 10px;
+    gap: 6px;
     flex-wrap: wrap;
-    gap: 10px;
-    padding: 10px 14px;
+    align-items: stretch;
   }
 
-  .navbar-center {
-    order: 3;
-    width: 100%;
+  .game-top-left {
+    flex: 1 1 auto;
     justify-content: space-between;
   }
 
-  .kpi-cards-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .game-top-center {
+    order: 2;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    justify-content: stretch;
   }
 
-  .presets-grid {
-    grid-template-columns: 1fr;
+  .pip-capsule {
+    justify-content: center;
+    padding: 3px 6px;
   }
 
-  .report-stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .game-top-right {
+    order: 3;
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    gap: 4px;
+    padding-bottom: 2px;
   }
-}
 
-/* Responsive Game Top Bar */
-@media (max-width: 900px) {
-  .game-top-bar.pipboy-header {
+  .game-top-right::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pipboy-action-btn {
+    height: 30px;
+    padding: 0 8px;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  /* Command Deck Inferior */
+  .game-bottom-bar.pipboy-bottom-deck {
     height: auto;
-    min-height: 48px;
+    min-height: 0;
     padding: 6px 10px;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
   }
 
-  .game-top-center {
-    order: 3;
+  .game-strategy-deck.pipboy-strategy-rack {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     width: 100%;
-    justify-content: space-around;
-  }
-}
-
-/* Dispositivos Móviles (<= 640px) */
-@media (max-width: 640px) {
-  .navbar-left .brand-sub {
-    display: none;
-  }
-
-  .navbar-right {
     gap: 6px;
   }
 
-  .btn-action span {
+  .game-timeline-scrubber.pipboy-timeline-dial {
+    width: 100%;
+  }
+
+  .game-impact-banner.pipboy-impact-holotape {
+    width: 100%;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   4. SMARTPHONES Y DISPOSITIVOS MÓVILES (<= 640px)
+   --------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  /* Conmutadores de texto responsive */
+  .badge-desktop { display: none !important; }
+  .badge-mobile { display: inline !important; }
+
+  .ticker-badge-desktop { display: none !important; }
+  .ticker-badge-mobile { display: inline !important; }
+
+  /* 4.1 Header Superior Compacto */
+  .game-top-bar.pipboy-header {
+    padding: 4px 6px;
+    gap: 4px;
+  }
+
+  .pipboy-logo-badge {
+    padding-right: 6px;
+    gap: 5px;
+  }
+
+  .pipboy-logo-icon {
+    font-size: 16px;
+  }
+
+  .pipboy-brand-title {
+    font-size: 13px;
+    letter-spacing: 0.4px;
+  }
+
+  .pipboy-day-display {
+    padding: 2px 5px;
+    gap: 2px;
+  }
+
+  .pipboy-day-tag {
+    font-size: 8px;
+  }
+
+  .pipboy-day-num {
+    font-size: 14px;
+  }
+
+  .pipboy-ctrl-btn {
+    width: 26px;
+    height: 26px;
+  }
+
+  .pipboy-btn-execute {
+    height: 26px;
+    padding: 0 6px;
+    font-size: 11px;
+    gap: 3px;
+  }
+
+  .pipboy-speed-selector {
+    padding: 0;
+  }
+
+  .pipboy-speed-pill {
+    font-size: 8.5px;
+    padding: 2px 3px;
+  }
+
+  /* 4.2 Telemetría Central (4 Píldoras en Grid) */
+  .game-top-center {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+    width: 100%;
+  }
+
+  .pip-capsule {
+    padding: 2px 4px;
+    gap: 3px;
+    justify-content: center;
+  }
+
+  .pip-meter-box {
+    width: 5px;
+    height: 5px;
+  }
+
+  .pip-capsule-lbl {
+    font-size: 7.5px;
     display: none;
   }
 
-  .btn-action {
-    padding: 8px 10px;
+  .pip-capsule-val {
+    font-size: 12.5px;
   }
 
-  .aws-telemetry-badge {
-    padding: 4px 8px;
-    font-size: 10px;
+  /* 4.3 Ribbon de Botones de Acción (Scroll Horizontal Fluido) */
+  .game-top-right {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 3px;
+    width: 100%;
+    padding-bottom: 2px;
   }
 
-  .kpi-cards-grid {
-    grid-template-columns: 1fr;
+  .pipboy-action-btn {
+    height: 28px;
+    padding: 0 7px;
+    font-size: 10.5px;
+    flex-shrink: 0;
   }
 
-  .state-legend {
-    display: none;
+  /* 4.4 Ticker de Noticias Táctico */
+  .plague-news-ticker.pipboy-news-strip {
+    height: 24px;
+    padding: 2px 8px;
+    gap: 6px;
+    font-size: 9.5px;
+  }
+
+  .ticker-left-badge.pipboy-ticker-badge {
+    gap: 4px;
+    font-size: 9.5px;
+  }
+
+  .ticker-headline-text {
+    font-size: 9.5px;
+  }
+
+  /* 4.5 Escenario del Mapa y Controles Flotantes */
+  .game-map-stage {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .map-canvas-wrapper {
+    min-height: 200px;
+    border-left: none;
+    border-right: none;
+  }
+
+  .map-floating-badge {
+    display: none !important;
+  }
+
+  .map-controls-panel {
+    top: 6px;
+    right: 6px;
+    gap: 3px;
+  }
+
+  .map-ctrl-btn {
+    width: 24px;
+    height: 24px;
+  }
+
+  .map-zoom-pill {
+    font-size: 9px;
+    min-width: 30px;
+    padding: 0 2px;
+  }
+
+  /* 4.6 Tarjeta Táctica de Parroquia Seleccionada (Bottom Docked) */
+  .node-detail-card.compact-card {
+    position: absolute;
+    bottom: 6px;
+    left: 6px;
+    right: 6px;
+    width: auto;
+    max-width: none;
+    padding: 6px 10px;
+    margin: 0;
+    z-index: 35;
+    background: #040e07;
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.95), 0 0 10px var(--primary-faint);
+  }
+
+  .node-detail-card::before,
+  .node-detail-card::after {
+    display: none !important;
+  }
+
+  .sector-name {
+    font-size: 13px;
+  }
+
+  .sector-tag {
+    font-size: 8px;
+  }
+
+  .sector-type {
+    font-size: 9px;
   }
 
   .stats-mini-grid {
-    grid-template-columns: repeat(2, 1fr);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
   }
 
+  .stat-pill {
+    padding: 2px 4px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1px;
+  }
+
+  .stat-pill svg {
+    display: none;
+  }
+
+  .stat-info .lbl {
+    font-size: 7.5px;
+  }
+
+  .stat-info .val {
+    font-size: 11.5px;
+  }
+
+  .btn-reopen-card {
+    position: absolute;
+    bottom: 6px;
+    left: 6px;
+    z-index: 35;
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  /* 4.7 Command Deck de Estrategias y Scrubber */
+  .game-bottom-bar.pipboy-bottom-deck {
+    padding: 4px 6px;
+    gap: 4px;
+  }
+
+  .game-strategy-deck.pipboy-strategy-rack {
+    gap: 4px;
+  }
+
+  .strat-deck-btn {
+    padding: 4px 2px;
+    min-height: 40px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 1px;
+  }
+
+  .strat-deck-icon {
+    display: none;
+  }
+
+  .strat-deck-title {
+    font-size: 11px;
+    letter-spacing: 0;
+  }
+
+  .strat-deck-sub {
+    display: none !important;
+  }
+
+  .strat-deck-badge {
+    font-size: 8.5px;
+    padding: 1px 3px;
+    line-height: 1;
+  }
+
+  /* Scrubber de Cronología */
+  .game-timeline-scrubber.pipboy-timeline-dial {
+    padding: 2px 0;
+  }
+
+  .scrubber-header.pipboy-dial-header {
+    margin-bottom: 2px;
+  }
+
+  .scrubber-label {
+    font-size: 8.5px;
+  }
+
+  .scrubber-day {
+    font-size: 10px;
+  }
+
+  .pipboy-range {
+    height: 16px;
+  }
+
+  .pipboy-dial-ticks {
+    font-size: 8px;
+  }
+
+  /* Banner de Impacto Telemetría */
+  .game-impact-banner.pipboy-impact-holotape {
+    padding: 4px 8px;
+    gap: 6px;
+  }
+
+  .pipboy-impact-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .impact-main {
+    font-size: 9.5px;
+    line-height: 1.2;
+  }
+
+  .impact-sub {
+    font-size: 8.5px;
+    line-height: 1.2;
+  }
+
+  /* 4.8 Modales Adaptados a Pantallas Táctiles */
   .modal-window {
-    max-height: 90vh;
+    width: 96vw;
+    max-width: 96vw;
+    max-height: 90dvh;
+    margin: 4px auto;
+  }
+
+  .modal-header {
+    padding: 10px 14px;
+  }
+
+  .modal-title {
+    font-size: 14px;
+  }
+
+  .modal-sub {
+    font-size: 9px;
+  }
+
+  .modal-body {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  /* Modal Brote Sorpresa */
+  .modal-surprise {
+    width: 96vw !important;
+    max-height: 94vh !important;
+  }
+
+  .modal-surprise .modal-header {
+    padding: 8px 12px;
+  }
+
+  .modal-surprise .modal-title {
+    font-size: clamp(11.5px, 2.8vw, 14px);
+    white-space: nowrap;
+  }
+
+  .modal-surprise .modal-sub {
+    font-size: 9.5px;
+  }
+
+  .modal-surprise .surprise-alert-box {
+    padding: 7px 10px;
+    gap: 6px;
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  .modal-surprise .presets-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .modal-surprise .preset-card {
+    padding: 8px 10px;
+    gap: 5px;
+  }
+
+  .modal-surprise .preset-title {
+    font-size: 11px;
+    line-height: 1.25;
+  }
+
+  .modal-surprise .preset-desc {
+    font-size: 9px;
+    line-height: 1.3;
+  }
+
+  .modal-surprise .btn-apply-preset {
+    padding: 5px 8px;
+    font-size: 9.5px;
+    margin-top: 2px;
+  }
+
+  .modal-surprise .modal-footer {
+    padding: 6px 12px;
+  }
+
+  .modal-surprise .footer-hint {
+    font-size: 9.5px;
+  }
+
+  .modal-surprise .btn-secondary {
+    padding: 4px 12px;
+    font-size: 10px;
+  }
+
+  /* Modal Comparativa SEIR */
+  .comp-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .comp-card {
+    padding: 8px 12px;
+  }
+
+  .comp-card-val {
+    font-size: 20px;
+  }
+
+  .comp-chart-wrapper {
+    height: 180px !important;
+    min-height: 180px !important;
+  }
+
+  .eval-table th,
+  .eval-table td {
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+
+  /* Cajón de Parámetros */
+  .config-drawer {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+  }
+
+  .drawer-body {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  /* Modal Moneda Fear & Hunger */
+  .modal-fh-coin {
+    width: 96vw;
+    max-width: 96vw;
+  }
+
+  .coin-stage {
+    height: 90px;
+  }
+
+  .coin-3d {
+    width: 75px;
+    height: 75px;
+  }
+}
+
+@media (max-width: 420px) {
+  .pipboy-brand-title {
+    font-size: 11.5px;
+    letter-spacing: 0.2px;
+  }
+
+  .game-player-controls {
+    gap: 2px;
+  }
+
+  .pipboy-btn-execute {
+    padding: 0 4px;
+    font-size: 10px;
+  }
+
+  .pipboy-day-display {
+    padding: 1px 3px;
+  }
+
+  .pipboy-speed-pill {
+    padding: 1px 2px;
+    font-size: 8px;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   5. SMARTPHONES ULTRA PEQUEÑOS (<= 380px)
+   --------------------------------------------------------------------- */
+@media (max-width: 380px) {
+  .pipboy-brand-title {
+    display: none;
+  }
+
+  .pipboy-btn-execute span {
+    display: none;
+  }
+
+  .strat-deck-title {
+    font-size: 10px;
+  }
+
+  .impact-main strong {
+    display: none;
   }
 }

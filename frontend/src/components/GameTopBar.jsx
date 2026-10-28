@@ -65,7 +65,8 @@ export default function GameTopBar({
             title={isPlaying ? 'Pausar Simulación' : 'Ejecutar Simulación'}
           >
             {isPlaying ? <Pause size={12} /> : <Play size={12} />}
-            <span>{isPlaying ? 'PAUSA' : 'SIMULAR'}</span>
+            <span className="btn-full-text">{isPlaying ? 'PAUSA' : 'SIMULAR'}</span>
+            <span className="btn-short-text">{isPlaying ? 'PAUSA' : 'SIM'}</span>
           </button>
           <div className="pipboy-speed-selector">
             {[1, 2, 5].map((spd) => (
@@ -164,7 +165,8 @@ export default function GameTopBar({
             className={`pipboy-action-btn ${crtEnabled ? 'pip-active' : ''}`}
             title="Activar o desactivar efecto CRT en el mapa táctico"
           >
-            <span>[CRT: {crtEnabled ? 'ON' : 'OFF'}]</span>
+            <span className="btn-full-text">[CRT: {crtEnabled ? 'ON' : 'OFF'}]</span>
+            <span className="btn-short-text">[CRT]</span>
           </button>
         )}
 
@@ -175,7 +177,8 @@ export default function GameTopBar({
             className="pipboy-action-btn"
             title="Alternar paleta de color del terminal: Verde -> Ámbar -> Cian"
           >
-            <span>[COLOR: {themeLabel}]</span>
+            <span className="btn-full-text">[COLOR: {themeLabel}]</span>
+            <span className="btn-short-text">[{themeLabel.slice(0, 3)}]</span>
           </button>
         )}
 

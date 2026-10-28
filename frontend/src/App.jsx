@@ -10,6 +10,7 @@ import SurpriseOutbreakModal from './components/SurpriseOutbreakModal';
 import { runComparativeSimulation } from './simulation/engine';
 import { soundFx } from './utils/soundFx';
 import './App.css';
+import './styles/responsive.css';
 
 // Configuración por defecto oficial del Reto Track B AWS Hackathon
 const DEFAULT_CONFIG = {
@@ -344,7 +345,6 @@ export default function App() {
       <SurpriseOutbreakModal
         isOpen={isSurpriseOpen}
         onClose={() => setIsSurpriseOpen(false)}
-        currentConfig={config}
         onApplyPreset={handleApplySurprisePreset}
       />
     </div>

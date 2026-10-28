@@ -25,7 +25,10 @@ export default function GameBottomBar({
             <span className="strat-deck-title">[1. NODEZERO]</span>
             <span className="strat-deck-sub">CERCO EN ANILLO + HUBS</span>
           </div>
-          <span className="strat-deck-badge badge-green">[RECOMENDADA]</span>
+          <span className="strat-deck-badge badge-green">
+            <span className="badge-desktop">[RECOMENDADA]</span>
+            <span className="badge-mobile">[RECOM]</span>
+          </span>
         </button>
 
         <button
@@ -38,7 +41,10 @@ export default function GameBottomBar({
             <span className="strat-deck-title">[2. AZAR F&H]</span>
             <span className="strat-deck-sub">SORTEO ALEATORIO</span>
           </div>
-          <span className="strat-deck-badge badge-amber">[AZAR F&H]</span>
+          <span className="strat-deck-badge badge-amber">
+            <span className="badge-desktop">[AZAR F&H]</span>
+            <span className="badge-mobile">[AZAR]</span>
+          </span>
         </button>
 
         <button
@@ -51,7 +57,10 @@ export default function GameBottomBar({
             <span className="strat-deck-title">[3. SIN CONTROL]</span>
             <span className="strat-deck-sub">PROPAGACIÓN LIBRE</span>
           </div>
-          <span className="strat-deck-badge badge-red">[COLAPSO]</span>
+          <span className="strat-deck-badge badge-red">
+            <span className="badge-desktop">[COLAPSO]</span>
+            <span className="badge-mobile">[CAOS]</span>
+          </span>
         </button>
       </div>
 

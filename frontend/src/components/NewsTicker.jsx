@@ -63,7 +63,8 @@ export default function NewsTicker({ currentDay, activeStrategy, simResults }) {
     <div className="plague-news-ticker pipboy-news-strip" role="region" aria-label="Boletín de Emergencia">
       <div className="ticker-left-badge pipboy-ticker-badge">
         <span className="live-dot pulse-hazard"></span>
-        <span className="ticker-badge-text">RADIO MANTA 87.5 FM // TRANSMISIÓN COE:</span>
+        <span className="ticker-badge-text ticker-badge-desktop">RADIO MANTA 87.5 FM // TRANSMISIÓN COE:</span>
+        <span className="ticker-badge-text ticker-badge-mobile">📻 COE:</span>
       </div>
 
       <div className="ticker-content" key={headlineIndex}>

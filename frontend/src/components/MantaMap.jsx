@@ -40,10 +40,7 @@ export default function MantaMap({
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
-  // Capas visuales activables
   const showEdges = true;
-  const showLandmarks = true;
-
   const wrapperRef = useRef(null);
 
   const activeNode =

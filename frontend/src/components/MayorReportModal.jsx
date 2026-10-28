@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { X, FileText, Check, Printer, Copy, AlertCircle, MapPin, Shield } from './Icons';
 import { MANTA_NODES } from '../data/mantaNetwork';
 
@@ -10,14 +10,14 @@ export default function MayorReportModal({
 }) {
   const [copied, setCopied] = useState(false);
 
-  const reportDate = useMemo(() => {
+  const [reportDate] = useState(() => {
     return new Date().toLocaleDateString('es-EC', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
       day: 'numeric',
     });
-  }, []);
+  });
 
   if (!isOpen || !simResults || !simResults.nodezero) return null;
 

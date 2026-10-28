@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { X, Dna, Shield, AlertTriangle, Zap, CheckCircle2, ArrowRight, Biohazard, Skull, Droplet, Bus, CircleDot, Store, Waves, StopCircle, Target, Activity } from './Icons';
+import { X, Dna, Shield, Zap, Biohazard, Skull, Droplet, Bus, CircleDot, Store, Waves, StopCircle, Target, Activity } from './Icons';
 
 export default function PlagueIncDnaModal({
   isOpen,
   onClose,
   config,
-  onUpdateConfig,
 }) {
   const [activeTab, setActiveTab] = useState('transmission'); // 'transmission' | 'symptoms' | 'countermeasures'
 
