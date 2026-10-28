@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TrendingUp, Layers, CheckCircle2, AlertCircle } from './Icons';
+import { TrendingUp, Layers, CheckCircle2, AlertCircle, Skull, Dice5, Shield } from './Icons';
 
 export default function CurvesChart({
   simResults,
@@ -99,19 +99,19 @@ export default function CurvesChart({
       <div className="chart-legend-row">
         <div className="chart-legend-tag tag-none">
           <span className="line-indicator line-red"></span>
-          <span>💀 1. Sin Intervención (No Vacunar)</span>
+          <span className="flex items-center gap-1"><Skull size={13} /> 1. Sin Intervención (No Vacunar)</span>
           <strong className="tag-val text-crimson">{pointNone.totalI?.toLocaleString()} zombies</strong>
         </div>
 
         <div className="chart-legend-tag tag-random">
           <span className="line-indicator line-amber"></span>
-          <span>🎲 2. Vacunación al Azar</span>
+          <span className="flex items-center gap-1"><Dice5 size={13} /> 2. Vacunación al Azar</span>
           <strong className="tag-val text-amber">{pointRandom.totalI?.toLocaleString()} zombies</strong>
         </div>
 
         <div className="chart-legend-tag tag-nodezero">
           <span className="line-indicator line-cyan"></span>
-          <span>🛡️ 3. NodeZero (Anillo + Hubs)</span>
+          <span className="flex items-center gap-1"><Shield size={13} /> 3. NodeZero (Anillo + Hubs)</span>
           <strong className="tag-val text-cyan">{pointNodeZero.totalI?.toLocaleString()} zombies</strong>
         </div>
       </div>
@@ -147,7 +147,7 @@ export default function CurvesChart({
                   y1={y}
                   x2={chartWidth - padding.right}
                   y2={y}
-                  stroke="rgba(255, 255, 255, 0.07)"
+                  stroke="var(--border-subtle)"
                   strokeWidth="1"
                   strokeDasharray="3 3"
                 />
@@ -155,9 +155,9 @@ export default function CurvesChart({
                   x={padding.left - 10}
                   y={y + 4}
                   textAnchor="end"
-                  fill="rgba(148, 163, 184, 0.7)"
+                  fill="var(--text-muted)"
                   fontSize="11"
-                  fontFamily="JetBrains Mono"
+                  fontFamily="Share Tech Mono"
                 >
                   {val >= 1000 ? `${(val / 1000).toFixed(0)}k` : val}
                 </text>
@@ -175,16 +175,16 @@ export default function CurvesChart({
                   y1={padding.top + innerH}
                   x2={x}
                   y2={padding.top + innerH + 6}
-                  stroke="rgba(148, 163, 184, 0.4)"
+                  stroke="var(--border-subtle)"
                   strokeWidth="1"
                 />
                 <text
                   x={x}
                   y={padding.top + innerH + 18}
                   textAnchor="middle"
-                  fill="rgba(148, 163, 184, 0.7)"
+                  fill="var(--text-muted)"
                   fontSize="11"
-                  fontFamily="JetBrains Mono"
+                  fontFamily="Share Tech Mono"
                 >
                   D{day}
                 </text>
@@ -197,44 +197,44 @@ export default function CurvesChart({
             <>
               <path
                 d={generateArea(monteCarloData.summary?.none)}
-                fill="rgba(239, 68, 68, 0.12)"
+                fill="rgba(255, 51, 51, 0.12)"
               />
               <path
                 d={generateArea(monteCarloData.summary?.random)}
-                fill="rgba(245, 158, 11, 0.12)"
+                fill="rgba(255, 176, 32, 0.12)"
               />
               <path
                 d={generateArea(monteCarloData.summary?.nodezero)}
-                fill="rgba(6, 182, 212, 0.15)"
+                fill="var(--primary-faint)"
               />
             </>
           )}
 
-          {/* Curva 1: Sin Intervención (Línea Base 1) */}
+          {/* Curva 1: Sin Intervención (Línea Base 1 - Rojo) */}
           <path
             d={pathNone}
             fill="none"
-            stroke="#ef4444"
+            stroke="var(--pip-red, #ff3333)"
             strokeWidth="2.5"
             strokeDasharray="6 3"
             opacity="0.85"
           />
 
-          {/* Curva 2: Intervención al Azar (Línea Base 2) */}
+          {/* Curva 2: Intervención al Azar (Línea Base 2 - Ámbar) */}
           <path
             d={pathRandom}
             fill="none"
-            stroke="#f59e0b"
+            stroke="var(--pip-amber, #ffb020)"
             strokeWidth="2.5"
             strokeDasharray="4 2"
             opacity="0.85"
           />
 
-          {/* Curva 3: NodeZero Estrategia Óptima */}
+          {/* Curva 3: NodeZero Estrategia Óptima (Verde Fósforo) */}
           <path
             d={pathNodeZero}
             fill="none"
-            stroke="#06b6d4"
+            stroke="var(--primary-color)"
             strokeWidth="3.5"
             className="nodezero-curve-glow"
           />
@@ -245,7 +245,7 @@ export default function CurvesChart({
             y1={padding.top}
             x2={getX(activeDay)}
             y2={padding.top + innerH}
-            stroke="#38bdf8"
+            stroke="var(--primary-color)"
             strokeWidth="1.5"
             strokeDasharray="4 3"
           />

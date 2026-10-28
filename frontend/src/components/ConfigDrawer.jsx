@@ -142,7 +142,7 @@ export default function ConfigDrawer({
           {/* Incubación */}
           <div className="drawer-group">
             <div className="drawer-header-flex">
-              <label className="drawer-label">INCUBACIÓN DE MORDEDURA (ESTADO E 🟡)</label>
+              <label className="drawer-label">INCUBACIÓN DE MORDEDURA (ESTADO E - EXPUESTO)</label>
               <span className="drawer-badge text-amber">{config.incubationDays} días</span>
             </div>
             <input

@@ -1,5 +1,15 @@
 import React, { useState, useMemo } from 'react';
-import { X, Search, ShieldAlert, Zap, ArrowRight, Check, Activity, AlertTriangle, Info, Thermometer } from './Icons';
+import { X, Search, ShieldAlert, Zap, ArrowRight, Check, Activity, AlertTriangle, Info, Thermometer, MapPin, Lightbulb, Bug, Lungs, Bird, Droplet, CircleDot, Biohazard } from './Icons';
+const renderDiseaseIcon = (type) => {
+  switch (type) {
+    case 'bug': return <Bug size={20} className="text-amber" />;
+    case 'lungs': return <Lungs size={20} className="text-cyan" />;
+    case 'bird': return <Bird size={20} className="text-crimson" />;
+    case 'droplet': return <Droplet size={20} className="text-cyan" />;
+    case 'circle-dot': return <CircleDot size={20} className="text-crimson" />;
+    case 'biohazard': default: return <Biohazard size={20} className="text-crimson" />;
+  }
+};
 import { DISEASES_CATALOG, DISEASE_CATEGORIES, DANGER_LEVELS } from '../data/diseasesCatalog';
 
 export default function DiseaseCatalogModal({
@@ -119,7 +129,7 @@ export default function DiseaseCatalogModal({
                   className={`disease-card ${isCurrent ? 'active-current-disease' : ''}`}
                 >
                   <div className="disease-card-header">
-                    <div className="disease-icon-badge">{disease.icon}</div>
+                    <div className="disease-icon-badge">{renderDiseaseIcon(disease.iconType)}</div>
                     <div className="disease-title-area">
                       <div className="disease-name">{disease.name}</div>
                       <div className="disease-sci">{disease.scientificName}</div>
@@ -159,13 +169,13 @@ export default function DiseaseCatalogModal({
                       <strong>Síntomas:</strong> {disease.symptoms}
                     </div>
                     <div className="detail-line context-highlight">
-                      <strong>📍 Realidad en Manta:</strong> {disease.manabiContext}
+                      <span className="flex items-center gap-1"><MapPin size={13} className="text-cyan flex-shrink-0" /><strong>Realidad en Manta:</strong></span> {disease.manabiContext}
                     </div>
                   </div>
 
                   <div className="disease-card-footer">
                     <div className="footer-strategy-hint">
-                      💡 <em>Estrategia sugerida:</em> {disease.recommendedStrategy}
+                      <span className="flex items-center gap-1.5"><Lightbulb size={13} className="text-amber flex-shrink-0" /><em>Estrategia sugerida:</em></span> {disease.recommendedStrategy}
                     </div>
 
                     <button
@@ -197,7 +207,7 @@ export default function DiseaseCatalogModal({
         {/* Pie del Modal */}
         <div className="modal-footer">
           <div className="footer-hint">
-            💡 Al seleccionar cualquier patógeno, el motor ajusta la tasa de contagio (β), días de incubación y calibración para Manta.
+            <span className="flex items-center gap-1.5"><Lightbulb size={14} className="text-amber flex-shrink-0" /><span>Al seleccionar cualquier patógeno</span></span>, el motor ajusta la tasa de contagio (β), días de incubación y calibración para Manta.
           </div>
           <button onClick={onClose} className="btn-secondary">
             Cerrar

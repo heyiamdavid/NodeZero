@@ -144,6 +144,23 @@
   }
 }
 
+/* Responsive Game Top Bar */
+@media (max-width: 900px) {
+  .game-top-bar.pipboy-header {
+    height: auto;
+    min-height: 48px;
+    padding: 6px 10px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .game-top-center {
+    order: 3;
+    width: 100%;
+    justify-content: space-around;
+  }
+}
+
 /* Dispositivos Móviles (<= 640px) */
 @media (max-width: 640px) {
   .navbar-left .brand-sub {

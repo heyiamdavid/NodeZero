@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AlertCircle, Radio, Shield, Skull } from './Icons';
+import { Siren, Biohazard, Shield, Radio, Microscope, Anchor } from './Icons';
 
 export default function NewsTicker({ currentDay, activeStrategy, simResults }) {
   const [headlineIndex, setHeadlineIndex] = useState(0);
@@ -7,43 +7,44 @@ export default function NewsTicker({ currentDay, activeStrategy, simResults }) {
   const headlines = [
     {
       type: 'breaking',
-      icon: '🚨',
-      tag: 'ÚLTIMA HORA',
-      text: 'COE Cantonal declara estado de emergencia biológica en Manta tras brote infeccioso en Tarqui.',
+      Icon: Siren,
+      tag: 'EMERGENCIA',
+      text: 'COE CANTONAL DECLARA ESTADO DE EMERGENCIA BIOLÓGICA EN MANTA TRAS BROTE EN TARQUI.',
     },
     {
       type: 'news',
-      icon: '🧟',
+      Icon: Biohazard,
       tag: 'TRANSMISIÓN',
-      text: 'Se reporta hiper-contagio en el transporte público: buses urbanos se convierten en vector crítico.',
+      text: 'HIPER-CONTAGIO EN TRANSPORTE PÚBLICO: LÍNEAS DE BUSES CONVERTIDAS EN VECTOR DE ALTO RIESGO.',
     },
     {
       type: 'tactical',
-      icon: '🛡️',
+      Icon: Shield,
       tag: 'CONTENCIÓN',
-      text: activeStrategy === 'nodezero'
-        ? 'Estrategia NodeZero activa cerco perimetral de vacunas en Terminal El Palmar y Av. 4 de Noviembre.'
-        : activeStrategy === 'random'
-        ? 'Vacunación al azar desperdicia dosis en zonas sin riesgo mientras el foco infeccioso avanza.'
-        : 'Propagación libre sin vacunas: hospitales reportan saturación inminente de camas UCI.',
+      text:
+        activeStrategy === 'nodezero'
+          ? 'ESTRATEGIA NODEZERO ACTIVA CERCO EN ANILLO PERIMETRAL EN TERMINAL EL PALMAR Y AV. 4 DE NOVIEMBRE.'
+          : activeStrategy === 'random'
+          ? 'VACUNACIÓN AL AZAR (FEAR & HUNGER) DESPERDICIA DOSIS EN PERIFERIA MIENTRAS EL FOCO AVANZA.'
+          : 'SIN INTERVENCIÓN NI VACUNAS: HOSPITALES AL BORDE DEL COLAPSO Y PROPAGACIÓN EXPONENCIAL.',
     },
     {
       type: 'satire',
-      icon: '📻',
+      Icon: Radio,
       tag: 'RADIO MANTA',
-      text: 'Habitantes de Los Esteros y Eloy Alfaro refuerzan puertas; suspenden ferias comerciales en la bahía.',
+      text: 'HABITANTES DE LOS ESTEROS Y ELOY ALFARO REFUERZAN BARRICADAS; SUSPENDEN FERIAS COMERCIALES.',
     },
     {
       type: 'science',
-      icon: '🔬',
+      Icon: Microscope,
       tag: 'ULEAM LABS',
-      text: `Día ${currentDay}: Modelo SEIR proyecta que la vacunación en anillo puede salvar hasta +${simResults?.metrics?.livesSavedVsNone?.toLocaleString() || '48,000'} vidas.`,
+      text: `DÍA ${currentDay}: MODELO SEIR ESTIMA QUE VACUNAR EN ANILLO PUEDE SALVAR HASTA +${simResults?.metrics?.livesSavedVsNone?.toLocaleString() || '48,000'} VIDAS.`,
     },
     {
       type: 'news',
-      icon: '⚓',
+      Icon: Anchor,
       tag: 'PUERTO TPM',
-      text: 'Capitanía de Puerto restringe desembarques pesqueros para proteger a la tripulación marítima.',
+      text: 'CAPITANÍA DE PUERTO DECLARA CUARENTENA MARÍTIMA PARA SALVAGUARDAR LA FLOTA PESQUERA.',
     },
   ];
 
@@ -56,17 +57,20 @@ export default function NewsTicker({ currentDay, activeStrategy, simResults }) {
   }, [headlines.length]);
 
   const activeHeadline = headlines[headlineIndex];
+  const ActiveIcon = activeHeadline.Icon || Biohazard;
 
   return (
-    <div className="plague-news-ticker">
-      <div className="ticker-left-badge">
-        <span className="live-dot pulse-red"></span>
-        <span className="ticker-badge-text">ALERTAS MANTA:</span>
+    <div className="plague-news-ticker pipboy-news-strip" role="region" aria-label="Boletín de Emergencia">
+      <div className="ticker-left-badge pipboy-ticker-badge">
+        <span className="live-dot pulse-hazard"></span>
+        <span className="ticker-badge-text">RADIO MANTA 87.5 FM // TRANSMISIÓN COE:</span>
       </div>
 
       <div className="ticker-content" key={headlineIndex}>
-        <span className="ticker-headline-text">
-          {activeHeadline.icon} {activeHeadline.text}
+        <span className="ticker-headline-text pipboy-glow-text flex items-center gap-1.5">
+          <ActiveIcon size={13} className="text-terminal-green flex-shrink-0" />
+          <span>&gt; {activeHeadline.text}</span>
+          <span className="pipboy-cursor">_</span>
         </span>
       </div>
     </div>

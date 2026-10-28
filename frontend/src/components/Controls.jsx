@@ -1,5 +1,5 @@
 import React from 'react';
-import { Play, Pause, RotateCcw, StepForward, FastForward, Sliders, MapPin, Syringe, DollarSign } from './Icons';
+import { Play, Pause, RotateCcw, StepForward, FastForward, Sliders, MapPin, Syringe, DollarSign, Shield, Dice5, Skull } from './Icons';
 import { MANTA_NODES } from '../data/mantaNetwork';
 
 export default function Controls({
@@ -77,7 +77,7 @@ export default function Controls({
       {/* Incubación (Días como Mordido) */}
       <div className="control-group">
         <div className="control-header-flex">
-          <label className="control-label">INCUBACIÓN DE MORDEDURA (ESTADO E 🟡)</label>
+          <label className="control-label">INCUBACIÓN DE MORDEDURA (ESTADO E - EXPUESTO)</label>
           <span className="control-value-badge text-amber">{config.incubationDays} días</span>
         </div>
         <input
@@ -154,21 +154,21 @@ export default function Controls({
             className={`pill-btn ${activeViewStrategy === 'nodezero' ? 'active-nodezero' : ''}`}
             title="Estrategia Inteligente: Anillo perimetral y cortafuegos en hubs de transporte"
           >
-            🛡️ 1. NodeZero (Anillo)
+            <span className="flex items-center gap-1.5"><Shield size={13} /> 1. NodeZero (Anillo)</span>
           </button>
           <button
             onClick={() => setActiveViewStrategy('random')}
             className={`pill-btn ${activeViewStrategy === 'random' ? 'active-random' : ''}`}
             title="Línea Base 2: Vacunación al azar sin planificación territorial"
           >
-            🎲 2. Vacunar al Azar
+            <span className="flex items-center gap-1.5"><Dice5 size={13} /> 2. Vacunar al Azar</span>
           </button>
           <button
             onClick={() => setActiveViewStrategy('none')}
             className={`pill-btn ${activeViewStrategy === 'none' ? 'active-none' : ''}`}
             title="Línea Base 1: Propagación libre sin vacunar a nadie"
           >
-            💀 3. No Vacunar
+            <span className="flex items-center gap-1.5"><Skull size={13} /> 3. No Vacunar</span>
           </button>
         </div>
       </div>

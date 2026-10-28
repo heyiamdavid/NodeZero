@@ -1,4 +1,7 @@
-/* Dedicated Map Stylesheet for Manta Epidemiological Command Center */
+/* =====================================================================
+   FALLOUT 4 PIP-BOY 3000 · TACTICAL MAP & RADAR STYLESHEET
+   Based on Codemotion Guide: "Creating a Fallout-Style UI Using Modern CSS"
+   ===================================================================== */
 
 .map-view-container {
   display: flex;
@@ -6,6 +9,7 @@
   height: 100%;
   position: relative;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--bg-deep);
 }
 
 .map-view-container.map-fullscreen {
@@ -13,8 +17,7 @@
   inset: 0;
   z-index: 1000;
   background: var(--bg-deep);
-  padding: 16px;
-  border-radius: 0;
+  padding: 14px;
 }
 
 /* Encabezado del Mapa */
@@ -22,8 +25,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
-  gap: 12px;
+  margin-bottom: 8px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
@@ -36,40 +39,40 @@
 
 .map-title {
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
-  letter-spacing: 0.5px;
-  color: #f8fafc;
+  letter-spacing: 1px;
+  color: var(--primary-color);
+  text-shadow: var(--pip-text-shadow);
 }
 
 .map-badge-strategy {
-  font-size: 10px;
-  padding: 3px 8px;
-  background: rgba(56, 189, 248, 0.12);
-  color: var(--cyan-bright);
-  border-radius: 4px;
+  font-size: 11px;
+  padding: 2px 8px;
+  background: var(--primary-faint);
+  color: var(--primary-color);
+  border: 1px solid var(--border-subtle);
   font-family: var(--font-mono);
-  border: 1px solid rgba(56, 189, 248, 0.25);
+  letter-spacing: 0.5px;
 }
 
 .map-badge-disease {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   padding: 2px 8px;
-  border-radius: 4px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid;
-  color: #f8fafc;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 .map-header-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
@@ -77,37 +80,38 @@
 .map-toolbar {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(10, 15, 29, 0.85);
+  gap: 4px;
+  background: rgba(4, 14, 7, 0.9);
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
   padding: 2px 6px;
 }
 
 .map-tool-btn {
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   color: var(--text-secondary);
-  padding: 5px 7px;
-  border-radius: 5px;
+  padding: 4px 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-mono);
   font-size: 11px;
-  transition: all 0.2s;
+  transition: all 0.15s ease;
 }
 
 .map-tool-btn:hover {
-  background: rgba(56, 189, 248, 0.15);
-  color: var(--cyan-bright);
+  background: var(--primary-color);
+  color: #000000;
+  font-weight: bold;
+  text-shadow: none;
 }
 
 .map-tool-btn.active {
-  background: rgba(6, 182, 212, 0.25);
-  color: var(--cyan-bright);
-  font-weight: 700;
+  background: var(--primary-faint);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  font-weight: bold;
 }
 
 .map-size-selector {
@@ -122,30 +126,31 @@
   font-family: var(--font-mono);
   font-size: 10px;
   padding: 2px 6px;
-  border-radius: 4px;
-  background: #0f172a;
+  background: transparent;
   border: 1px solid var(--border-subtle);
   color: var(--text-muted);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.15s;
 }
 
 .size-pill:hover {
-  color: #f8fafc;
+  color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
 .size-pill.active {
-  background: var(--cyan-bright);
-  color: #060911;
-  font-weight: 700;
-  border-color: var(--cyan-bright);
+  background: var(--primary-color);
+  color: #000000;
+  font-weight: bold;
+  border-color: var(--primary-color);
+  text-shadow: none;
 }
 
 /* Leyenda de Estados */
 .state-legend {
   display: flex;
-  gap: 10px;
-  font-size: 10px;
+  gap: 12px;
+  font-size: 11px;
   font-family: var(--font-mono);
   color: var(--text-secondary);
 }
@@ -153,33 +158,34 @@
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
 .dot {
   width: 8px;
   height: 8px;
-  border-radius: 50%;
+  border-radius: 2px;
 }
 
-.dot-green { background: var(--color-susceptible); box-shadow: 0 0 6px var(--color-susceptible); }
-.dot-amber { background: var(--color-exposed); box-shadow: 0 0 6px var(--color-exposed); }
-.dot-red { background: var(--color-infectious); box-shadow: 0 0 6px var(--color-infectious); }
-.dot-blue { background: var(--color-recovered); box-shadow: 0 0 6px var(--color-recovered); }
+.dot-green { background: var(--color-susceptible); box-shadow: 0 0 6px var(--primary-glow); }
+.dot-amber { background: var(--color-exposed); box-shadow: 0 0 6px rgba(255, 176, 32, 0.6); }
+.dot-red { background: var(--color-infectious); box-shadow: 0 0 6px rgba(255, 51, 51, 0.7); }
+.dot-blue { background: var(--color-recovered); box-shadow: 0 0 6px rgba(0, 240, 255, 0.6); }
 
-/* Contenedor del Canvas SVG */
+/* Contenedor del Canvas SVG · Pantalla Radar Pip-Boy */
 .map-canvas-wrapper {
   position: relative;
   flex: 1;
-  background: #080d1a;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: radial-gradient(circle at 50% 50%, rgba(26, 255, 116, 0.05) 0%, rgba(2, 6, 3, 0.95) 90%);
+  border: 1px solid var(--border-subtle);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 420px;
-  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
+  box-shadow: 
+    inset 0 0 80px rgba(0, 0, 0, 0.95),
+    inset 0 0 15px var(--primary-faint);
   cursor: grab;
 }
 
@@ -198,61 +204,65 @@
 /* Capas flotantes y overlays */
 .map-floating-badge {
   position: absolute;
-  top: 12px;
-  left: 12px;
-  background: rgba(10, 15, 29, 0.85);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  border-radius: 6px;
-  padding: 6px 12px;
+  top: 10px;
+  left: 10px;
+  background: rgba(4, 14, 7, 0.94);
+  border: 1px solid var(--border-subtle);
+  padding: 4px 10px;
   font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--cyan-bright);
+  font-size: 11px;
+  color: var(--primary-color);
   display: flex;
   align-items: center;
   gap: 6px;
   pointer-events: none;
-  z-index: 5;
+  z-index: 25;
+  text-shadow: var(--pip-text-shadow);
 }
 
 .map-zoom-indicator {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  background: rgba(10, 15, 29, 0.85);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  top: 10px;
+  right: 10px;
+  background: rgba(4, 14, 7, 0.94);
   border: 1px solid var(--border-subtle);
-  border-radius: 6px;
   padding: 4px 8px;
   font-family: var(--font-mono);
   font-size: 10px;
   color: var(--text-muted);
   pointer-events: none;
-  z-index: 5;
+  z-index: 25;
 }
 
-/* Animaciones del Mapa */
-.pulse-circle {
-  animation: pulse-ring 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-  transform-origin: center;
+/* Animaciones y Outlines Tácticos del Radar */
+.node-selected-outline {
+  filter: drop-shadow(0 0 5px var(--primary-color));
+  animation: tacticalOutlineBreathe 2.4s ease-in-out infinite;
 }
 
-@keyframes pulse-ring {
-  0% { transform: scale(0.95); opacity: 0.9; }
-  50% { transform: scale(1.4); opacity: 0.3; }
-  100% { transform: scale(1.8); opacity: 0; }
+@keyframes tacticalOutlineBreathe {
+  0%, 100% {
+    opacity: 1;
+    stroke-width: 2.5px;
+  }
+  50% {
+    opacity: 0.85;
+    stroke-width: 3.2px;
+  }
 }
 
-.rotate-ring {
-  animation: rotate-dashed 8s linear infinite;
-  transform-origin: center;
+.tactical-reticle-corners {
+  filter: drop-shadow(0 0 4px var(--primary-bright));
+  animation: reticlePulse 3s ease-in-out infinite;
 }
 
-@keyframes rotate-dashed {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@keyframes reticlePulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.75;
+  }
 }
 
 .animated-edge-risk {
@@ -263,76 +273,107 @@
   to { stroke-dashoffset: -20; }
 }
 
-/* Herramientas Flotantes de Zoom */
+/* Herramientas Flotantes de Zoom (Estilo Botones Militares Pip-Boy) */
 .map-floating-tools {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 10px;
+  right: 10px;
   z-index: 25;
   display: flex;
   align-items: center;
-  gap: 4px;
-  background: rgba(10, 15, 29, 0.82);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  border-radius: 8px;
+  gap: 3px;
+  background: rgba(4, 14, 7, 0.9);
+  border: 1px solid var(--border-subtle);
   padding: 3px 6px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
 }
 
 .map-glass-btn {
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   color: var(--text-secondary);
-  padding: 5px;
-  border-radius: 5px;
+  padding: 5px 7px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: all 0.15s;
 }
 
 .map-glass-btn:hover {
-  background: rgba(56, 189, 248, 0.2);
-  color: var(--cyan-bright);
+  background: var(--primary-color);
+  color: #000000;
+  text-shadow: none;
 }
 
 .map-glass-btn.active-fs {
-  background: rgba(6, 182, 212, 0.3);
-  color: var(--cyan-bright);
+  background: var(--primary-faint);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .map-zoom-label {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 700;
-  color: var(--cyan-bright);
+  color: var(--primary-color);
   padding: 0 4px;
   min-width: 36px;
   text-align: center;
+  text-shadow: var(--pip-text-shadow);
 }
 
-/* Tarjeta de Inspección Flotante Compacta */
+/* =====================================================================
+   TARJETA DE INSPECCIÓN Y TELEMETRÍA DEL NODO SELECCIONADO
+   ===================================================================== */
+
 .node-detail-card {
   position: absolute;
-  bottom: 14px;
-  left: 14px;
-  width: 290px;
-  max-width: calc(100vw - 28px);
-  background: rgba(8, 12, 22, 0.88);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  border-radius: 10px;
-  padding: 10px 14px;
+  bottom: 12px;
+  left: 12px;
+  width: 300px;
+  max-width: calc(100vw - 24px);
+  background: rgba(4, 14, 7, 0.96);
+  border: 1px solid var(--primary-color);
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(6, 182, 212, 0.1);
-  z-index: 20;
+  box-shadow: 
+    0 12px 30px rgba(0, 0, 0, 0.9), 
+    0 0 15px var(--primary-faint),
+    inset 0 0 12px rgba(26, 255, 116, 0.08);
+  z-index: 25;
   animation: fadeInCard 0.2s ease-out;
+}
+
+/* Corchetes esquineros de encuadre táctico */
+.node-detail-card::before {
+  content: "┌                      ┐";
+  position: absolute;
+  top: -9px;
+  left: 4px;
+  right: 4px;
+  color: var(--primary-color);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 12px;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.node-detail-card::after {
+  content: "└                      ┘";
+  position: absolute;
+  bottom: -9px;
+  left: 4px;
+  right: 4px;
+  color: var(--primary-color);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 12px;
+  pointer-events: none;
+  opacity: 0.8;
 }
 
 @keyframes fadeInCard {
@@ -345,6 +386,8 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 6px;
 }
 
 .header-left-info {
@@ -355,45 +398,48 @@
 
 .sector-tag {
   font-family: var(--font-mono);
-  font-size: 8.5px;
+  font-size: 9px;
   font-weight: 800;
-  color: var(--cyan-bright);
-  letter-spacing: 0.6px;
+  color: var(--primary-color);
+  letter-spacing: 1px;
   text-transform: uppercase;
+  text-shadow: var(--pip-text-shadow);
 }
 
 .sector-name {
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 800;
   color: #ffffff;
   line-height: 1.2;
+  letter-spacing: 0.5px;
 }
 
 .sector-type {
   font-size: 10px;
+  font-family: var(--font-mono);
   color: var(--text-muted);
 }
 
 .btn-close-card {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  border: 1px solid var(--border-subtle);
   color: var(--text-muted);
   width: 22px;
   height: 22px;
-  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.15s;
   flex-shrink: 0;
 }
 
 .btn-close-card:hover {
-  background: rgba(239, 68, 68, 0.2);
-  color: #fca5a5;
-  border-color: rgba(239, 68, 68, 0.4);
+  background: var(--pip-red);
+  color: #000000;
+  border-color: var(--pip-red);
+  font-weight: bold;
 }
 
 /* 2x2 Mini Grid for Stats inside Card */
@@ -407,16 +453,15 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 8px;
-  border-radius: 6px;
-  background: rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--border-subtle);
 }
 
-.stat-pill.green { border-left: 3px solid #10b981; }
-.stat-pill.amber { border-left: 3px solid #f59e0b; }
-.stat-pill.red { border-left: 3px solid #ef4444; }
-.stat-pill.cyan { border-left: 3px solid #06b6d4; }
+.stat-pill.green { border-left: 3px solid var(--color-susceptible); }
+.stat-pill.amber { border-left: 3px solid var(--color-exposed); }
+.stat-pill.red { border-left: 3px solid var(--color-infectious); }
+.stat-pill.cyan { border-left: 3px solid var(--color-recovered); }
 
 .stat-info {
   display: flex;
@@ -424,17 +469,18 @@
 }
 
 .stat-info .lbl {
-  font-size: 8.5px;
+  font-size: 9px;
   color: var(--text-muted);
   font-family: var(--font-mono);
   text-transform: uppercase;
 }
 
 .stat-info .val {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
-  font-family: var(--font-mono);
-  color: #f8fafc;
+  font-family: var(--font-display);
+  color: var(--primary-color);
+  text-shadow: var(--pip-text-shadow);
 }
 
 .node-pop-breakdown {
@@ -443,52 +489,50 @@
 
 .breakdown-bar {
   display: flex;
-  height: 4px;
+  height: 5px;
   width: 100%;
-  border-radius: 2px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--border-subtle);
 }
 
-.seg-s { background: #10b981; }
-.seg-e { background: #f59e0b; }
-.seg-i { background: #ef4444; }
-.seg-r { background: #06b6d4; }
+.seg-s { background: var(--color-susceptible); }
+.seg-e { background: var(--color-exposed); }
+.seg-i { background: var(--color-infectious); }
+.seg-r { background: var(--color-recovered); }
 
 /* Botón flotante para reabrir datos de la parroquia */
 .btn-reopen-card {
   position: absolute;
-  bottom: 14px;
-  left: 14px;
-  z-index: 20;
-  background: rgba(8, 12, 22, 0.85);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  border-radius: 20px;
-  padding: 6px 12px;
+  bottom: 12px;
+  left: 12px;
+  z-index: 25;
+  background: rgba(4, 14, 7, 0.92);
+  border: 1px solid var(--primary-color);
+  padding: 5px 12px;
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #ffffff;
+  color: var(--primary-color);
   font-family: var(--font-display);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-  transition: all 0.2s;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8), 0 0 10px var(--primary-faint);
+  transition: all 0.15s;
 }
 
 .btn-reopen-card:hover {
-  background: rgba(14, 23, 42, 0.95);
-  border-color: var(--cyan-bright);
+  background: var(--primary-color);
+  color: #000000;
+  text-shadow: none;
 }
 
 .badge-reopen {
-  background: rgba(239, 68, 68, 0.2);
-  color: #fca5a5;
-  border-radius: 4px;
+  background: rgba(255, 51, 51, 0.2);
+  color: #ff6666;
+  border: 1px solid rgba(255, 51, 51, 0.4);
   padding: 1px 6px;
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 10px;
 }

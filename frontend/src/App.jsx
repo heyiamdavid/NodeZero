@@ -38,6 +38,33 @@ export default function App() {
   const [isComparisonOpen, setIsComparisonOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
 
+  // Estado de terminal CRT (Scanlines y color de fósforo)
+  const [crtEnabled, setCrtEnabled] = useState(() => {
+    const saved = localStorage.getItem('nodezero_crt');
+    return saved !== null ? saved === 'true' : true;
+  });
+  const [pipTheme, setPipTheme] = useState(() => {
+    return localStorage.getItem('nodezero_theme') || 'green';
+  });
+
+  const handleToggleCrt = () => {
+    setCrtEnabled((prev) => {
+      const next = !prev;
+      localStorage.setItem('nodezero_crt', String(next));
+      return next;
+    });
+  };
+
+  const handleCycleTheme = () => {
+    setPipTheme((prev) => {
+      const themes = ['green', 'amber', 'cyan'];
+      const nextIndex = (themes.indexOf(prev) + 1) % themes.length;
+      const next = themes[nextIndex];
+      localStorage.setItem('nodezero_theme', next);
+      return next;
+    });
+  };
+
   // Sincronizar semilla con la configuración
   useEffect(() => {
     setConfig((prev) => ({ ...prev, seed }));
@@ -100,8 +127,8 @@ export default function App() {
   };
 
   return (
-    <div className="game-app-container">
-      {/* 1. HUD Superior del Juego */}
+    <div className={`game-app-container terminal-screen ${crtEnabled ? 'crt-active' : ''}`} data-pip-theme={pipTheme}>
+      {/* 1. HUD Superior del Sistema */}
       <GameTopBar
         currentDay={currentDay}
         totalDays={config.days}
@@ -117,16 +144,20 @@ export default function App() {
         onOpenComparisonModal={() => setIsComparisonOpen(true)}
         isMuted={isMuted}
         onToggleSound={handleToggleSound}
+        crtEnabled={crtEnabled}
+        onToggleCrt={handleToggleCrt}
+        pipTheme={pipTheme}
+        onCycleTheme={handleCycleTheme}
       />
 
-      {/* 2. Ticker de Noticias de Manta estilo Plague Inc. */}
+      {/* 2. Ticker de Noticias de Manta */}
       <NewsTicker
         currentDay={currentDay}
         activeStrategy={activeStrategy}
         simResults={simResults}
       />
 
-      {/* 3. Escenario Central: El Mapa Táctico de Manta */}
+      {/* 3. Escenario Central: El Mapa Táctico de Manta con Capa CRT */}
       <main className="game-map-stage">
         <MantaMap
           currentDayData={currentDayData}
@@ -134,6 +165,15 @@ export default function App() {
           selectedNodeId={selectedNodeId}
           setSelectedNodeId={setSelectedNodeId}
         />
+
+        {/* Efecto CRT posicionado exclusivamente encima del mapa y detrás del resto de la interfaz */}
+        {crtEnabled && (
+          <div className="crt-map-overlay-layer" aria-hidden="true">
+            <div className="pipboy-scanlines" />
+            <div className="pipboy-crt-roll" />
+            <div className="pipboy-crt-vignette" />
+          </div>
+        )}
       </main>
 
       {/* 4. Command Deck Inferior: Las 3 Estrategias y Resultados */}

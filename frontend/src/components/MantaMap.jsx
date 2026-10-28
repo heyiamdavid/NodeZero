@@ -16,6 +16,15 @@ import {
   MapPin,
   Move,
   X,
+  Store,
+  Palmtree,
+  GraduationCap,
+  Bus,
+  Sailboat,
+  Factory,
+  Home,
+  Biohazard,
+  Syringe,
 } from './Icons';
 
 export default function MantaMap({
@@ -146,19 +155,19 @@ export default function MantaMap({
           <defs>
             {/* Patrón de radar táctico con rejilla */}
             <pattern id="manta-grid-dense" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255, 255, 255, 0.035)" strokeWidth="1" />
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--border-subtle)" strokeWidth="1" />
             </pattern>
 
             {/* Gradientes oceánicos y continentales */}
             <radialGradient id="deep-ocean" cx="30%" cy="10%" r="90%">
-              <stop offset="0%" stopColor="#0b172e" />
-              <stop offset="50%" stopColor="#070c1a" />
-              <stop offset="100%" stopColor="#050811" />
+              <stop offset="0%" stopColor="#08140c" />
+              <stop offset="50%" stopColor="#040b06" />
+              <stop offset="100%" stopColor="#020603" />
             </radialGradient>
 
             <linearGradient id="manta-land" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#0f1a2e" />
-              <stop offset="100%" stopColor="#091020" />
+              <stop offset="0%" stopColor="#0b2413" />
+              <stop offset="100%" stopColor="#06160b" />
             </linearGradient>
 
             {/* Filtros de resplandor */}
@@ -170,9 +179,13 @@ export default function MantaMap({
               <feGaussianBlur stdDeviation="6" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
+            <filter id="glow-radar-green" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="4" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
           </defs>
 
-          {/* Océano Pacífico */}
+          {/* Océano Pacífico (Fondo Radar) */}
           <rect width="100%" height="100%" fill="url(#deep-ocean)" />
           <rect width="100%" height="100%" fill="url(#manta-grid-dense)" />
 
@@ -180,22 +193,22 @@ export default function MantaMap({
           <path
             d="M 0,220 C 130,170 230,120 370,110 C 520,80 670,90 1000,130"
             fill="none"
-            stroke="rgba(56, 189, 248, 0.12)"
+            stroke="var(--border-subtle)"
             strokeWidth="1.5"
             strokeDasharray="8 6"
           />
           <path
             d="M 0,150 C 160,100 340,50 580,45 C 780,35 880,65 1000,75"
             fill="none"
-            stroke="rgba(56, 189, 248, 0.08)"
+            stroke="var(--border-subtle)"
             strokeWidth="1.5"
           />
 
-          <text x="70" y="65" fill="rgba(56, 189, 248, 0.4)" fontSize="13" letterSpacing="4" fontFamily="JetBrains Mono" fontWeight="700">
-            BAHÍA DE MANTA · OCÉANO PACÍFICO
+          <text x="70" y="65" fill="var(--text-secondary)" fontSize="13" letterSpacing="3" fontFamily="VT323" fontWeight="700">
+            BAHÍA DE MANTA · RADAR EPIDEMIOLÓGICO // COE CANTONAL
           </text>
-          <text x="70" y="88" fill="rgba(148, 163, 184, 0.35)" fontSize="10" fontFamily="JetBrains Mono">
-            ZONA MARÍTIMA 00° 57′ S, 80° 43′ W · PUERTO DE AGUAS PROFUNDAS
+          <text x="70" y="88" fill="var(--text-muted)" fontSize="10" fontFamily="Share Tech Mono">
+            COORD 00° 57′ S, 80° 43′ W · PROTOCOLO CONTENCIÓN EPIDEMIOLÓGICA
           </text>
 
           {/* LÍNEA DE COSTA REAL DE MANTA */}
@@ -210,8 +223,8 @@ export default function MantaMap({
                C 850,200 920,220 1000,240 
                L 1000,560 L 0,560 Z"
             fill="url(#manta-land)"
-            stroke="rgba(56, 189, 248, 0.45)"
-            strokeWidth="3"
+            stroke="var(--primary-color)"
+            strokeWidth="2.5"
           />
 
           {/* Espigón del Puerto Marítimo de Manta (TPM) */}
@@ -222,8 +235,13 @@ export default function MantaMap({
             strokeWidth="4"
             strokeLinecap="round"
           />
-          <text x="465" y="148" fill="rgba(245, 158, 11, 0.85)" fontSize="10" fontFamily="JetBrains Mono" fontWeight="700">
-            ⚓ PUERTO INTERNACIONAL TPM
+          <g transform="translate(460, 137)">
+            <circle cx="6" cy="3" r="1.8" fill="none" stroke="rgba(245, 158, 11, 0.9)" strokeWidth="1.2" />
+            <line x1="6" y1="5" x2="6" y2="12" stroke="rgba(245, 158, 11, 0.9)" strokeWidth="1.2" />
+            <path d="M2 8.5 H1 a5 5 0 0 0 10 0 h-1" fill="none" stroke="rgba(245, 158, 11, 0.9)" strokeWidth="1.2" />
+          </g>
+          <text x="475" y="148" fill="rgba(245, 158, 11, 0.85)" fontSize="10" fontFamily="JetBrains Mono" fontWeight="700">
+            PUERTO INTERNACIONAL TPM
           </text>
 
           {/* Desembocadura de Ríos Urbanos en Tarqui */}
@@ -292,8 +310,8 @@ export default function MantaMap({
                     y1={sy}
                     x2={tx}
                     y2={ty}
-                    stroke={isHighRisk ? 'rgba(239, 68, 68, 0.7)' : 'rgba(56, 189, 248, 0.25)'}
-                    strokeWidth={edge.flow * (isHighRisk ? 4.5 : 3)}
+                    stroke={isHighRisk ? 'var(--pip-red, #ff3333)' : 'var(--primary-glow, rgba(26, 255, 116, 0.35))'}
+                    strokeWidth={edge.flow * (isHighRisk ? 4 : 2.5)}
                     strokeDasharray={isHighRisk ? '8 4' : 'none'}
                     className={isHighRisk ? 'animated-edge-risk' : ''}
                   />
@@ -319,18 +337,18 @@ export default function MantaMap({
             // Tamaño proporcional
             const radius = Math.max(24, Math.min(42, Math.sqrt(node.population) / 5.8));
 
-            let nodeFill = '#10b981'; // Sano
-            let filterGlow = 'none';
+            let nodeFill = 'var(--primary-color)';
+            let filterGlow = 'url(#glow-radar-green)';
 
             if (state.I > 80) {
-              nodeFill = '#ef4444';
+              nodeFill = '#ff3333';
               filterGlow = 'url(#glow-zombie-intense)';
             } else if (state.I > 10) {
-              nodeFill = '#f97316';
+              nodeFill = '#ff7733';
             } else if (state.E > 15) {
-              nodeFill = '#f59e0b';
+              nodeFill = '#ffb020';
             } else if (state.R > node.population * 0.35) {
-              nodeFill = '#06b6d4';
+              nodeFill = '#00f0ff';
               filterGlow = 'url(#glow-immune-intense)';
             }
 
@@ -348,27 +366,56 @@ export default function MantaMap({
                 className="svg-node-group"
                 style={{ cursor: 'pointer' }}
               >
-                {/* Onda expansiva animada si hay brote activo */}
-                {state.I > 30 && (
+                {/* Alerta perimetral fija si hay foco infeccioso (sin círculos que se van) */}
+                {state.I > 30 && !isSelected && (
                   <circle
-                    r={radius + 18}
+                    r={radius + 5}
                     fill="none"
-                    stroke="#ef4444"
-                    strokeWidth="2.5"
-                    opacity="0.8"
-                    className="pulse-circle"
+                    stroke="var(--pip-red, #ff3333)"
+                    strokeWidth="2"
+                    strokeDasharray="4 3"
+                    opacity="0.85"
                   />
                 )}
 
-                {/* Aro de selección / foco */}
-                {(isSelected || isHovered) && (
+                {/* OUTLINE TÁCTICO DEL NODO SELECCIONADO */}
+                {isSelected && (
+                  <>
+                    {/* Contorno exterior continuo con resplandor táctico */}
+                    <circle
+                      r={radius + 7}
+                      fill="none"
+                      stroke="var(--primary-bright)"
+                      strokeWidth="2.5"
+                      className="node-selected-outline"
+                    />
+                    {/* Anillo interior punteado ajustado */}
+                    <circle
+                      r={radius + 3.5}
+                      fill="none"
+                      stroke="var(--primary-color)"
+                      strokeWidth="1.5"
+                      strokeDasharray="5 2.5"
+                    />
+                    {/* Retículas angulares de encuadre en las esquinas */}
+                    <g className="tactical-reticle-corners" stroke="var(--primary-bright)" strokeWidth="2.5" fill="none">
+                      <path d={`M ${-(radius + 12)} ${-(radius + 5)} L ${-(radius + 12)} ${-(radius + 12)} L ${-(radius + 5)} ${-(radius + 12)}`} />
+                      <path d={`M ${radius + 5} ${-(radius + 12)} L ${radius + 12} ${-(radius + 12)} L ${radius + 12} ${-(radius + 5)}`} />
+                      <path d={`M ${radius + 12} ${radius + 5} L ${radius + 12} ${radius + 12} L ${radius + 5} ${radius + 12}`} />
+                      <path d={`M ${-(radius + 5)} ${radius + 12} L ${-(radius + 12)} ${radius + 12} L ${-(radius + 12)} ${radius + 5}`} />
+                    </g>
+                  </>
+                )}
+
+                {/* Outline sutil para hover cuando no está seleccionado */}
+                {isHovered && !isSelected && (
                   <circle
-                    r={radius + 11}
+                    r={radius + 5}
                     fill="none"
-                    stroke="#38bdf8"
-                    strokeWidth="3"
-                    strokeDasharray="6 3"
-                    className="rotate-ring"
+                    stroke="var(--primary-color)"
+                    strokeWidth="2"
+                    strokeDasharray="4 2"
+                    opacity="0.8"
                   />
                 )}
 
@@ -378,19 +425,19 @@ export default function MantaMap({
                   fill={nodeFill}
                   fillOpacity="0.92"
                   stroke={isSelected ? '#ffffff' : 'rgba(255, 255, 255, 0.45)'}
-                  strokeWidth={isSelected ? 4 : 2}
+                  strokeWidth={isSelected ? 3.5 : 2}
                   filter={filterGlow}
                 />
 
                 {/* Ícono representativo de la zona */}
-                <text textAnchor="middle" dy="-0.35em" fontSize="13">
-                  {node.id === 'tarqui' ? '🏬' :
-                   node.id === 'manta_centro' ? '🏖️' :
-                   node.id === 'uleam' ? '🎓' :
-                   node.id === 'el_palmar' ? '🚌' :
-                   node.id === 'san_mateo' ? '⛵' :
-                   node.id === 'los_esteros' ? '🏭' : '🏘️'}
-                </text>
+                <g transform="translate(-7, -18)" stroke="#ffffff" fill="none" opacity="0.95">
+                  {node.id === 'tarqui' ? <Store size={14} /> :
+                   node.id === 'manta_centro' ? <Palmtree size={14} /> :
+                   node.id === 'uleam' ? <GraduationCap size={14} /> :
+                   node.id === 'el_palmar' ? <Bus size={14} /> :
+                   node.id === 'san_mateo' ? <Sailboat size={14} /> :
+                   node.id === 'los_esteros' ? <Factory size={14} /> : <Home size={14} />}
+                </g>
 
                 {/* Conteo de Infectados / Zombies */}
                 <text
@@ -399,12 +446,12 @@ export default function MantaMap({
                   fill="#ffffff"
                   fontSize="12"
                   fontWeight="800"
-                  fontFamily="JetBrains Mono"
+                  fontFamily="Share Tech Mono"
                 >
                   {state.I > 999 ? `${(state.I / 1000).toFixed(1)}k` : state.I}
                 </text>
 
-                {/* Burbuja Biohazard Roja estilo Plague Inc. */}
+                {/* Burbuja Biohazard Roja con badge firme */}
                 {state.I > 5 && (
                   <g
                     className="plague-bubble-group plague-bubble-red"
@@ -415,13 +462,14 @@ export default function MantaMap({
                       setSelectedNodeId(node.id);
                     }}
                   >
-                    <circle r="13" fill="#ef4444" className="biohazard-pulse-ring" />
                     <circle r="10" fill="#dc2626" stroke="#ffffff" strokeWidth="1.5" />
-                    <text textAnchor="middle" dy="0.32em" fontSize="8" fill="#ffffff" fontWeight="bold">☣️</text>
+                    <g transform="translate(-5.5, -5.5)">
+                      <Biohazard size={11} className="text-white" />
+                    </g>
                   </g>
                 )}
 
-                {/* Burbuja Azul de Vacuna / Cura estilo Plague Inc. */}
+                {/* Burbuja Azul de Vacuna / Inmunizados */}
                 {state.R > 200 && (
                   <g
                     className="plague-bubble-group plague-bubble-blue"
@@ -432,9 +480,10 @@ export default function MantaMap({
                       setSelectedNodeId(node.id);
                     }}
                   >
-                    <circle r="11" fill="#06b6d4" className="cure-pulse-ring" />
                     <circle r="8.5" fill="#0891b2" stroke="#ffffff" strokeWidth="1.5" />
-                    <text textAnchor="middle" dy="0.34em" fontSize="7" fill="#ffffff">💉</text>
+                    <g transform="translate(-5, -5)">
+                      <Syringe size={10} className="text-white" />
+                    </g>
                   </g>
                 )}
 
@@ -543,7 +592,10 @@ export default function MantaMap({
           >
             <MapPin size={12} className="text-cyan" />
             <span>{activeNode.name.split(' (')[0]}</span>
-            <span className="badge-reopen">{nodeStats.I.toLocaleString()} 🧟</span>
+            <span className="badge-reopen flex items-center gap-1">
+              <span>{nodeStats.I.toLocaleString()}</span>
+              <Skull size={11} className="text-red inline-block" />
+            </span>
           </button>
         )}
       </div>

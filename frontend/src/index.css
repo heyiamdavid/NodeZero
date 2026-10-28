@@ -1,64 +1,400 @@
-/* Design System & Core Tokens for NodeZero */
+/* =====================================================================
+   FALLOUT 4 PIP-BOY 3000 MARK IV · MODERN CSS DESIGN SYSTEM
+   Based on Codemotion Guide: "Creating a Fallout-Style UI Using Modern CSS"
+   ===================================================================== */
+
 :root {
-  --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  /* Typography */
+  --font-pip-display: 'VT323', monospace;
+  --font-pip-mono: 'Share Tech Mono', 'JetBrains Mono', monospace;
+  --font-display: 'VT323', monospace;
+  --font-body: 'Share Tech Mono', monospace;
+  --font-mono: 'Share Tech Mono', 'JetBrains Mono', monospace;
 
-  /* Tactical Color Palette */
-  --bg-deep: #060911;
-  --bg-surface: #0a0f1d;
-  --bg-card: rgba(15, 23, 42, 0.75);
-  --bg-card-hover: rgba(30, 41, 59, 0.85);
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-glow: rgba(56, 189, 248, 0.3);
+  /* Fallout 4 Phosphor Green Theme (Default) */
+  --primary-color: #1aff74;
+  --primary-bright: #3aff8b;
+  --primary-glow: rgba(26, 255, 116, 0.55);
+  --primary-faint: rgba(26, 255, 116, 0.12);
+  --primary-dark: #072210;
+  --secondary-color: #0b3419;
+  --tertiary-color: #04140a;
+  --background-color: #030804;
 
-  /* States */
-  --color-susceptible: #10b981; /* 🟢 Sano */
-  --color-exposed: #f59e0b;     /* 🟡 Mordido */
-  --color-infectious: #ef4444;  /* 🔴 Zombie */
-  --color-recovered: #06b6d4;   /* 🔵 Exorcizado / Inmune */
+  --bg-deep: #030804;
+  --bg-surface: #061208;
+  --bg-card: rgba(8, 22, 12, 0.88);
+  --bg-card-hover: rgba(14, 36, 20, 0.95);
+  --border-subtle: rgba(26, 255, 116, 0.28);
+  --border-glow: rgba(26, 255, 116, 0.6);
+  --pip-border: #1aff74;
 
-  /* Theme Accents */
-  --cyan-primary: #06b6d4;
-  --cyan-bright: #38bdf8;
-  --crimson-glow: #ef4444;
-  --emerald-bright: #10b981;
-  --violet-accent: #8b5cf6;
+  /* Telemetry / SEIR States */
+  --color-susceptible: #1aff74; /* Terminal Green (Healthy) */
+  --color-exposed: #ffb020;     /* Radiation Amber (Bitten) */
+  --color-infectious: #ff3333;  /* Biohazard Red (Infected) */
+  --color-recovered: #00f0ff;   /* Stasis Blue (Inoculated) */
 
-  /* Text */
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  /* Fallout Accents */
+  --cyan-primary: #00f0ff;
+  --cyan-bright: #38ffff;
+  --crimson-glow: #ff3333;
+  --emerald-bright: #1aff74;
+  --violet-accent: #c084fc;
+
+  /* Phosphor Text */
+  --text-primary: #1aff74;
+  --text-secondary: rgba(26, 255, 116, 0.8);
+  --text-muted: rgba(26, 255, 116, 0.5);
+  --pip-text-shadow: 0 0 5px rgba(26, 255, 116, 0.65), 0 0 10px rgba(26, 255, 116, 0.3);
+
+  /* CRT Screen Parameters */
+  --crt-scanline-color: rgba(0, 0, 0, 0.35);
+  --crt-flicker-duration: 0.15s;
+  scrollbar-color: var(--primary-color) var(--background-color);
 }
 
-* {
+/* =====================================================================
+   THEME VARIANTS (Amber New Vegas / Cyan Institute)
+   ===================================================================== */
+
+[data-pip-theme="amber"] {
+  --primary-color: #ffb020;
+  --primary-bright: #ffd52c;
+  --primary-glow: rgba(255, 176, 32, 0.55);
+  --primary-faint: rgba(255, 176, 32, 0.12);
+  --primary-dark: #291a04;
+  --secondary-color: #3b2507;
+  --tertiary-color: #170d02;
+  --background-color: #080501;
+
+  --bg-deep: #080501;
+  --bg-surface: #120b03;
+  --bg-card: rgba(26, 17, 5, 0.88);
+  --bg-card-hover: rgba(40, 26, 8, 0.95);
+  --border-subtle: rgba(255, 176, 32, 0.28);
+  --border-glow: rgba(255, 176, 32, 0.6);
+  --pip-border: #ffb020;
+
+  --color-susceptible: #ffb020;
+  --color-exposed: #ffd52c;
+  --color-infectious: #ff3333;
+  --color-recovered: #38bdf8;
+
+  --text-primary: #ffb020;
+  --text-secondary: rgba(255, 176, 32, 0.8);
+  --text-muted: rgba(255, 176, 32, 0.5);
+  --pip-text-shadow: 0 0 5px rgba(255, 176, 32, 0.65), 0 0 10px rgba(255, 176, 32, 0.3);
+  scrollbar-color: var(--primary-color) var(--background-color);
+}
+
+[data-pip-theme="cyan"] {
+  --primary-color: #00f0ff;
+  --primary-bright: #5df7ff;
+  --primary-glow: rgba(0, 240, 255, 0.55);
+  --primary-faint: rgba(0, 240, 255, 0.12);
+  --primary-dark: #042329;
+  --secondary-color: #07343d;
+  --tertiary-color: #021519;
+  --background-color: #01080a;
+
+  --bg-deep: #01080a;
+  --bg-surface: #041317;
+  --bg-card: rgba(5, 25, 32, 0.88);
+  --bg-card-hover: rgba(8, 38, 48, 0.95);
+  --border-subtle: rgba(0, 240, 255, 0.28);
+  --border-glow: rgba(0, 240, 255, 0.6);
+  --pip-border: #00f0ff;
+
+  --color-susceptible: #00f0ff;
+  --color-exposed: #ffb020;
+  --color-infectious: #ff3333;
+  --color-recovered: #1aff74;
+
+  --text-primary: #00f0ff;
+  --text-secondary: rgba(0, 240, 255, 0.8);
+  --text-muted: rgba(0, 240, 255, 0.5);
+  --pip-text-shadow: 0 0 5px rgba(0, 240, 255, 0.65), 0 0 10px rgba(0, 240, 255, 0.3);
+  scrollbar-color: var(--primary-color) var(--background-color);
+}
+
+/* Base Reset & CRT Hardware Simulation */
+/* ── Reset ── */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   background-color: var(--bg-deep);
   color: var(--text-primary);
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: 13.5px;
   line-height: 1.5;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.25px;
 }
 
 /* Custom Tactical Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--bg-deep);
+  border-left: 1px solid var(--border-subtle);
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 3px;
+  background: var(--primary-color);
+  border-radius: 0px;
+  box-shadow: 0 0 6px var(--primary-glow);
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: var(--primary-bright);
+}
+
+/* =====================================================================
+   CAPA DE EFECTOS CRT SOBRE EL MAPA (DETRÁS DE LA INTERFAZ)
+   ===================================================================== */
+
+.crt-map-overlay-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 6; /* Por encima del canvas del mapa SVG (z-index: 1), por debajo de tarjetas flotantes (z-index: 20) */
+  overflow: hidden;
+}
+
+/* 1. Líneas de escaneo CRT en el mapa */
+.crt-map-overlay-layer .pipboy-scanlines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.28) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.02),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.02)
+  );
+  background-size: 100% 3px, 3px 100%;
+  opacity: 0.85;
+}
+
+/* 2. Haz de barrido continuo CRT */
+.crt-map-overlay-layer .pipboy-crt-roll {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0%,
+    var(--primary-faint) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  background-size: 100% 80px;
+  animation: pipboyRoll 10s linear infinite;
+  opacity: 0.55;
+}
+
+@keyframes pipboyRoll {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* 3. Viñeta y curvatura perimetral en el visor del mapa */
+.crt-map-overlay-layer .pipboy-crt-vignette {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, transparent 65%, rgba(0, 0, 0, 0.65) 100%);
+  box-shadow: 
+    inset 0 0 60px rgba(0, 0, 0, 0.9),
+    inset 0 0 15px var(--primary-faint);
+}
+
+/* Parpadeo sutil de fósforo */
+.crt-flicker {
+  animation: pipFlicker 0.18s infinite alternate ease-in-out;
+}
+
+@keyframes pipFlicker {
+  0% { opacity: 0.985; }
+  50% { opacity: 1; }
+  100% { opacity: 0.992; }
+}
+
+/* Pip-Boy Blinking Cursor */
+.pipboy-cursor {
+  display: inline-block;
+  font-weight: 900;
+  animation: pipBlink 1s infinite steps(1);
+}
+
+@keyframes pipBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+
+/* ── Utility text colors ── */
+.text-cyan {
+  color: var(--phosphor);
+  text-shadow: var(--glow-green);
+}
+
+.text-crimson {
+  color: var(--plague-infected);
+  text-shadow: var(--glow-red);
+}
+
+.text-amber {
+  color: var(--plague-exposed);
+}
+
+.text-emerald {
+  color: var(--plague-immune);
+}
+
+.text-violet {
+  color: var(--violet-accent);
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+/* ── Phosphor flicker animation ── */
+@keyframes flicker {
+
+  0%,
+  95%,
+  100% {
+    opacity: 1;
+  }
+
+  96% {
+    opacity: 0.85;
+  }
+
+  97% {
+    opacity: 1;
+  }
+
+  98% {
+    opacity: 0.9;
+  }
+}
+
+/* ── Typing cursor blink ── */
+@keyframes blink {
+
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ── Pulse glow (used on logo / infected indicators) ── */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 3px rgba(192, 57, 43, 0.5));
+    opacity: 0.85;
+  }
+
+  50% {
+    filter: drop-shadow(0 0 14px rgba(192, 57, 43, 1));
+    opacity: 1;
+  }
+}
+
+.pulse-crimson {
+  color: var(--plague-infected);
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+
+/* ── Rotating dashed ring ── */
+@keyframes rotate-dashed {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate-ring {
+  animation: rotate-dashed 8s linear infinite;
+  transform-origin: center;
+}
+
+/* ── Pulse circle (map) ── */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.9;
+  }
+
+  50% {
+    transform: scale(1.45);
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: scale(1.85);
+    opacity: 0;
+  }
+}
+
+.pulse-circle {
+  animation: pulse-ring 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  transform-origin: center;
+}
+
+/* ── Edge dash animation ── */
+@keyframes dash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+.animated-edge-risk {
+  animation: dash 1.5s linear infinite;
+}
+
+/* ── Fade in (modals) ── */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

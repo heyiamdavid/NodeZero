@@ -1,5 +1,15 @@
 import React from 'react';
-import { X, Award, Shield, TrendingDown, DollarSign, Calendar, Syringe } from './Icons';
+import {
+  X,
+  Award,
+  Shield,
+  TrendingDown,
+  DollarSign,
+  Skull,
+  Coins,
+  Check,
+  Pin,
+} from './Icons';
 import CurvesChart from './CurvesChart';
 
 export default function ComparisonModal({
@@ -15,69 +25,79 @@ export default function ComparisonModal({
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-window modal-comparison" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="modal-window modal-comparison modal-terminal-square"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Tactical Corner Reticle Accents */}
+        <div className="terminal-corner corner-tl" aria-hidden="true" />
+        <div className="terminal-corner corner-tr" aria-hidden="true" />
+        <div className="terminal-corner corner-bl" aria-hidden="true" />
+        <div className="terminal-corner corner-br" aria-hidden="true" />
+
+        {/* Modal Header */}
         <div className="modal-header">
           <div className="modal-title-group">
             <div className="modal-icon-badge badge-cyan">
-              <Award size={22} className="text-cyan" />
+              <Award size={20} className="text-cyan" />
             </div>
             <div>
-              <div className="modal-title">EVALUACIÓN OFICIAL TRACK B · COMPARATIVA TRIPLE</div>
+              <div className="modal-title">[ EVALUACIÓN TRACK B // COMPARATIVA TRIPLE ]</div>
               <div className="modal-sub">
-                NodeZero (Anillo + Hubs) vs. Azar de la Moneda vs. No Vacunar a Nadie
+                NODEZERO (ANILLO + HUBS) VS. AZAR DE LA MONEDA VS. PROPAGACIÓN LIBRE
               </div>
             </div>
           </div>
-          <button onClick={onClose} className="btn-close-modal">
-            <X size={20} />
+          <button onClick={onClose} className="btn-close-modal" title="Cerrar ventana">
+            <X size={16} />
           </button>
         </div>
 
         <div className="modal-body comparison-modal-body">
           {/* Tarjetas Principales de Impacto Cuantitativo */}
           <div className="comp-cards-grid">
-            <div className="comp-card card-cyan">
+            <div className="comp-card card-cyan square-card">
               <div className="comp-card-label">
-                <Shield size={16} className="text-cyan" />
-                <span>VIDAS SALVADAS</span>
+                <Shield size={14} className="text-cyan" />
+                <span>[ VIDAS SALVADAS ]</span>
               </div>
               <div className="comp-card-val text-cyan">
                 +{metrics.livesSavedVsNone?.toLocaleString()}
               </div>
               <div className="comp-card-sub">
-                vs No vacunar a nadie (+{metrics.livesSavedVsRandom?.toLocaleString()} más que al azar)
+                vs No vacunar (+{metrics.livesSavedVsRandom?.toLocaleString()} más que al azar)
               </div>
             </div>
 
-            <div className="comp-card card-emerald">
+            <div className="comp-card card-emerald square-card">
               <div className="comp-card-label">
-                <TrendingDown size={16} className="text-emerald" />
-                <span>REDUCCIÓN DEL PICO</span>
+                <TrendingDown size={14} className="text-emerald" />
+                <span>[ REDUCCIÓN DE PICO ]</span>
               </div>
               <div className="comp-card-val text-emerald">
                 -{metrics.peakReductionPct}%
               </div>
               <div className="comp-card-sub">
-                De {none.summary.peakInfected.toLocaleString()} zombies a solo {nodezero.summary.peakInfected.toLocaleString()}
+                De {none.summary.peakInfected?.toLocaleString()} a {nodezero.summary.peakInfected?.toLocaleString()} casos pico
               </div>
             </div>
 
-            <div className="comp-card card-amber">
+            <div className="comp-card card-amber square-card">
               <div className="comp-card-label">
-                <DollarSign size={16} className="text-amber" />
-                <span>COSTO / EFICIENCIA</span>
+                <DollarSign size={14} className="text-amber" />
+                <span>[ COSTO / EFICIENCIA ]</span>
               </div>
               <div className="comp-card-val text-amber">
                 ${metrics.costPerLifeSaved} USD
               </div>
               <div className="comp-card-sub">
-                Costo por habitante salvado (${nodezero.summary.totalCostUSD.toLocaleString()} total)
+                Costo por habitante salvado (${nodezero.summary.totalCostUSD?.toLocaleString()} total)
               </div>
             </div>
           </div>
 
           {/* Gráfica de Curvas SEIR Superpuestas */}
-          <div className="comp-chart-wrapper">
+          <div className="comp-chart-wrapper square-card">
             <CurvesChart
               simResults={simResults}
               currentDay={currentDay}
@@ -86,7 +106,7 @@ export default function ComparisonModal({
           </div>
 
           {/* Tabla Comparativa Oficial */}
-          <div className="comp-table-card">
+          <div className="comp-table-card square-card">
             <table className="eval-table">
               <thead>
                 <tr>
@@ -101,33 +121,47 @@ export default function ComparisonModal({
               <tbody>
                 <tr className="row-none">
                   <td>
-                    <span className="badge-strat strat-red">💀 1. No Vacunar a Nadie</span>
+                    <span className="badge-strat strat-red square-badge flex items-center gap-1.5">
+                      <Skull size={13} />
+                      <span>[ 1. NO VACUNAR ]</span>
+                    </span>
                   </td>
-                  <td>{none.summary.finalSusceptible.toLocaleString()}</td>
-                  <td className="text-crimson font-bold">{none.summary.peakInfected.toLocaleString()}</td>
-                  <td>{none.summary.finalImmuneOrSaved.toLocaleString()}</td>
+                  <td>{none.summary.finalSusceptible?.toLocaleString()}</td>
+                  <td className="text-crimson font-bold">{none.summary.peakInfected?.toLocaleString()}</td>
+                  <td>{none.summary.finalImmuneOrSaved?.toLocaleString()}</td>
                   <td>$0 USD</td>
-                  <td className="text-crimson font-bold">Colapso de Manta</td>
+                  <td className="text-crimson font-bold">Colapso Total de Manta</td>
                 </tr>
                 <tr className="row-random">
                   <td>
-                    <span className="badge-strat strat-amber">🪙 2. Azar de la Moneda</span>
+                    <span className="badge-strat strat-amber square-badge flex items-center gap-1.5">
+                      <Coins size={13} />
+                      <span>[ 2. AZAR DE LA MONEDA ]</span>
+                    </span>
                   </td>
-                  <td>{random.summary.finalSusceptible.toLocaleString()}</td>
-                  <td>{random.summary.peakInfected.toLocaleString()}</td>
-                  <td>{random.summary.finalImmuneOrSaved.toLocaleString()}</td>
-                  <td>${random.summary.totalCostUSD.toLocaleString()} USD</td>
+                  <td>{random.summary.finalSusceptible?.toLocaleString()}</td>
+                  <td>{random.summary.peakInfected?.toLocaleString()}</td>
+                  <td>{random.summary.finalImmuneOrSaved?.toLocaleString()}</td>
+                  <td>${random.summary.totalCostUSD?.toLocaleString()} USD</td>
                   <td className="text-amber">Ineficiente / Desperdicio</td>
                 </tr>
                 <tr className="row-nodezero">
                   <td>
-                    <span className="badge-strat strat-nodezero">🛡️ 3. NodeZero (Anillo + Hubs)</span>
+                    <span className="badge-strat strat-nodezero square-badge flex items-center gap-1.5">
+                      <Shield size={13} />
+                      <span>[ 3. NODEZERO (ANILLO + HUBS) ]</span>
+                    </span>
                   </td>
-                  <td className="text-emerald font-bold">{nodezero.summary.finalSusceptible.toLocaleString()}</td>
-                  <td className="text-cyan font-bold">{nodezero.summary.peakInfected.toLocaleString()}</td>
-                  <td className="text-cyan font-bold">{nodezero.summary.finalImmuneOrSaved.toLocaleString()}</td>
-                  <td>${nodezero.summary.totalCostUSD.toLocaleString()} USD</td>
-                  <td className="text-emerald font-bold">✓ Brote Contenido con Éxito</td>
+                  <td className="text-emerald font-bold">{nodezero.summary.finalSusceptible?.toLocaleString()}</td>
+                  <td className="text-cyan font-bold">{nodezero.summary.peakInfected?.toLocaleString()}</td>
+                  <td className="text-cyan font-bold">{nodezero.summary.finalImmuneOrSaved?.toLocaleString()}</td>
+                  <td>${nodezero.summary.totalCostUSD?.toLocaleString()} USD</td>
+                  <td className="text-emerald font-bold">
+                    <span className="flex items-center gap-1.5">
+                      <Check size={14} />
+                      <span>BROTE CONTENIDO CON ÉXITO</span>
+                    </span>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -135,11 +169,14 @@ export default function ComparisonModal({
         </div>
 
         <div className="modal-footer">
-          <div className="comp-footer-note">
-            📌 <em>Criterio Track B:</em> Muestra exactamente con números el impacto de la estrategia ganadora.
+          <div className="comp-footer-note square-note flex items-center gap-1.5">
+            <Pin size={13} className="text-cyan flex-shrink-0" />
+            <span>
+              <strong>[ CRITERIO TRACK B ]</strong> Telemetría comparativa con números exactos para el jurado evaluador.
+            </span>
           </div>
-          <button onClick={onClose} className="btn-done-drawer">
-            Cerrar Comparativa
+          <button onClick={onClose} className="btn-done-drawer square-btn">
+            [ CERRAR COMPARATIVA ]
           </button>
         </div>
       </div>

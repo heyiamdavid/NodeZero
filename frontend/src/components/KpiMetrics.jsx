@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, TrendingDown, DollarSign, Calendar, Syringe, Award } from './Icons';
+import { Shield, TrendingDown, DollarSign, Calendar, Syringe, Award, Skull, Dice5, Check } from './Icons';
 
 export default function KpiMetrics({ simResults }) {
   if (!simResults || !simResults.nodezero) return null;
@@ -108,7 +108,7 @@ export default function KpiMetrics({ simResults }) {
             <tbody>
               <tr className="row-none">
                 <td>
-                  <span className="badge-strat strat-red">💀 1. No Vacunar a Nadie</span>
+                  <span className="badge-strat strat-red flex items-center gap-1.5"><Skull size={13} /> 1. No Vacunar a Nadie</span>
                 </td>
                 <td>{none.summary.finalSusceptible.toLocaleString()}</td>
                 <td className="text-crimson font-bold">{none.summary.peakInfected.toLocaleString()}</td>
@@ -118,7 +118,7 @@ export default function KpiMetrics({ simResults }) {
               </tr>
               <tr className="row-random">
                 <td>
-                  <span className="badge-strat strat-amber">🎲 2. Vacunación al Azar</span>
+                  <span className="badge-strat strat-amber flex items-center gap-1.5"><Dice5 size={13} /> 2. Vacunación al Azar</span>
                 </td>
                 <td>{random.summary.finalSusceptible.toLocaleString()}</td>
                 <td>{random.summary.peakInfected.toLocaleString()}</td>
@@ -128,13 +128,13 @@ export default function KpiMetrics({ simResults }) {
               </tr>
               <tr className="row-nodezero">
                 <td>
-                  <span className="badge-strat strat-nodezero">🛡️ 3. NodeZero (Anillo + Hubs)</span>
+                  <span className="badge-strat strat-nodezero flex items-center gap-1.5"><Shield size={13} /> 3. NodeZero (Anillo + Hubs)</span>
                 </td>
                 <td className="text-emerald font-bold">{nodezero.summary.finalSusceptible.toLocaleString()}</td>
                 <td className="text-cyan font-bold">{nodezero.summary.peakInfected.toLocaleString()}</td>
                 <td className="text-cyan font-bold">{nodezero.summary.finalImmuneOrSaved.toLocaleString()}</td>
                 <td>${nodezero.summary.totalCostUSD.toLocaleString()} USD</td>
-                <td className="text-emerald font-bold">✓ Ciudad Salvada (Brote Contenido)</td>
+                <td className="text-emerald font-bold"><span className="flex items-center gap-1"><Check size={14} /> Ciudad Salvada (Brote Contenido)</span></td>
               </tr>
             </tbody>
           </table>

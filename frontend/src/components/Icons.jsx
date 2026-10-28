@@ -378,4 +378,240 @@ export const Radio = ({ size = 18, className = '' }) => (
   </svg>
 );
 
+export const Biohazard = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <circle cx="12" cy="11.9" r="2" fill="currentColor" fillOpacity="0.2" />
+    <path d="M6.7 6.7a6.8 6.8 0 0 1 10.6 0" />
+    <path d="M7.4 17.6A6.8 6.8 0 0 1 5.3 7.2" />
+    <path d="M16.6 17.6a6.8 6.8 0 0 0 2.1-10.4" />
+    <circle cx="12" cy="17" r="3" />
+    <circle cx="7.7" cy="9.5" r="3" />
+    <circle cx="16.3" cy="9.5" r="3" />
+  </svg>
+);
+
+export const Coins = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <circle cx="8" cy="8" r="6" />
+    <path d="M18.09 10.37A6 6 0 1 1 10.34 18" />
+    <path d="M7 6h1v4" />
+    <path d="m16.7 13.9.7-.7-2.8-2.8" />
+  </svg>
+);
+
+export const Coin = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <circle cx="12" cy="12" r="9" />
+    <circle cx="12" cy="12" r="6" strokeDasharray="2 2" />
+    <path d="M12 9v6" />
+  </svg>
+);
+
+export const Microscope = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <path d="M6 18h8" />
+    <path d="M3 22h18" />
+    <path d="M14 22a7 7 0 1 0 0-14h-1" />
+    <path d="M9 14h2" />
+    <path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z" />
+    <path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3" />
+  </svg>
+);
+
+export const Anchor = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <circle cx="12" cy="5" r="3" />
+    <line x1="12" y1="22" x2="12" y2="8" />
+    <path d="M5 12H2a10 10 0 0 0 20 0h-3" />
+  </svg>
+);
+
+export const Siren = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <path d="M7 12a5 5 0 0 1 10 0v6H7v-6z" />
+    <path d="M5 20a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1H5v-1z" />
+    <line x1="12" y1="2" x2="12" y2="4" />
+    <line x1="4" y1="6" x2="6" y2="7.5" />
+    <line x1="20" y1="6" x2="18" y2="7.5" />
+  </svg>
+);
+
+export const Sparkles = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3z" />
+    <path d="M5 3v4" />
+    <path d="M19 17v4" />
+    <path d="M3 5h4" />
+    <path d="M17 19h4" />
+  </svg>
+);
+
+export const Pin = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <line x1="12" y1="17" x2="12" y2="22" />
+    <path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z" />
+  </svg>
+);
+
+export const Lightbulb = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-1 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+    <path d="M9 18h6" />
+    <path d="M10 22h4" />
+  </svg>
+);
+
+export const Store = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
+    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+    <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" />
+    <path d="M2 7h20" />
+    <path d="M22 7a2.5 2.5 0 0 1-5 0 2.5 2.5 0 0 1-5 0 2.5 2.5 0 0 1-5 0 2.5 2.5 0 0 1-5 0" />
+  </svg>
+);
+
+export const Palmtree = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h11Z" />
+    <path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-9Z" />
+    <path d="M5.8 21a10.2 10.2 0 0 1 5.9-10.2" />
+    <path d="M13 14c-.6.9-1 2-1 3.5 0 2 .5 3.5 1 3.5" />
+  </svg>
+);
+
+export const GraduationCap = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+    <path d="M6 12v5c3 3 9 3 12 0v-5" />
+  </svg>
+);
+
+export const Bus = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <path d="M8 6v6" />
+    <path d="M16 6v6" />
+    <path d="M4 6h16" />
+    <path d="M4 12h16" />
+    <rect x="4" y="3" width="16" height="16" rx="2" />
+    <path d="M6 19v2" />
+    <path d="M18 19v2" />
+    <circle cx="7.5" cy="15.5" r="1.5" />
+    <circle cx="16.5" cy="15.5" r="1.5" />
+  </svg>
+);
+
+export const Sailboat = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <path d="M22 18H2l3 4h14l3-4Z" />
+    <path d="M10 2v16" />
+    <path d="M10 4l9 9h-9" />
+    <path d="M10 7L4 13h6" />
+  </svg>
+);
+
+export const Factory = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4H2v16z" />
+    <path d="M17 18h1" />
+    <path d="M12 18h1" />
+    <path d="M7 18h1" />
+  </svg>
+);
+
+export const Home = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+    <polyline points="9 22 9 12 15 12 15 22" />
+  </svg>
+);
+
+export const Bug = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <rect width="8" height="14" x="8" y="6" rx="4" />
+    <path d="m19 7-3 2" />
+    <path d="m5 7 3 2" />
+    <path d="m19 19-3-2" />
+    <path d="m5 19 3-2" />
+    <path d="M20 13h-4" />
+    <path d="M4 13h4" />
+    <path d="m10 4 1 2" />
+    <path d="m14 4-1 2" />
+  </svg>
+);
+
+export const Lungs = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <path d="M12 3v8" />
+    <path d="m12 11-4-2c-2.5 0-4.5 2-4.5 4.5 0 3 1.5 6.5 4.5 7.5 2.5.8 4-.5 4-2.5V11" />
+    <path d="m12 11 4-2c2.5 0 4.5 2 4.5 4.5 0 3-1.5 6.5-4.5 7.5-2.5.8-4-.5-4-2.5V11" />
+  </svg>
+);
+
+export const Droplet = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" fill="currentColor" fillOpacity="0.2" />
+  </svg>
+);
+
+export const Bird = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <path d="M16 7h.01" />
+    <path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 14" />
+    <path d="m20 7 2 .5-2 .5" />
+    <path d="M10 18v3" />
+    <path d="M14 17.75V21" />
+    <path d="M7 18a6 6 0 0 0 3.84-10.61" />
+  </svg>
+);
+
+export const Target = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <circle cx="12" cy="12" r="10" />
+    <circle cx="12" cy="12" r="6" />
+    <circle cx="12" cy="12" r="2" />
+  </svg>
+);
+
+export const StopCircle = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <circle cx="12" cy="12" r="10" />
+    <rect x="9" y="9" width="6" height="6" />
+  </svg>
+);
+
+export const Waves = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+    <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+    <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+  </svg>
+);
+
+export const Box = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+    <path d="m3.3 7 8.7 5 8.7-5" />
+    <path d="M12 22V12" />
+  </svg>
+);
+
+export const Radiation = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <circle cx="12" cy="12" r="2" />
+    <path d="M4.93 4.93l4.24 4.24" />
+    <path d="M14.83 9.17l4.24-4.24" />
+    <path d="M14.83 14.83l4.24 4.24" />
+    <path d="M9.17 14.83L4.93 19.07" />
+    <circle cx="12" cy="12" r="9" />
+  </svg>
+);
+
+export const CircleDot = ({ size = 18, className = '' }) => (
+  <svg {...defaultProps(size, className)}>
+    <circle cx="12" cy="12" r="10" />
+    <circle cx="12" cy="12" r="4" fill="currentColor" />
+  </svg>
+);
+
 

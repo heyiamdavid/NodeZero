@@ -4,11 +4,11 @@
 
 export const DISEASE_CATEGORIES = [
   { id: 'all', label: 'Todas las Patologías' },
-  { id: 'vectorial', label: '🦟 Vectoriales (Dengue/Mosquitos)' },
-  { id: 'respiratory', label: '🫁 Respiratorias (Aerosol/Gotículas)' },
-  { id: 'zombie', label: '🧟 Mutagénicas / Zombies' },
-  { id: 'waterborne', label: '💧 Hídricas / Alimentos' },
-  { id: 'contact', label: '🩸 Contacto Dérmico / Fluidos' },
+  { id: 'vectorial', label: 'Vectoriales (Dengue/Mosquitos)' },
+  { id: 'respiratory', label: 'Respiratorias (Aerosol/Gotículas)' },
+  { id: 'zombie', label: 'Mutagénicas / Zombies' },
+  { id: 'waterborne', label: 'Hídricas / Alimentos' },
+  { id: 'contact', label: 'Contacto Dérmico / Fluidos' },
 ];
 
 export const DANGER_LEVELS = [
@@ -37,7 +37,7 @@ export const DISEASES_CATALOG = [
     manabiContext: 'Inició con un pescador en Tarqui. Transmisión hiper-rápida en mercados y buses.',
     recommendedStrategy: 'Vacunación en anillo perimetral y cerco estricto en hubs de transporte.',
     badgeColor: '#ef4444',
-    icon: '🧟',
+    iconType: 'biohazard',
   },
   {
     id: 'dengue_hemorragico',
@@ -56,7 +56,7 @@ export const DISEASES_CATALOG = [
     manabiContext: 'Endémico en Manta durante lluvias. Crítico en Tarqui y Los Esteros por acumulación de agua.',
     recommendedStrategy: 'Fumigación espacial termonebulizada y bloqueo de casos febriles.',
     badgeColor: '#f97316',
-    icon: '🦟',
+    iconType: 'bug',
   },
   {
     id: 'covid19_omicron',
@@ -75,7 +75,7 @@ export const DISEASES_CATALOG = [
     manabiContext: 'Dispersión acelerada en el transporte interparroquial y aulas de la ULEAM.',
     recommendedStrategy: 'Vacunación de refuerzo, mascarillas en buses urbanos y ventilación forzada.',
     badgeColor: '#f59e0b',
-    icon: '🫁',
+    iconType: 'lungs',
   },
   {
     id: 'sarampion',
@@ -94,7 +94,7 @@ export const DISEASES_CATALOG = [
     manabiContext: 'Riesgo alto en guarderías y escuelas de Eloy Alfaro por esquemas de vacunación rezagados.',
     recommendedStrategy: 'Barrido de vacunación puerta a puerta (estrategia de bloqueo 100%).',
     badgeColor: '#dc2626',
-    icon: '🔴',
+    iconType: 'circle-dot',
   },
   {
     id: 'influenza_aviar',
@@ -113,7 +113,7 @@ export const DISEASES_CATALOG = [
     manabiContext: 'Alerta en playas (Murciélago/San Mateo) por aves marinas silvestres y puerto pesquero.',
     recommendedStrategy: 'Antivirales tempranos (Oseltamivir), cuarentena de contactos y cordón sanitario.',
     badgeColor: '#e11d48',
-    icon: '🦅',
+    iconType: 'bird',
   },
   {
     id: 'colera_costero',
@@ -132,7 +132,7 @@ export const DISEASES_CATALOG = [
     manabiContext: 'Riesgo histórico en puestos de comida de mariscos en Tarqui y redes fluviales.',
     recommendedStrategy: 'Vacuna oral Dukoral/Shanchol y cloración masiva de tanqueros.',
     badgeColor: '#0284c7',
-    icon: '💧',
+    iconType: 'droplet',
   },
   {
     id: 'rabia_furia',
@@ -151,7 +151,7 @@ export const DISEASES_CATALOG = [
     manabiContext: 'Dispersión acelerada a través de las rutas de buses de la Av. 4 de Noviembre.',
     recommendedStrategy: 'Vacunación en anillo de 1 km alrededor de cada mordido reportado.',
     badgeColor: '#b91c1c',
-    icon: '☣️',
+    iconType: 'biohazard',
   },
   {
     id: 'mpox_clado1',
@@ -170,6 +170,6 @@ export const DISEASES_CATALOG = [
     manabiContext: 'Transmisión focalizada en zonas de alta aglomeración nocturna y turismo.',
     recommendedStrategy: 'Rastreo de contactos directos y vacunación post-exposición en 4 días.',
     badgeColor: '#d97706',
-    icon: '🩸',
+    iconType: 'droplet',
   }
 ];

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Dna, Shield, AlertTriangle, Zap, CheckCircle2, ArrowRight } from './Icons';
+import { X, Dna, Shield, AlertTriangle, Zap, CheckCircle2, ArrowRight, Biohazard, Skull, Droplet, Bus, CircleDot, Store, Waves, StopCircle, Target, Activity } from './Icons';
 
 export default function PlagueIncDnaModal({
   isOpen,
@@ -21,7 +21,7 @@ export default function PlagueIncDnaModal({
               <Dna size={22} className="text-crimson pulse-crimson" />
             </div>
             <div>
-              <div className="modal-title">🧬 LABORATORIO DE MUTACIÓN & CONTRAMEDIDAS</div>
+              <div className="modal-title">LABORATORIO DE MUTACIÓN & CONTRAMEDIDAS</div>
               <div className="modal-sub">
                 Árbol Genético SEIR estilo Plague Inc. · Vías de Transmisión vs. Cerco Epidemiológico
               </div>
@@ -38,19 +38,19 @@ export default function PlagueIncDnaModal({
             onClick={() => setActiveTab('transmission')}
             className={`dna-tab ${activeTab === 'transmission' ? 'active-transmission' : ''}`}
           >
-            ☣️ Vías de Transmisión
+            <span className="flex items-center gap-1.5"><Biohazard size={15} /> Vías de Transmisión</span>
           </button>
           <button
             onClick={() => setActiveTab('symptoms')}
             className={`dna-tab ${activeTab === 'symptoms' ? 'active-symptoms' : ''}`}
           >
-            🧟 Rasgos de la Horda
+            <span className="flex items-center gap-1.5"><Skull size={15} /> Rasgos de la Horda</span>
           </button>
           <button
             onClick={() => setActiveTab('countermeasures')}
             className={`dna-tab ${activeTab === 'countermeasures' ? 'active-countermeasures' : ''}`}
           >
-            🛡️ Contramedidas NodeZero
+            <span className="flex items-center gap-1.5"><Shield size={15} /> Contramedidas NodeZero</span>
           </button>
         </div>
 
@@ -59,7 +59,7 @@ export default function PlagueIncDnaModal({
             <div className="dna-grid">
               <div className="dna-trait-card active-trait">
                 <div className="trait-header">
-                  <span className="trait-icon">🩸</span>
+                  <span className="trait-icon"><Droplet size={18} className="text-crimson" /></span>
                   <div className="trait-title-box">
                     <span className="trait-name">Mordedura & Saliva</span>
                     <span className="trait-type text-crimson">Transmisión Dérmica</span>
@@ -73,7 +73,7 @@ export default function PlagueIncDnaModal({
 
               <div className="dna-trait-card active-trait">
                 <div className="trait-header">
-                  <span className="trait-icon">🚌</span>
+                  <span className="trait-icon"><Bus size={18} className="text-amber" /></span>
                   <div className="trait-title-box">
                     <span className="trait-name">Vectores de Transporte Público</span>
                     <span className="trait-type text-amber">Dispersión Urbana</span>
@@ -87,7 +87,7 @@ export default function PlagueIncDnaModal({
 
               <div className="dna-trait-card active-trait">
                 <div className="trait-header">
-                  <span className="trait-icon">🟡</span>
+                  <span className="trait-icon"><CircleDot size={18} className="text-amber" /></span>
                   <div className="trait-title-box">
                     <span className="trait-name">Incubación Silenciosa</span>
                     <span className="trait-type text-amber">Periodo de Latencia (E)</span>
@@ -101,7 +101,7 @@ export default function PlagueIncDnaModal({
 
               <div className="dna-trait-card">
                 <div className="trait-header">
-                  <span className="trait-icon">🛒</span>
+                  <span className="trait-icon"><Store size={18} className="text-crimson" /></span>
                   <div className="trait-title-box">
                     <span className="trait-name">Aglomeración en Mercados</span>
                     <span className="trait-type text-crimson">Hub Comercial</span>
@@ -119,7 +119,7 @@ export default function PlagueIncDnaModal({
             <div className="dna-grid">
               <div className="dna-trait-card active-trait">
                 <div className="trait-header">
-                  <span className="trait-icon">⚡</span>
+                  <span className="trait-icon"><Zap size={18} className="text-amber" /></span>
                   <div className="trait-title-box">
                     <span className="trait-name">Fiebre Hiperpirética</span>
                     <span className="trait-type text-crimson">Síntoma Inicial</span>
@@ -132,7 +132,7 @@ export default function PlagueIncDnaModal({
 
               <div className="dna-trait-card active-trait">
                 <div className="trait-header">
-                  <span className="trait-icon">🧟‍♂️</span>
+                  <span className="trait-icon"><Skull size={18} className="text-crimson" /></span>
                   <div className="trait-title-box">
                     <span className="trait-name">Agresividad Caníbal</span>
                     <span className="trait-type text-crimson">Estado Infeccioso (I)</span>
@@ -145,7 +145,7 @@ export default function PlagueIncDnaModal({
 
               <div className="dna-trait-card">
                 <div className="trait-header">
-                  <span className="trait-icon">🌊</span>
+                  <span className="trait-icon"><Waves size={18} className="text-cyan" /></span>
                   <div className="trait-title-box">
                     <span className="trait-name">Resistencia Salina / Marina</span>
                     <span className="trait-type text-cyan">Mutación Costera</span>
@@ -162,7 +162,7 @@ export default function PlagueIncDnaModal({
             <div className="dna-grid">
               <div className="dna-trait-card active-countermeasure">
                 <div className="trait-header">
-                  <span className="trait-icon">🛡️</span>
+                  <span className="trait-icon"><Shield size={18} className="text-cyan" /></span>
                   <div className="trait-title-box">
                     <span className="trait-name">Vacunación en Anillo (Ring)</span>
                     <span className="trait-type text-cyan">Estrategia NodeZero</span>
@@ -176,7 +176,7 @@ export default function PlagueIncDnaModal({
 
               <div className="dna-trait-card active-countermeasure">
                 <div className="trait-header">
-                  <span className="trait-icon">🛑</span>
+                  <span className="trait-icon"><StopCircle size={18} className="text-cyan" /></span>
                   <div className="trait-title-box">
                     <span className="trait-name">Bloqueo en Terminal El Palmar</span>
                     <span className="trait-type text-cyan">Control de Movilidad</span>
@@ -190,7 +190,7 @@ export default function PlagueIncDnaModal({
 
               <div className="dna-trait-card active-countermeasure">
                 <div className="trait-header">
-                  <span className="trait-icon">🎯</span>
+                  <span className="trait-icon"><Target size={18} className="text-emerald" /></span>
                   <div className="trait-title-box">
                     <span className="trait-name">Cero Dosis Desperdiciadas</span>
                     <span className="trait-type text-emerald">Optimización Matemática</span>
@@ -207,7 +207,7 @@ export default function PlagueIncDnaModal({
 
         <div className="modal-footer">
           <div className="footer-hint-text">
-            🎮 <em>Inspirado en Plague Inc.:</em> Cada parámetro altera las ecuaciones diferenciales del grafo en tiempo real.
+            <span className="flex items-center gap-1.5"><Activity size={14} className="text-cyan flex-shrink-0" /><em>Dinámica de Grafo:</em></span> Cada parámetro altera las ecuaciones diferenciales del grafo en tiempo real.
           </div>
           <button onClick={onClose} className="btn-action btn-surprise">
             Entendido · Volver al Mapa

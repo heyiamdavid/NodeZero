@@ -106,7 +106,7 @@ export default function Navbar({
           title="Ver árbol genético de transmisión y contramedidas (Plague Inc.)"
         >
           <Dna size={16} className="text-crimson pulse-crimson" />
-          <span>🧬 Laboratorio</span>
+          <span>Laboratorio</span>
         </button>
 
         {/* Catálogo de Enfermedades */}
@@ -126,7 +126,7 @@ export default function Navbar({
           title="Prueba de Fuego: Responder al brote sorpresa del jurado en 5 minutos"
         >
           <Zap size={16} className="zap-icon" />
-          <span>🎃 Brote Sorpresa</span>
+          <span>Brote Sorpresa</span>
         </button>
 
         {/* Botón Informe Alcalde */}

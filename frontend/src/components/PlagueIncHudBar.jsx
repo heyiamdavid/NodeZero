@@ -1,5 +1,5 @@
 import React from 'react';
-import { Skull, Shield, HeartPulse, AlertTriangle, Activity } from './Icons';
+import { Skull, Shield, HeartPulse, AlertTriangle, Activity, Biohazard } from './Icons';
 
 export default function PlagueIncHudBar({ currentDayData, totalPopulation = 248000, activeStrategy }) {
   if (!currentDayData) return null;
@@ -50,13 +50,13 @@ export default function PlagueIncHudBar({ currentDayData, totalPopulation = 2480
         </div>
         <div className="hud-metric-footer">
           <span>{totalI.toLocaleString()} infectados</span>
-          <span className="text-amber">({totalE.toLocaleString()} mordidos 🟡)</span>
+          <span className="text-amber">({totalE.toLocaleString()} mordidos)</span>
         </div>
       </div>
 
       {/* Centro: Nivel de Peligro Biohazard Plague Inc. */}
       <div className="hud-center-biohazard" style={{ borderColor: threatColor }}>
-        <div className="biohazard-emblem">☣️</div>
+        <div className="biohazard-emblem flex items-center justify-center"><Biohazard size={22} style={{ color: threatColor }} /></div>
         <div className="biohazard-info">
           <span className="biohazard-tag">ESTADO EPIDEMIOLÓGICO</span>
           <span className="biohazard-status" style={{ color: threatColor }}>
@@ -82,7 +82,7 @@ export default function PlagueIncHudBar({ currentDayData, totalPopulation = 2480
         </div>
         <div className="hud-metric-footer">
           <span>{totalR.toLocaleString()} protegidos</span>
-          <span className="text-emerald">({totalS.toLocaleString()} sanos 🟢)</span>
+          <span className="text-emerald">({totalS.toLocaleString()} sanos)</span>
         </div>
       </div>
     </div>
