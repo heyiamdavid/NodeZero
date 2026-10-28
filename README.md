@@ -117,7 +117,7 @@ cd frontend
 npm install
 npm run dev
 ```
-> Abrir la aplicación en el navegador: [http://localhost:5173/](http://localhost:5173/)
+> Abrir la aplicación en el navegador: https://d1vj2vln9zq5so.cloudfront.net/
 
 ---
 
