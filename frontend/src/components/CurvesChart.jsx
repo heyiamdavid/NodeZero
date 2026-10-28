@@ -12,7 +12,7 @@ export default function CurvesChart({
   const [hoverDay, setHoverDay] = useState(null);
 
   if (!simResults || !simResults.none || !simResults.nodezero) {
-    return <div className="chart-loading">Cargando telemetría epidemiológica...</div>;
+    return <div className="chart-loading font-mono">Cargando telemetría epidemiológica...</div>;
   }
 
   const noneHistory = simResults.none.history || [];
@@ -78,41 +78,41 @@ export default function CurvesChart({
     <div className="curves-chart-card">
       <div className="chart-header-row">
         <div className="chart-title-group">
-          <TrendingUp size={18} className="text-cyan" />
-          <span className="chart-title">COMPARATIVA DE CURVAS: BROTE ZOMBIE VS ESTRATEGIAS</span>
+          <TrendingUp size={18} style={{ color: 'var(--primary-bright)' }} />
+          <span className="chart-title font-mono">[ COMPARATIVA DE CURVAS: BROTE ZOMBIE VS ESTRATEGIAS ]</span>
         </div>
 
         <div className="chart-actions">
           {/* Toggle Monte Carlo */}
           <button
             onClick={() => setIsMonteCarloActive(!isMonteCarloActive)}
-            className={`btn-mc-toggle ${isMonteCarloActive ? 'active' : ''}`}
+            className={`btn-mc-toggle square-btn ${isMonteCarloActive ? 'active' : ''}`}
             title="Mostrar intervalos de confianza Monte Carlo (p25 - p75)"
           >
             <Layers size={14} />
-            <span>Monte Carlo {isMonteCarloActive ? '(Activo)' : '(Inactivo)'}</span>
+            <span>[ Monte Carlo {isMonteCarloActive ? 'ON' : 'OFF'} ]</span>
           </button>
         </div>
       </div>
 
       {/* Leyenda Interactiva */}
-      <div className="chart-legend-row">
-        <div className="chart-legend-tag tag-none">
+      <div className="chart-legend-row font-mono">
+        <div className="chart-legend-tag tag-none square-box">
           <span className="line-indicator line-red"></span>
-          <span className="flex items-center gap-1"><Skull size={13} /> 1. Sin Intervención (No Vacunar)</span>
+          <span className="flex items-center gap-1"><Skull size={13} /> 1. Sin Intervención</span>
           <strong className="tag-val text-crimson">{pointNone.totalI?.toLocaleString()} zombies</strong>
         </div>
 
-        <div className="chart-legend-tag tag-random">
+        <div className="chart-legend-tag tag-random square-box">
           <span className="line-indicator line-amber"></span>
           <span className="flex items-center gap-1"><Dice5 size={13} /> 2. Vacunación al Azar</span>
           <strong className="tag-val text-amber">{pointRandom.totalI?.toLocaleString()} zombies</strong>
         </div>
 
-        <div className="chart-legend-tag tag-nodezero">
-          <span className="line-indicator line-cyan"></span>
+        <div className="chart-legend-tag tag-nodezero square-box">
+          <span className="line-indicator line-theme"></span>
           <span className="flex items-center gap-1"><Shield size={13} /> 3. NodeZero (Anillo + Hubs)</span>
-          <strong className="tag-val text-cyan">{pointNodeZero.totalI?.toLocaleString()} zombies</strong>
+          <strong className="tag-val" style={{ color: 'var(--primary-bright)' }}>{pointNodeZero.totalI?.toLocaleString()} zombies</strong>
         </div>
       </div>
 
@@ -230,7 +230,7 @@ export default function CurvesChart({
             opacity="0.85"
           />
 
-          {/* Curva 3: NodeZero Estrategia Óptima (Verde Fósforo) */}
+          {/* Curva 3: NodeZero Estrategia Óptima (Color del Tema) */}
           <path
             d={pathNodeZero}
             fill="none"
@@ -253,22 +253,22 @@ export default function CurvesChart({
           {/* Puntos de datos en el día activo */}
           <circle cx={getX(activeDay)} cy={getY(pointNone.totalI || 0)} r="4.5" fill="#ef4444" stroke="#ffffff" strokeWidth="1" />
           <circle cx={getX(activeDay)} cy={getY(pointRandom.totalI || 0)} r="4.5" fill="#f59e0b" stroke="#ffffff" strokeWidth="1" />
-          <circle cx={getX(activeDay)} cy={getY(pointNodeZero.totalI || 0)} r="6" fill="#06b6d4" stroke="#ffffff" strokeWidth="2" />
+          <circle cx={getX(activeDay)} cy={getY(pointNodeZero.totalI || 0)} r="6" fill="var(--primary-bright)" stroke="#000000" strokeWidth="2" />
         </svg>
 
         {/* Banner de Verificación de la Prueba de Fuego */}
-        <div className="chart-evaluation-banner">
+        <div className="chart-evaluation-banner square-box font-mono">
           <div className="banner-left">
-            <CheckCircle2 size={16} className="text-emerald" />
+            <CheckCircle2 size={16} className="text-emerald shrink-0" />
             <span>
-              <strong>Validación Track B:</strong> La estrategia NodeZero aplana el pico zombie en un{' '}
+              <strong style={{ color: 'var(--primary-bright)' }}>[ VALIDACIÓN TRACK B ]:</strong> La estrategia NodeZero aplana el pico zombie en un{' '}
               <strong className="text-emerald">{simResults.metrics?.peakReductionPct}%</strong>, salvando a{' '}
-              <strong className="text-cyan">{simResults.metrics?.livesSavedVsNone?.toLocaleString()}</strong> personas vs. no intervenir y{' '}
+              <strong style={{ color: 'var(--primary-bright)' }}>{simResults.metrics?.livesSavedVsNone?.toLocaleString()}</strong> personas vs. no intervenir y{' '}
               <strong className="text-emerald">+{simResults.metrics?.livesSavedVsRandom?.toLocaleString()}</strong> más que al azar.
             </span>
           </div>
-          <div className="banner-right">
-            <span>Día actual: <strong>Día {activeDay}</strong></span>
+          <div className="banner-right shrink-0">
+            <span>DÍA REGISTRADO: <strong style={{ color: 'var(--primary-bright)' }}>DÍA {activeDay}</strong></span>
           </div>
         </div>
       </div>

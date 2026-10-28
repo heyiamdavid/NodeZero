@@ -556,8 +556,13 @@
   }
 
   .comp-chart-wrapper {
-    height: 180px !important;
-    min-height: 180px !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding: 10px 12px;
+  }
+
+  .curves-svg {
+    min-height: 180px;
   }
 
   .eval-table th,

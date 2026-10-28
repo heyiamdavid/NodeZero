@@ -38,17 +38,24 @@ export default function ComparisonModal({
         {/* Modal Header */}
         <div className="modal-header">
           <div className="modal-title-group">
-            <div className="modal-icon-badge badge-cyan">
-              <Award size={20} className="text-cyan" />
+            <div
+              className="modal-icon-badge"
+              style={{
+                background: 'var(--primary-faint)',
+                borderColor: 'var(--primary-color)',
+                color: 'var(--primary-bright)',
+              }}
+            >
+              <Award size={20} />
             </div>
             <div>
               <div className="modal-title">[ EVALUACIÓN TRACK B // COMPARATIVA TRIPLE ]</div>
-              <div className="modal-sub">
+              <div className="modal-sub font-mono">
                 NODEZERO (ANILLO + HUBS) VS. VACUNACIÓN ALEATORIA VS. PROPAGACIÓN LIBRE
               </div>
             </div>
           </div>
-          <button onClick={onClose} className="btn-close-modal" title="Cerrar ventana">
+          <button onClick={onClose} className="btn-close-modal square-btn" title="Cerrar ventana">
             <X size={16} />
           </button>
         </div>
@@ -56,15 +63,15 @@ export default function ComparisonModal({
         <div className="modal-body comparison-modal-body">
           {/* Tarjetas Principales de Impacto Cuantitativo */}
           <div className="comp-cards-grid">
-            <div className="comp-card card-cyan square-card">
+            <div className="comp-card card-nodezero square-card">
               <div className="comp-card-label">
-                <Shield size={14} className="text-cyan" />
+                <Shield size={14} style={{ color: 'var(--primary-bright)' }} />
                 <span>[ VIDAS SALVADAS ]</span>
               </div>
-              <div className="comp-card-val text-cyan">
+              <div className="comp-card-val" style={{ color: 'var(--primary-bright)' }}>
                 +{metrics.livesSavedVsNone?.toLocaleString()}
               </div>
-              <div className="comp-card-sub">
+              <div className="comp-card-sub font-mono">
                 vs No vacunar (+{metrics.livesSavedVsRandom?.toLocaleString()} más que al azar)
               </div>
             </div>
@@ -77,7 +84,7 @@ export default function ComparisonModal({
               <div className="comp-card-val text-emerald">
                 -{metrics.peakReductionPct}%
               </div>
-              <div className="comp-card-sub">
+              <div className="comp-card-sub font-mono">
                 De {none.summary.peakInfected?.toLocaleString()} a {nodezero.summary.peakInfected?.toLocaleString()} casos pico
               </div>
             </div>
@@ -90,7 +97,7 @@ export default function ComparisonModal({
               <div className="comp-card-val text-amber">
                 ${metrics.costPerLifeSaved} USD
               </div>
-              <div className="comp-card-sub">
+              <div className="comp-card-sub font-mono">
                 Costo por habitante salvado (${nodezero.summary.totalCostUSD?.toLocaleString()} total)
               </div>
             </div>
@@ -107,75 +114,92 @@ export default function ComparisonModal({
 
           {/* Tabla Comparativa Oficial */}
           <div className="comp-table-card square-card">
-            <table className="eval-table">
-              <thead>
-                <tr>
-                  <th>ESTRATEGIA</th>
-                  <th>POBLACIÓN FINAL SANA (S)</th>
-                  <th>PICO MÁXIMO ZOMBIES</th>
-                  <th>INMUNIZADOS (R)</th>
-                  <th>RECURSOS GASTADOS</th>
-                  <th>VEREDICTO OFICIAL</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="row-none">
-                  <td>
-                    <span className="badge-strat strat-red square-badge flex items-center gap-1.5">
-                      <Skull size={13} />
-                      <span>[ 1. NO VACUNAR ]</span>
-                    </span>
-                  </td>
-                  <td>{none.summary.finalSusceptible?.toLocaleString()}</td>
-                  <td className="text-crimson font-bold">{none.summary.peakInfected?.toLocaleString()}</td>
-                  <td>{none.summary.finalImmuneOrSaved?.toLocaleString()}</td>
-                  <td>$0 USD</td>
-                  <td className="text-crimson font-bold">Colapso Total de Manta</td>
-                </tr>
-                <tr className="row-random">
-                  <td>
-                    <span className="badge-strat strat-amber square-badge flex items-center gap-1.5">
-                      <Dice5 size={13} />
-                      <span>[ 2. VACUNACIÓN ALEATORIA ]</span>
-                    </span>
-                  </td>
-                  <td>{random.summary.finalSusceptible?.toLocaleString()}</td>
-                  <td>{random.summary.peakInfected?.toLocaleString()}</td>
-                  <td>{random.summary.finalImmuneOrSaved?.toLocaleString()}</td>
-                  <td>${random.summary.totalCostUSD?.toLocaleString()} USD</td>
-                  <td className="text-amber">Ineficiente / Desperdicio</td>
-                </tr>
-                <tr className="row-nodezero">
-                  <td>
-                    <span className="badge-strat strat-nodezero square-badge flex items-center gap-1.5">
-                      <Shield size={13} />
-                      <span>[ 3. NODEZERO (ANILLO + HUBS) ]</span>
-                    </span>
-                  </td>
-                  <td className="text-emerald font-bold">{nodezero.summary.finalSusceptible?.toLocaleString()}</td>
-                  <td className="text-cyan font-bold">{nodezero.summary.peakInfected?.toLocaleString()}</td>
-                  <td className="text-cyan font-bold">{nodezero.summary.finalImmuneOrSaved?.toLocaleString()}</td>
-                  <td>${nodezero.summary.totalCostUSD?.toLocaleString()} USD</td>
-                  <td className="text-emerald font-bold">
-                    <span className="flex items-center gap-1.5">
-                      <Check size={14} />
-                      <span>BROTE CONTENIDO CON ÉXITO</span>
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div className="comp-table-header flex items-center justify-between">
+              <div className="flex items-center gap-1.5 font-mono text-xs font-bold" style={{ color: 'var(--primary-bright)' }}>
+                <Shield size={13} />
+                <span>[ MATRIZ OFICIAL DE RESULTADOS EPIDEMIOLÓGICOS · 40 DÍAS ]</span>
+              </div>
+              <span className="font-mono text-xs text-muted">[ BENCHMARK TRACK B ]</span>
+            </div>
+            <div className="comp-table-scroll">
+              <table className="eval-table">
+                <thead>
+                  <tr>
+                    <th>[ ESTRATEGIA ]</th>
+                    <th>[ POBLACIÓN SANA (S) ]</th>
+                    <th>[ PICO MÁXIMO ZOMBIES ]</th>
+                    <th>[ INMUNIZADOS (R) ]</th>
+                    <th>[ COSTO TOTAL ]</th>
+                    <th>[ VEREDICTO OFICIAL ]</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="row-none">
+                    <td>
+                      <span className="badge-strat strat-red square-badge flex items-center gap-1.5">
+                        <Skull size={13} />
+                        <span>[ 1. NO VACUNAR ]</span>
+                      </span>
+                    </td>
+                    <td className="font-mono">{none.summary.finalSusceptible?.toLocaleString()}</td>
+                    <td className="font-mono text-crimson font-bold">{none.summary.peakInfected?.toLocaleString()}</td>
+                    <td className="font-mono">{none.summary.finalImmuneOrSaved?.toLocaleString()}</td>
+                    <td className="font-mono">$0 USD</td>
+                    <td>
+                      <span className="verdict-pill pill-danger square-badge font-mono">
+                        [ COLAPSO TOTAL ]
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="row-random">
+                    <td>
+                      <span className="badge-strat strat-amber square-badge flex items-center gap-1.5">
+                        <Dice5 size={13} />
+                        <span>[ 2. VACUNACIÓN ALEATORIA ]</span>
+                      </span>
+                    </td>
+                    <td className="font-mono">{random.summary.finalSusceptible?.toLocaleString()}</td>
+                    <td className="font-mono text-amber font-bold">{random.summary.peakInfected?.toLocaleString()}</td>
+                    <td className="font-mono">{random.summary.finalImmuneOrSaved?.toLocaleString()}</td>
+                    <td className="font-mono">${random.summary.totalCostUSD?.toLocaleString()} USD</td>
+                    <td>
+                      <span className="verdict-pill pill-warning square-badge font-mono">
+                        [ INEFICIENTE / DESPERDICIO ]
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="row-nodezero">
+                    <td>
+                      <span className="badge-strat strat-nodezero square-badge flex items-center gap-1.5 font-bold">
+                        <Shield size={13} />
+                        <span>[ 3. NODEZERO (ANILLO + HUBS) ]</span>
+                      </span>
+                    </td>
+                    <td className="font-mono text-emerald font-bold">{nodezero.summary.finalSusceptible?.toLocaleString()}</td>
+                    <td className="font-mono font-bold" style={{ color: 'var(--primary-bright)' }}>{nodezero.summary.peakInfected?.toLocaleString()}</td>
+                    <td className="font-mono font-bold" style={{ color: 'var(--cyan-bright)' }}>{nodezero.summary.finalImmuneOrSaved?.toLocaleString()}</td>
+                    <td className="font-mono font-bold">${nodezero.summary.totalCostUSD?.toLocaleString()} USD</td>
+                    <td>
+                      <span className="verdict-pill pill-success square-badge flex items-center gap-1.5 font-mono font-bold">
+                        <Check size={13} />
+                        <span>[ BROTE CONTENIDO CON ÉXITO ]</span>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
         <div className="modal-footer">
           <div className="comp-footer-note square-note flex items-center gap-1.5">
-            <Pin size={13} className="text-cyan shrink-0" />
-            <span>
-              <strong>[ CRITERIO TRACK B ]</strong> Telemetría comparativa con números exactos para el usuario y toma de decisiones.
+            <Pin size={13} style={{ color: 'var(--primary-bright)' }} className="shrink-0" />
+            <span className="font-mono text-xs">
+              <strong style={{ color: 'var(--primary-bright)' }}>[ CRITERIO TRACK B ]</strong> Telemetría comparativa con números exactos para toma de decisiones tácticas.
             </span>
           </div>
-          <button onClick={onClose} className="btn-done-drawer square-btn">
+          <button onClick={onClose} className="btn-comp-close square-btn">
             [ CERRAR COMPARATIVA ]
           </button>
         </div>
