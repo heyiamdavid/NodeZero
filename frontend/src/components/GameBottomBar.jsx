@@ -81,15 +81,18 @@ export default function GameBottomBar({
       </div>
 
       {/* Banner de Impacto Cuantitativo Directo */}
-      <div className="game-impact-banner pipboy-impact-holotape" title="Impacto del modelo Track B">
-        <Award size={15} className="pipboy-impact-icon shrink-0" />
+      <div className="game-impact-banner pipboy-impact-holotape" title="Impacto cuantitativo oficial Track B">
+        <Award size={16} className="pipboy-impact-icon shrink-0" />
         <div className="impact-text-group">
-          <span className="impact-main">
-            <strong>TELEMETRÍA TRACK B:</strong> <span className="pip-highlight font-bold">+{metrics.livesSavedVsNone?.toLocaleString()} VIDAS SALVADAS</span> VS NO VACUNAR
-          </span>
-          <span className="impact-sub">
-            +{metrics.livesSavedVsRandom?.toLocaleString()} VS AZAR · REDUCCIÓN DE PICO <span className="pip-highlight font-bold">-{metrics.peakReductionPct}%</span>
-          </span>
+          <div className="impact-main">
+            <strong>TELEMETRÍA TRACK B:</strong>{' '}
+            <span className="pip-highlight font-bold">+{metrics.livesSavedVsNone?.toLocaleString()} VIDAS SALVADAS</span>{' '}
+            <span className="impact-vs-tag">VS NO VACUNAR</span>
+          </div>
+          <div className="impact-sub">
+            <span className="text-cyan font-bold">+{metrics.livesSavedVsRandom?.toLocaleString()}</span> VS AZAR · REDUCCIÓN DE PICO{' '}
+            <span className="pip-highlight font-bold">-{metrics.peakReductionPct}%</span>
+          </div>
         </div>
       </div>
     </footer>
