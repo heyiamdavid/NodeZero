@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { MANTA_NODES, MANTA_EDGES } from '../data/mantaNetwork';
 import { soundFx } from '../utils/soundFx';
 import {
@@ -55,7 +55,7 @@ export default function MantaMap({
 
   // Manejadores de Zoom
   const handleZoomIn = () => setZoom((prev) => Math.min(2.5, +(prev + 0.25).toFixed(2)));
-  const handleZoomOut = () => setZoom((prev) => Math.max(0.75, +(prev - 0.25).toFixed(2)));
+  const handleZoomOut = () => setZoom((prev) => Math.max(0.6, +(prev - 0.25).toFixed(2)));
   const handleResetZoomPan = () => {
     setZoom(1);
     setPan({ x: 0, y: 0 });
@@ -88,14 +88,22 @@ export default function MantaMap({
     setIsDragging(false);
   };
 
-  const handleWheel = (e) => {
-    // Zoom suave con la rueda del ratón
-    if (e.ctrlKey || e.metaKey || zoom > 1) {
+  // Zoom interactivo con la rueda del ratón (permite zoom in/out en cualquier porcentaje)
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+
+    const onWheel = (e) => {
       e.preventDefault();
-      const delta = e.deltaY < 0 ? 0.15 : -0.15;
-      setZoom((prev) => Math.min(2.5, Math.max(0.75, +(prev + delta).toFixed(2))));
-    }
-  };
+      const delta = e.deltaY < 0 ? 0.12 : -0.12;
+      setZoom((prev) => Math.min(2.5, Math.max(0.6, +(prev + delta).toFixed(2))));
+    };
+
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => {
+      el.removeEventListener('wheel', onWheel);
+    };
+  }, []);
 
   return (
     <div className={`map-view-container ${isFullscreen ? 'map-fullscreen' : ''}`}>
@@ -107,7 +115,6 @@ export default function MantaMap({
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
-        onWheel={handleWheel}
       >
         {/* Herramientas de Zoom Flotantes en la Esquina Superior Derecha */}
         <div className={`map-floating-tools ${isDrawerOpen ? 'tools-drawer-open' : ''}`}>
