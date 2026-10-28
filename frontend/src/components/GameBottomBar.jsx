@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, Shield, Coins, Skull, Play, Pause, RotateCcw } from './Icons';
+import { Award, Shield, Dice5, Skull, Play, Pause, RotateCcw } from './Icons';
 
 export default function GameBottomBar({
   activeStrategy,
@@ -39,15 +39,15 @@ export default function GameBottomBar({
         <button
           onClick={() => setActiveStrategy('random')}
           className={`strat-deck-btn pipboy-tape-btn strat-random ${activeStrategy === 'random' ? 'active-deck' : ''}`}
-          title="Línea Base 2: Vacunación al azar (Mecánica Fear & Hunger)"
+          title="Línea Base 2: Vacunación al azar / Sorteo no focalizado"
         >
-          <span className="strat-deck-icon"><Coins size={18} /></span>
+          <span className="strat-deck-icon"><Dice5 size={18} /></span>
           <div className="strat-deck-text">
-            <span className="strat-deck-title">[2. AZAR F&H]</span>
+            <span className="strat-deck-title">[2. AZAR]</span>
             <span className="strat-deck-sub">SORTEO ALEATORIO</span>
           </div>
           <span className="strat-deck-badge badge-amber">
-            <span className="badge-desktop">[AZAR F&H]</span>
+            <span className="badge-desktop">[AZAR]</span>
             <span className="badge-mobile">[AZAR]</span>
           </span>
         </button>

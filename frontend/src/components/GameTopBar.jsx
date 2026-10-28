@@ -1,12 +1,12 @@
 import React from 'react';
-import { Volume2, VolumeX, Award, Biohazard, Coins, Zap } from './Icons';
+import { Volume2, VolumeX, Award, Biohazard, Dice5, Zap } from './Icons';
 
 export default function GameTopBar({
   currentDay,
   totalDays,
   currentDayData,
   totalPopulation = 248000,
-  onOpenCoinModal,
+  onOpenEventsModal,
   onOpenComparisonModal,
   onOpenSurpriseModal,
   isMuted,
@@ -98,15 +98,15 @@ export default function GameTopBar({
           </button>
         )}
 
-        {/* Mecánica de Azar Fear & Hunger */}
+        {/* Contingencias y Eventos Aleatorios de Probabilidad */}
         <button
-          onClick={onOpenCoinModal}
-          className="pipboy-action-btn btn-luck"
-          title="Lanzar la Moneda del Destino (Mecánica Fear & Hunger)"
+          onClick={onOpenEventsModal}
+          className="pipboy-action-btn btn-events"
+          title="Ver contingencias y eventos aleatorios de probabilidad"
         >
-          <Coins size={14} className="text-amber" />
-          <span className="btn-full-text">[ AZAR F&H ]</span>
-          <span className="btn-short-text">[ AZAR ]</span>
+          <Dice5 size={14} className="text-amber" />
+          <span className="btn-full-text">[ EVENTOS ALEATORIOS ]</span>
+          <span className="btn-short-text">[ EVENTOS ]</span>
         </button>
 
         {/* Toggle de Scanlines CRT en el Mapa */}

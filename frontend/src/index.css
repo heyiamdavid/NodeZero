@@ -35,7 +35,11 @@
   --color-infectious: #ff3333;  /* Biohazard Red (Infected) */
   --color-recovered: #00f0ff;   /* Stasis Blue (Inoculated) */
 
-  /* Fallout Accents */
+  /* Fallout Accents & Fixed Color Variables */
+  --pip-amber: #ffb020;
+  --pip-amber-bright: #ffd52c;
+  --pip-red: #ff3333;
+  --pip-red-bright: #ff5555;
   --cyan-primary: #00f0ff;
   --cyan-bright: #38ffff;
   --crimson-glow: #ff3333;

@@ -134,6 +134,19 @@
   .ticker-badge-desktop { display: none !important; }
   .ticker-badge-mobile { display: inline !important; }
 
+  /* Notificaciones tácticas de eventos en móviles */
+  .event-notifications-stack {
+    top: 42px;
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-width: calc(100vw - 16px);
+  }
+
+  .event-toast-card {
+    padding: 8px 10px;
+  }
+
   /* 4.1 Header Superior Compacto */
   .game-top-bar.pipboy-header {
     padding: 4px 6px;
@@ -565,19 +578,23 @@
     gap: 12px;
   }
 
-  /* Modal Moneda Fear & Hunger */
-  .modal-fh-coin {
+  /* Modal Eventos Aleatorios */
+  .modal-events {
     width: 96vw;
     max-width: 96vw;
   }
 
-  .coin-stage {
-    height: 90px;
+  .events-prob-banner {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .coin-3d {
-    width: 75px;
-    height: 75px;
+  .prob-slider-widget {
+    width: 100%;
+  }
+
+  .events-catalog-grid {
+    grid-template-columns: 1fr;
   }
 }
 

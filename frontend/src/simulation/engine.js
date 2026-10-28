@@ -2,6 +2,7 @@
 // Basado en principios epidemiológicos reproducibles con semilla pseudoaleatoria
 
 import { MANTA_NODES, MANTA_EDGES } from '../data/mantaNetwork';
+import { triggerRandomEvent } from '../data/randomEvents';
 
 // Generador pseudoaleatorio Mulberry32 reproducible
 export function createRNG(seed) {
@@ -33,11 +34,16 @@ export function runSimulation(config) {
     strategy = 'nodezero', // 'none' | 'random' | 'nodezero'
     budgetLimit = 250000,
     costPerDose = 12, // Dólares por dosis
+    randomEventProb = 0.25, // Probabilidad de eventos aleatorios de contingencia (0 a 1)
   } = config;
 
   const rng = createRNG(seed);
+  // Stream pseudoaleatorio Mulberry32 desacoplado derivado de la semilla,
+  // garantizando aleatoriedad genuina dependiente de 'seed' y 100% reproducible entre estrategias
+  const eventRNG = createRNG(Number(seed) * 10007 + 7919);
   const sigma = 1 / incubationDays; // Tasa de paso E -> I
   const gamma = 1 / recoveryDays; // Tasa de resolución
+  const eventsLog = [];
 
   // Inicializar estado de cada nodo
   const nodeState = {};
@@ -79,6 +85,17 @@ export function runSimulation(config) {
 
   // Simulación día por día
   for (let day = 1; day <= days; day++) {
+    // 0. EVENTOS ALEATORIOS DE PROBABILIDAD (CONTINGENCIAS EN CAMPO)
+    const dayEvents = [];
+    const eventRoll = eventRNG();
+    if (randomEventProb > 0 && eventRoll < randomEventProb) {
+      const triggered = triggerRandomEvent(day, nodeState, eventRNG);
+      if (triggered) {
+        dayEvents.push(triggered);
+        eventsLog.push(triggered);
+      }
+    }
+
     // 1. APLICAR INTERVENCIONES DEL DÍA
     if (strategy !== 'none' && cumulativeCost + dailyVaccines * costPerDose <= budgetLimit) {
       applyIntervention(day);
@@ -149,7 +166,7 @@ export function runSimulation(config) {
       state.R = Math.max(0, state.R);
     });
 
-    recordDayHistory(day);
+    recordDayHistory(day, dayEvents);
   }
 
   function applyIntervention(_day) {
@@ -213,7 +230,7 @@ export function runSimulation(config) {
     }
   }
 
-  function recordDayHistory(day) {
+  function recordDayHistory(day, dayEvents = []) {
     let totalS = 0;
     let totalE = 0;
     let totalI = 0;
@@ -239,6 +256,7 @@ export function runSimulation(config) {
       cumulativeVaccinesUsed,
       cumulativeCost,
       nodes: nodeSnapshots,
+      events: dayEvents,
     });
   }
 
@@ -250,6 +268,7 @@ export function runSimulation(config) {
     strategy,
     config,
     history: dailyHistory,
+    events: eventsLog,
     summary: {
       finalSusceptible: finalDay.totalS,
       finalExposed: finalDay.totalE,
@@ -280,7 +299,7 @@ export function runComparativeSimulation(baseConfig) {
   const totalPop = noneResult.summary.finalSusceptible + noneResult.summary.finalExposed + noneResult.summary.finalZombies + noneResult.summary.finalImmuneOrSaved;
   const livesSavedVsNone = nodeZeroResult.summary.finalSusceptible + nodeZeroResult.summary.finalImmuneOrSaved - (noneResult.summary.finalSusceptible + noneResult.summary.finalImmuneOrSaved);
   const livesSavedVsRandom = nodeZeroResult.summary.finalSusceptible + nodeZeroResult.summary.finalImmuneOrSaved - (randomResult.summary.finalSusceptible + randomResult.summary.finalImmuneOrSaved);
-  
+
   const peakReductionPct = Math.round(((noneResult.summary.peakInfected - nodeZeroResult.summary.peakInfected) / (noneResult.summary.peakInfected || 1)) * 100);
 
   return {

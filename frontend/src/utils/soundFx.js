@@ -140,59 +140,29 @@ class SoundEffectsEngine {
     });
   }
 
-  // Sonido de Lanzamiento de Moneda estilo Fear & Hunger (Coin Flip)
-  playCoinFlip() {
+  // Sonido de Contingencia / Evento Aleatorio Disparado
+  playEventTrigger(isPositive = true) {
     if (this.isMuted) return;
     this.init();
     if (!this.audioCtx) return;
 
     const ctx = this.audioCtx;
     const now = ctx.currentTime;
-
-    // Ping metálico agudo de moneda lanzada al aire
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
 
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(2600, now);
-    osc.frequency.exponentialRampToValueAtTime(2950, now + 0.04);
-    osc.frequency.exponentialRampToValueAtTime(2400, now + 0.35);
+    osc.type = isPositive ? 'sine' : 'sawtooth';
+    osc.frequency.setValueAtTime(isPositive ? 580 : 220, now);
+    osc.frequency.exponentialRampToValueAtTime(isPositive ? 880 : 140, now + 0.15);
 
-    gain.gain.setValueAtTime(0.3, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+    gain.gain.setValueAtTime(0.25, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
 
     osc.connect(gain);
     gain.connect(ctx.destination);
 
     osc.start(now);
-    osc.stop(now + 0.4);
-  }
-
-  // Sonido de caída / resultado de la Moneda
-  playCoinLand(isTails = false) {
-    if (this.isMuted) return;
-    this.init();
-    if (!this.audioCtx) return;
-
-    const ctx = this.audioCtx;
-    const now = ctx.currentTime;
-
-    // Golpe metálico sordo y seco
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    osc.type = isTails ? 'sawtooth' : 'triangle';
-    osc.frequency.setValueAtTime(isTails ? 180 : 520, now);
-    osc.frequency.exponentialRampToValueAtTime(60, now + 0.15);
-
-    gain.gain.setValueAtTime(0.35, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    osc.start(now);
-    osc.stop(now + 0.2);
+    osc.stop(now + 0.25);
   }
 }
 

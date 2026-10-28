@@ -6,7 +6,7 @@ import {
   TrendingDown,
   DollarSign,
   Skull,
-  Coins,
+  Dice5,
   Check,
   Pin,
 } from './Icons';
@@ -44,7 +44,7 @@ export default function ComparisonModal({
             <div>
               <div className="modal-title">[ EVALUACIÓN TRACK B // COMPARATIVA TRIPLE ]</div>
               <div className="modal-sub">
-                NODEZERO (ANILLO + HUBS) VS. AZAR DE LA MONEDA VS. PROPAGACIÓN LIBRE
+                NODEZERO (ANILLO + HUBS) VS. VACUNACIÓN ALEATORIA VS. PROPAGACIÓN LIBRE
               </div>
             </div>
           </div>
@@ -135,8 +135,8 @@ export default function ComparisonModal({
                 <tr className="row-random">
                   <td>
                     <span className="badge-strat strat-amber square-badge flex items-center gap-1.5">
-                      <Coins size={13} />
-                      <span>[ 2. AZAR DE LA MONEDA ]</span>
+                      <Dice5 size={13} />
+                      <span>[ 2. VACUNACIÓN ALEATORIA ]</span>
                     </span>
                   </td>
                   <td>{random.summary.finalSusceptible?.toLocaleString()}</td>

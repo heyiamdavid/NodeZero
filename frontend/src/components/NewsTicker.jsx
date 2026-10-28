@@ -1,10 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Siren, Biohazard, Shield, Radio, Microscope, Anchor } from './Icons';
 
-export default function NewsTicker({ currentDay, activeStrategy, simResults }) {
+export default function NewsTicker({ currentDay, activeStrategy, simResults, currentDayData }) {
   const [headlineIndex, setHeadlineIndex] = useState(0);
 
+  const activeDayEvent = currentDayData?.events?.[0];
+
   const headlines = [
+    ...(activeDayEvent
+      ? [
+          {
+            type: 'event',
+            Icon: Siren,
+            tag: 'CONTINGENCIA',
+            text: `[DÍA ${currentDay}] CONTINGENCIA ACTIVA: ${activeDayEvent.title.toUpperCase()} // ${activeDayEvent.impactSummary || activeDayEvent.description.toUpperCase()}`,
+          },
+        ]
+      : []),
     {
       type: 'breaking',
       Icon: Siren,
@@ -25,7 +37,7 @@ export default function NewsTicker({ currentDay, activeStrategy, simResults }) {
         activeStrategy === 'nodezero'
           ? 'ESTRATEGIA NODEZERO ACTIVA CERCO EN ANILLO PERIMETRAL EN TERMINAL EL PALMAR Y AV. 4 DE NOVIEMBRE.'
           : activeStrategy === 'random'
-          ? 'VACUNACIÓN AL AZAR (FEAR & HUNGER) DESPERDICIA DOSIS EN PERIFERIA MIENTRAS EL FOCO AVANZA.'
+          ? 'VACUNACIÓN AL AZAR (SORTEO ALEATORIO) DISPERSA DOSIS SIN FOCALIZAR EN EJES CRÍTICOS.'
           : 'SIN INTERVENCIÓN NI VACUNAS: HOSPITALES AL BORDE DEL COLAPSO Y PROPAGACIÓN EXPONENCIAL.',
     },
     {

@@ -3,7 +3,8 @@ import GameTopBar from './components/GameTopBar';
 import NewsTicker from './components/NewsTicker';
 import MantaMap from './components/MantaMap';
 import GameBottomBar from './components/GameBottomBar';
-import FearAndHungerCoin from './components/FearAndHungerCoin';
+import RandomEventsModal from './components/RandomEventsModal';
+import EventNotificationToast from './components/EventNotificationToast';
 import ConfigDrawer from './components/ConfigDrawer';
 import ComparisonModal from './components/ComparisonModal';
 import SurpriseOutbreakModal from './components/SurpriseOutbreakModal';
@@ -25,6 +26,7 @@ const DEFAULT_CONFIG = {
   initialZombies: 5,
   budgetLimit: 250000,
   costPerDose: 12,
+  randomEventProb: 0.25,
 };
 
 export default function App() {
@@ -95,7 +97,7 @@ export default function App() {
   });
 
   // 4. Modales y menús tácticos
-  const [isCoinOpen, setIsCoinOpen] = useState(false);
+  const [isEventsOpen, setIsEventsOpen] = useState(false);
   const [isConfigOpen, setIsConfigOpen] = useState(() => {
     try {
       const saved = localStorage.getItem('nodezero_config_drawer_open');
@@ -222,6 +224,48 @@ export default function App() {
   const activeHistory = simResults[activeStrategy]?.history || [];
   const currentDayData = activeHistory[currentDay] || activeHistory[0];
 
+  // Notificaciones de contingencias en la interfaz (máximo 2 eventos FIFO)
+  const [activeNotifications, setActiveNotifications] = useState([]);
+  const notifiedEventIdsRef = useRef(new Set());
+
+  const pushEventNotification = (evt) => {
+    if (!evt) return;
+    soundFx.playEventTrigger(evt.type === 'positive');
+    setActiveNotifications((prev) => {
+      const newNotification = {
+        ...evt,
+        uniqueKey: `${evt.id}_${Date.now()}_${Math.random()}`,
+      };
+      const next = [...prev, newNotification];
+      // Mantiene máximo 2 eventos: si ocurre otro, se borra el más antiguo
+      return next.slice(-2);
+    });
+  };
+
+  const handleDismissNotification = (key) => {
+    setActiveNotifications((prev) => prev.filter((n) => n.uniqueKey !== key && n.id !== key));
+  };
+
+  // Monitorear y notificar eventos generados por la simulación
+  useEffect(() => {
+    if (currentDay === 0) {
+      notifiedEventIdsRef.current.clear();
+      setActiveNotifications([]);
+      return;
+    }
+
+    const dayEvents = currentDayData?.events || [];
+    if (dayEvents.length > 0) {
+      dayEvents.forEach((evt) => {
+        const eventKey = `${evt.id}_d${currentDay}`;
+        if (!notifiedEventIdsRef.current.has(eventKey)) {
+          notifiedEventIdsRef.current.add(eventKey);
+          pushEventNotification(evt);
+        }
+      });
+    }
+  }, [currentDay, currentDayData]);
+
   // Bucle de reproducción temporal
   const timerRef = useRef(null);
 
@@ -277,7 +321,7 @@ export default function App() {
         totalDays={config.days}
         currentDayData={currentDayData}
         totalPopulation={248000}
-        onOpenCoinModal={() => setIsCoinOpen(true)}
+        onOpenEventsModal={() => setIsEventsOpen(true)}
         onOpenComparisonModal={() => setIsComparisonOpen(true)}
         onOpenSurpriseModal={() => setIsSurpriseOpen(true)}
         isMuted={isMuted}
@@ -293,6 +337,7 @@ export default function App() {
         currentDay={currentDay}
         activeStrategy={activeStrategy}
         simResults={simResults}
+        currentDayData={currentDayData}
       />
 
       {/* 3. Escenario Central: El Mapa Táctico de Manta con Capa CRT y Panel Persistente */}
@@ -302,6 +347,12 @@ export default function App() {
           selectedNodeId={selectedNodeId}
           setSelectedNodeId={setSelectedNodeId}
           isDrawerOpen={isConfigOpen}
+        />
+
+        {/* Notificaciones flotantes tácticas de contingencias (máximo 2 en pantalla) */}
+        <EventNotificationToast
+          notifications={activeNotifications}
+          onDismiss={handleDismissNotification}
         />
 
         {/* Efecto CRT posicionado exclusivamente encima del mapa y detrás del resto de la interfaz */}
@@ -343,9 +394,13 @@ export default function App() {
       />
 
       {/* Modales Desacoplados (Cero Sobrecarga en Pantalla) */}
-      <FearAndHungerCoin
-        isOpen={isCoinOpen}
-        onClose={() => setIsCoinOpen(false)}
+      <RandomEventsModal
+        isOpen={isEventsOpen}
+        onClose={() => setIsEventsOpen(false)}
+        config={config}
+        setConfig={setConfig}
+        simResults={simResults}
+        activeStrategy={activeStrategy}
       />
 
       <ComparisonModal

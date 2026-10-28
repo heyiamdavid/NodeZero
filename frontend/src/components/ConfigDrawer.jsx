@@ -6,6 +6,7 @@ import {
   DollarSign,
   RotateCcw,
   Zap,
+  Dice5,
   ChevronRight,
   ChevronLeft,
 } from './Icons';
@@ -195,6 +196,36 @@ export default function ConfigDrawer({
             onChange={(e) => handleChange('incubationDays', parseInt(e.target.value))}
             className="drawer-range range-amber"
           />
+        </div>
+
+        {/* Probabilidad de Eventos Aleatorios de Contingencia */}
+        <div className="drawer-group">
+          <div className="drawer-header-flex">
+            <label className="drawer-label">
+              <Dice5 size={14} className="text-amber" />
+              <span>PROBABILIDAD EVENTOS ALEATORIOS</span>
+            </label>
+            <span className="drawer-badge text-amber">
+              {Math.round((config.randomEventProb ?? 0.25) * 100)}% / día
+            </span>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.05"
+            value={config.randomEventProb ?? 0.25}
+            onChange={(e) => handleChange('randomEventProb', parseFloat(e.target.value))}
+            className="drawer-range range-amber"
+          />
+          <div className="drawer-minmax font-mono">
+            <span>0% (Desactivado)</span>
+            <span>25% (Moderado)</span>
+            <span>100% (Diario)</span>
+          </div>
+          <span className="drawer-hint font-mono">
+            Frecuencia diaria de contingencias climáticas, buques o donaciones aéreas.
+          </span>
         </div>
 
         {/* Semilla Determinista */}
