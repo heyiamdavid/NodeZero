@@ -1,4 +1,4 @@
-# Declaración de Costos · NodeZero Manta
+# Declaración de Costos · NodeZero
 **Track B: Comité de Contención Epidemiológica · Hackathon AWS ULEAM**
 
 ---

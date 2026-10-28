@@ -37,7 +37,7 @@ export default function GameTopBar({
         <div className="pipboy-logo-badge">
           <span className="pipboy-logo-icon"><Biohazard size={18} /></span>
           <div className="pipboy-brand-meta">
-            <span className="pipboy-brand-title">MANTA ZERO</span>
+            <span className="pipboy-brand-title">NODEZERO</span>
             <span className="pipboy-brand-sub">COE · RETO TRACK B AWS</span>
           </div>
         </div>
