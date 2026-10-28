@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Siren, Biohazard, Shield, Radio, Microscope, Anchor } from './Icons';
 
-export default function NewsTicker({ currentDay, activeStrategy, simResults, currentDayData }) {
+function NewsTicker({ currentDay, activeStrategy, simResults, currentDayData }) {
   const [headlineIndex, setHeadlineIndex] = useState(0);
 
   const activeDayEvent = currentDayData?.events?.[0];
 
-  const headlines = [
+  const headlines = useMemo(() => [
     ...(activeDayEvent
       ? [
           {
@@ -58,7 +58,7 @@ export default function NewsTicker({ currentDay, activeStrategy, simResults, cur
       tag: 'PUERTO TPM',
       text: 'CAPITANÍA DE PUERTO DECLARA CUARENTENA MARÍTIMA PARA SALVAGUARDAR LA FLOTA PESQUERA.',
     },
-  ];
+  ], [currentDay, activeDayEvent, activeStrategy, simResults?.metrics?.livesSavedVsNone]);
 
   // Rotar titulares cada 6 segundos
   useEffect(() => {
@@ -68,7 +68,7 @@ export default function NewsTicker({ currentDay, activeStrategy, simResults, cur
     return () => clearInterval(timer);
   }, [headlines.length]);
 
-  const activeHeadline = headlines[headlineIndex];
+  const activeHeadline = headlines[headlineIndex] || headlines[0];
   const ActiveIcon = activeHeadline.Icon || Biohazard;
 
   return (
@@ -91,3 +91,5 @@ export default function NewsTicker({ currentDay, activeStrategy, simResults, cur
     </div>
   );
 }
+
+export default React.memo(NewsTicker);

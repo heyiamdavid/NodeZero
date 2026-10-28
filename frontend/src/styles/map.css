@@ -236,26 +236,29 @@
   z-index: 25;
 }
 
-/* Animaciones y Outlines Tácticos del Radar */
+/* Animaciones y Outlines Tácticos del Radar (Optimizados para GPU) */
 .node-selected-outline {
-  filter: drop-shadow(0 0 5px var(--primary-color));
+  filter: drop-shadow(0 0 4px var(--primary-color));
   animation: tacticalOutlineBreathe 2.4s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform, opacity;
 }
 
 @keyframes tacticalOutlineBreathe {
   0%, 100% {
     opacity: 1;
-    stroke-width: 2.5px;
+    transform: scale(1);
   }
   50% {
-    opacity: 0.85;
-    stroke-width: 3.2px;
+    opacity: 0.78;
+    transform: scale(1.03);
   }
 }
 
 .tactical-reticle-corners {
-  filter: drop-shadow(0 0 4px var(--primary-bright));
+  filter: drop-shadow(0 0 3px var(--primary-bright));
   animation: reticlePulse 3s ease-in-out infinite;
+  will-change: opacity;
 }
 
 @keyframes reticlePulse {
@@ -269,6 +272,7 @@
 
 .animated-edge-risk {
   animation: dash 1.5s linear infinite;
+  will-change: stroke-dashoffset;
 }
 
 @keyframes dash {

@@ -2,7 +2,6 @@ import React from 'react';
 import {
   X,
   Siren,
-  Zap,
   Anchor,
   Syringe,
   Waves,
@@ -12,7 +11,7 @@ import {
   Shield,
 } from './Icons';
 
-export default function EventNotificationToast({ notifications = [], onDismiss }) {
+function EventNotificationToast({ notifications = [], onDismiss }) {
   if (!notifications.length) return null;
 
   const getEventIcon = (iconName, type) => {
@@ -77,4 +76,6 @@ export default function EventNotificationToast({ notifications = [], onDismiss }
     </div>
   );
 }
+
+export default React.memo(EventNotificationToast);
 

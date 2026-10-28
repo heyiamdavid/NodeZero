@@ -1,7 +1,7 @@
 import React from 'react';
 import { Volume2, VolumeX, Award, Biohazard, Dice5, Zap } from './Icons';
 
-export default function GameTopBar({
+function GameTopBar({
   currentDay,
   totalDays,
   currentDayData,
@@ -145,3 +145,5 @@ export default function GameTopBar({
     </header>
   );
 }
+
+export default React.memo(GameTopBar);

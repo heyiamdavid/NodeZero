@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import GameTopBar from './components/GameTopBar';
 import NewsTicker from './components/NewsTicker';
 import MantaMap from './components/MantaMap';
@@ -134,17 +134,23 @@ export default function App() {
     return localStorage.getItem('nodezero_theme') || 'green';
   });
 
-  // Efectos de sincronización automática con la caché del navegador (localStorage)
+  // Efectos de sincronización automática optimizados con debounce para evitar bloqueos en el hilo principal
   useEffect(() => {
-    try {
-      localStorage.setItem('nodezero_config', JSON.stringify(config));
-    } catch {}
+    const timer = setTimeout(() => {
+      try {
+        localStorage.setItem('nodezero_config', JSON.stringify(config));
+      } catch {}
+    }, 350);
+    return () => clearTimeout(timer);
   }, [config]);
 
   useEffect(() => {
-    try {
-      localStorage.setItem('nodezero_current_day', String(currentDay));
-    } catch {}
+    const timer = setTimeout(() => {
+      try {
+        localStorage.setItem('nodezero_current_day', String(currentDay));
+      } catch {}
+    }, 400);
+    return () => clearTimeout(timer);
   }, [currentDay]);
 
   useEffect(() => {
@@ -171,26 +177,30 @@ export default function App() {
     } catch {}
   }, [isMuted]);
 
-  const handleToggleCrt = () => {
+  const handleToggleCrt = useCallback(() => {
     setCrtEnabled((prev) => {
       const next = !prev;
-      localStorage.setItem('nodezero_crt', String(next));
+      try {
+        localStorage.setItem('nodezero_crt', String(next));
+      } catch {}
       return next;
     });
-  };
+  }, []);
 
-  const handleCycleTheme = () => {
+  const handleCycleTheme = useCallback(() => {
     setPipTheme((prev) => {
       const themes = ['green', 'amber', 'cyan'];
       const nextIndex = (themes.indexOf(prev) + 1) % themes.length;
       const next = themes[nextIndex];
-      localStorage.setItem('nodezero_theme', next);
+      try {
+        localStorage.setItem('nodezero_theme', next);
+      } catch {}
       return next;
     });
-  };
+  }, []);
 
   // Restablecer parámetros a los valores oficiales de Track B y limpiar caché
-  const handleRestoreDefaults = () => {
+  const handleRestoreDefaults = useCallback(() => {
     setConfig(DEFAULT_CONFIG);
     setActiveStrategy('nodezero');
     setCurrentDay(0);
@@ -204,16 +214,27 @@ export default function App() {
       localStorage.removeItem('nodezero_selected_node');
     } catch {}
     soundFx.playBiohazardAlert();
-  };
+  }, []);
 
   // Carga de escenarios imprevistos en vivo (Prueba del Usuario)
-  const handleApplySurprisePreset = (patch) => {
+  const handleApplySurprisePreset = useCallback((patch) => {
     setConfig((prev) => ({
       ...prev,
       ...patch,
     }));
     soundFx.playBiohazardAlert();
-  };
+  }, []);
+
+  // Callbacks estables de interfaz para evitar re-renderizados innecesarios
+  const handleSelectDay = useCallback((day) => setCurrentDay(day), []);
+  const handleToggleConfig = useCallback(() => setIsConfigOpen((prev) => !prev), []);
+  const handleCloseConfig = useCallback(() => setIsConfigOpen(false), []);
+  const handleOpenEvents = useCallback(() => setIsEventsOpen(true), []);
+  const handleCloseEvents = useCallback(() => setIsEventsOpen(false), []);
+  const handleOpenComparison = useCallback(() => setIsComparisonOpen(true), []);
+  const handleCloseComparison = useCallback(() => setIsComparisonOpen(false), []);
+  const handleOpenSurprise = useCallback(() => setIsSurpriseOpen(true), []);
+  const handleCloseSurprise = useCallback(() => setIsSurpriseOpen(false), []);
 
   // Ejecución determinista del modelo epidemiológico local
   const simResults = useMemo(() => {
@@ -228,7 +249,7 @@ export default function App() {
   const [activeNotifications, setActiveNotifications] = useState([]);
   const notifiedEventIdsRef = useRef(new Set());
 
-  const pushEventNotification = (evt) => {
+  const pushEventNotification = useCallback((evt) => {
     if (!evt) return;
     soundFx.playEventTrigger(evt.type === 'positive');
     setActiveNotifications((prev) => {
@@ -237,14 +258,13 @@ export default function App() {
         uniqueKey: `${evt.id}_${Date.now()}_${Math.random()}`,
       };
       const next = [...prev, newNotification];
-      // Mantiene máximo 2 eventos: si ocurre otro, se borra el más antiguo
       return next.slice(-2);
     });
-  };
+  }, []);
 
-  const handleDismissNotification = (key) => {
+  const handleDismissNotification = useCallback((key) => {
     setActiveNotifications((prev) => prev.filter((n) => n.uniqueKey !== key && n.id !== key));
-  };
+  }, []);
 
   // Monitorear y notificar eventos generados por la simulación
   useEffect(() => {
@@ -264,7 +284,7 @@ export default function App() {
         }
       });
     }
-  }, [currentDay, currentDayData]);
+  }, [currentDay, currentDayData, pushEventNotification]);
 
   // Bucle de reproducción temporal
   const timerRef = useRef(null);
@@ -293,25 +313,25 @@ export default function App() {
     };
   }, [isPlaying, playbackSpeed, config.days]);
 
-  const handleTogglePlay = () => {
+  const handleTogglePlay = useCallback(() => {
     if (currentDay >= config.days) {
       setCurrentDay(0);
     }
     if (!isPlaying) {
       soundFx.playBiohazardAlert();
     }
-    setIsPlaying(!isPlaying);
-  };
+    setIsPlaying((prev) => !prev);
+  }, [currentDay, config.days, isPlaying]);
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     setIsPlaying(false);
     setCurrentDay(0);
-  };
+  }, []);
 
-  const handleToggleSound = () => {
+  const handleToggleSound = useCallback(() => {
     const muted = soundFx.toggleMute();
     setIsMuted(muted);
-  };
+  }, []);
 
   return (
     <div className={`game-app-container terminal-screen ${crtEnabled ? 'crt-active' : ''}`} data-pip-theme={pipTheme}>
@@ -321,9 +341,9 @@ export default function App() {
         totalDays={config.days}
         currentDayData={currentDayData}
         totalPopulation={248000}
-        onOpenEventsModal={() => setIsEventsOpen(true)}
-        onOpenComparisonModal={() => setIsComparisonOpen(true)}
-        onOpenSurpriseModal={() => setIsSurpriseOpen(true)}
+        onOpenEventsModal={handleOpenEvents}
+        onOpenComparisonModal={handleOpenComparison}
+        onOpenSurpriseModal={handleOpenSurprise}
         isMuted={isMuted}
         onToggleSound={handleToggleSound}
         crtEnabled={crtEnabled}
@@ -347,6 +367,7 @@ export default function App() {
           selectedNodeId={selectedNodeId}
           setSelectedNodeId={setSelectedNodeId}
           isDrawerOpen={isConfigOpen}
+          crtEnabled={crtEnabled}
         />
 
         {/* Notificaciones flotantes tácticas de contingencias (máximo 2 en pantalla) */}
@@ -355,26 +376,17 @@ export default function App() {
           onDismiss={handleDismissNotification}
         />
 
-        {/* Efecto CRT posicionado exclusivamente encima del mapa y detrás del resto de la interfaz */}
-        {crtEnabled && (
-          <div className="crt-map-overlay-layer" aria-hidden="true">
-            <div className="pipboy-scanlines" />
-            <div className="pipboy-crt-roll" />
-            <div className="pipboy-crt-vignette" />
-          </div>
-        )}
-
         {/* Ventana Persistente de Parámetros con Etiqueta de Flecha Ocultable */}
         <ConfigDrawer
           isOpen={isConfigOpen}
-          onToggle={() => setIsConfigOpen((prev) => !prev)}
-          onClose={() => setIsConfigOpen(false)}
+          onToggle={handleToggleConfig}
+          onClose={handleCloseConfig}
           config={config}
           setConfig={setConfig}
           seed={seed}
           setSeed={setSeed}
           onRestoreDefaults={handleRestoreDefaults}
-          onOpenSurprise={() => setIsSurpriseOpen(true)}
+          onOpenSurprise={handleOpenSurprise}
         />
       </main>
 
@@ -385,7 +397,7 @@ export default function App() {
         simResults={simResults}
         currentDay={currentDay}
         totalDays={config.days}
-        onSelectDay={(day) => setCurrentDay(day)}
+        onSelectDay={handleSelectDay}
         isPlaying={isPlaying}
         onTogglePlay={handleTogglePlay}
         onReset={handleReset}
@@ -396,7 +408,7 @@ export default function App() {
       {/* Modales Desacoplados (Cero Sobrecarga en Pantalla) */}
       <RandomEventsModal
         isOpen={isEventsOpen}
-        onClose={() => setIsEventsOpen(false)}
+        onClose={handleCloseEvents}
         config={config}
         setConfig={setConfig}
         simResults={simResults}
@@ -405,15 +417,15 @@ export default function App() {
 
       <ComparisonModal
         isOpen={isComparisonOpen}
-        onClose={() => setIsComparisonOpen(false)}
+        onClose={handleCloseComparison}
         simResults={simResults}
         currentDay={currentDay}
-        onSelectDay={(day) => setCurrentDay(day)}
+        onSelectDay={handleSelectDay}
       />
 
       <SurpriseOutbreakModal
         isOpen={isSurpriseOpen}
-        onClose={() => setIsSurpriseOpen(false)}
+        onClose={handleCloseSurprise}
         onApplyPreset={handleApplySurprisePreset}
       />
     </div>

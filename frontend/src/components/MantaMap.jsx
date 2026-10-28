@@ -25,11 +25,12 @@ import {
   Syringe,
 } from './Icons';
 
-export default function MantaMap({
+function MantaMap({
   currentDayData,
   selectedNodeId,
   setSelectedNodeId,
   isDrawerOpen = false,
+  crtEnabled = true,
 }) {
   const [hoveredNodeId, setHoveredNodeId] = useState(null);
   const [isCardDismissed, setIsCardDismissed] = useState(false);
@@ -180,17 +181,17 @@ export default function MantaMap({
               <stop offset="100%" stopColor="#06160b" />
             </linearGradient>
 
-            {/* Filtros de resplandor */}
-            <filter id="glow-zombie-intense" x="-40%" y="-40%" width="180%" height="180%">
-              <feGaussianBlur stdDeviation="8" result="blur" />
+            {/* Filtros de resplandor optimizados para GPU */}
+            <filter id="glow-zombie-intense" x="-25%" y="-25%" width="150%" height="150%">
+              <feGaussianBlur stdDeviation="3.5" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
-            <filter id="glow-immune-intense" x="-40%" y="-40%" width="180%" height="180%">
-              <feGaussianBlur stdDeviation="6" result="blur" />
+            <filter id="glow-immune-intense" x="-25%" y="-25%" width="150%" height="150%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
-            <filter id="glow-radar-green" x="-40%" y="-40%" width="180%" height="180%">
-              <feGaussianBlur stdDeviation="4" result="blur" />
+            <filter id="glow-radar-green" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="2.5" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
           </defs>
@@ -526,6 +527,15 @@ export default function MantaMap({
           })}
         </svg>
 
+        {/* Efecto CRT retro posicionado exclusivamente sobre el canvas del mapa y por debajo de las ventanas/tarjetas tácticas */}
+        {crtEnabled && (
+          <div className="crt-map-overlay-layer" aria-hidden="true">
+            <div className="pipboy-scanlines" />
+            <div className="pipboy-crt-roll" />
+            <div className="pipboy-crt-vignette" />
+          </div>
+        )}
+
         {/* Panel Táctico Flotante Compacto de la Parroquia Seleccionada */}
         {!isCardDismissed ? (
           <div className="node-detail-card compact-card modal-terminal-square">
@@ -630,3 +640,5 @@ export default function MantaMap({
     </div>
   );
 }
+
+export default React.memo(MantaMap);

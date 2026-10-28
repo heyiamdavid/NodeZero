@@ -1,7 +1,7 @@
 import React from 'react';
 import { Award, Shield, Dice5, Skull, Play, Pause, RotateCcw } from './Icons';
 
-export default function GameBottomBar({
+function GameBottomBar({
   activeStrategy,
   setActiveStrategy,
   simResults,
@@ -146,3 +146,5 @@ export default function GameBottomBar({
     </footer>
   );
 }
+
+export default React.memo(GameBottomBar);

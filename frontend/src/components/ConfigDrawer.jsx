@@ -12,7 +12,7 @@ import {
 } from './Icons';
 import { MANTA_NODES } from '../data/mantaNetwork';
 
-export default function ConfigDrawer({
+function ConfigDrawer({
   isOpen,
   onToggle,
   onClose,
@@ -291,3 +291,5 @@ export default function ConfigDrawer({
     </aside>
   );
 }
+
+export default React.memo(ConfigDrawer);

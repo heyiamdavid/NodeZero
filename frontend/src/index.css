@@ -185,7 +185,7 @@ body {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 6; /* Por encima del canvas del mapa SVG (z-index: 1), por debajo de tarjetas flotantes (z-index: 20) */
+  z-index: 2; /* Por encima del canvas del mapa SVG (z-index: 1 / auto), por debajo de tarjetas y ventanas flotantes (z-index >= 20) */
   overflow: hidden;
   contain: strict;
 }
@@ -210,28 +210,29 @@ body {
   opacity: 0.85;
 }
 
-/* 2. Haz de barrido continuo CRT */
+/* 2. Haz de barrido continuo CRT (GPU acelerado) */
 .crt-map-overlay-layer .pipboy-crt-roll {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
+  height: 80px;
   pointer-events: none;
   background: linear-gradient(
-    0deg,
+    180deg,
     rgba(0, 0, 0, 0) 0%,
     var(--primary-faint) 50%,
     rgba(0, 0, 0, 0) 100%
   );
-  background-size: 100% 80px;
-  animation: pipboyRoll 10s linear infinite;
-  opacity: 0.55;
+  animation: pipboyRoll 8s linear infinite;
+  opacity: 0.5;
   will-change: transform;
+  transform: translate3d(0, -80px, 0);
 }
 
 @keyframes pipboyRoll {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
+  0% { transform: translate3d(0, -80px, 0); }
+  100% { transform: translate3d(0, 800px, 0); }
 }
 
 /* 3. Viñeta y curvatura perimetral en el visor del mapa */
