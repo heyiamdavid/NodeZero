@@ -25,17 +25,21 @@
 * **Costo: $0.00 USD**.
 
 ### B. AWS Budgets & Alarmas de Monitoreo
-* **Presupuesto Máximo Establecido:** **$5.00 USD**.
+* **Presupuesto Máximo Establecido:** **$15.00 USD** (*Presupuesto ZeroNode Hackaton*).
 * **3 Umbrales de Alerta Escalonados:**
-  1. **50% ($2.50 USD):** Notificación de advertencia temprana preventiva.
-  2. **80% ($4.00 USD):** Alerta crítica de atención operativa.
-  3. **100% ($5.00 USD):** Alerta de tope presupuestario.
-* **Estado Actual:** Todos los umbrales **No superados** (Gasto real acumulado: < $0.01 USD).
+  1. **50% ($7.50 USD):** Notificación de advertencia temprana preventiva.
+  2. **80% ($12.00 USD):** Alerta crítica de atención operativa.
+  3. **100% ($15.00 USD):** Alerta de tope presupuestario.
+* **Estado Actual:** En buen estado · **0.00% gastado ($0.00 USD de $15.00 USD)** (Umbrales 100% no superados).
 * **Costo de Presupuesto:** $0.00 USD (AWS incluye presupuestos mensuales sin costo en Free Tier).
 
-![Evidencia de Alertas en AWS Budgets](aws-budgets.png)
+### Evidencias de Costos y Monitoreo en AWS
 
-<img width="1365" height="683" alt="Detalle de Costos AWS" src="https://github.com/user-attachments/assets/864d6684-344a-42de-aa23-447c84f67e67" />
+#### 1. Estado General del Presupuesto (ZeroNode Hackaton)
+![Estado del Presupuesto AWS](aws-presupuesto-estado.png)
+
+#### 2. Configuración de Alertas Escalonadas en AWS Budgets
+![Alertas de Presupuesto en AWS Budgets](aws-presupuesto-alertas.png)
 
 ---
 

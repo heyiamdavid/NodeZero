@@ -1,7 +1,7 @@
 # 🛡️ NodeZero
 > **Reto Track B: Comité de Contención Epidemiológica**  
 > **Hackathon AWS · Universidad Laica Eloy Alfaro de Manabí (ULEAM)**  
-> **Región AWS:** `us-east-1` | **Presupuesto AWS Budget:** `$5.00 USD` (3 Alertas escalonadas: 50%, 80%, 100%)  
+> **Región AWS:** `us-east-1` | **Presupuesto AWS Budget:** `$15.00 USD` (3 Alertas escalonadas: 50%, 80%, 100%)  
 > **Despliegue Global CloudFront:** [https://d1vj2vln9zq5so.cloudfront.net/](https://d1vj2vln9zq5so.cloudfront.net/)
 
 ---
@@ -95,16 +95,21 @@ Consulte los detalles complementarios en:
 
 ## 💰 7. Declaración de Costos AWS
 
-* **Presupuesto AWS Budget:** **$5.00 USD** con **3 alertas escalonadas**:
-  * 🟡 **50% ($2.50 USD):** Notificación preventiva temprana.
-  * 🟠 **80% ($4.00 USD):** Alerta crítica de supervisión.
-  * 🔴 **100% ($5.00 USD):** Alerta de tope presupuestario.
+* **Presupuesto AWS Budget:** **$15.00 USD** (*Presupuesto ZeroNode Hackaton*) con **3 alertas escalonadas**:
+  * 🟡 **50% ($7.50 USD):** Notificación preventiva temprana.
+  * 🟠 **80% ($12.00 USD):** Alerta crítica de supervisión.
+  * 🔴 **100% ($15.00 USD):** Alerta de tope presupuestario.
+* **Estado Actual:** En buen estado · **0.00% gastado ($0.00 USD de $15.00 USD)**.
 * **Costo Operativo Mensual Estimado:** **$0.00 USD / mes** (100% cubierto por el AWS Free Tier de CloudFront y S3).
-* **Gasto Real durante el Desarrollo y Evaluación:** **< $0.01 USD** (Umbrales 100% no superados).
+* **Gasto Real durante el Desarrollo y Evaluación:** **$0.00 USD** (Umbrales 100% no superados).
 
-![Alertas de Presupuesto en AWS Budgets](docs/aws-budgets.png)
+### Evidencias de Costos y Monitoreo en AWS
 
-<img width="1365" height="683" alt="Detalle de Costos AWS" src="https://github.com/user-attachments/assets/864d6684-344a-42de-aa23-447c84f67e67" />
+#### 1. Estado General del Presupuesto (ZeroNode Hackaton)
+![Estado del Presupuesto AWS](docs/aws-presupuesto-estado.png)
+
+#### 2. Configuración de Alertas Escalonadas en AWS Budgets
+![Alertas de Presupuesto en AWS Budgets](docs/aws-presupuesto-alertas.png)
 
 ---
 
