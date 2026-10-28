@@ -172,7 +172,7 @@ export default function ComparisonModal({
           <div className="comp-footer-note square-note flex items-center gap-1.5">
             <Pin size={13} className="text-cyan shrink-0" />
             <span>
-              <strong>[ CRITERIO TRACK B ]</strong> Telemetría comparativa con números exactos para el jurado evaluador.
+              <strong>[ CRITERIO TRACK B ]</strong> Telemetría comparativa con números exactos para el usuario y toma de decisiones.
             </span>
           </div>
           <button onClick={onClose} className="btn-done-drawer square-btn">

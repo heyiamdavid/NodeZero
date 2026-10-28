@@ -134,12 +134,12 @@ export default function GameTopBar({
           <span className="btn-short-text">[ CFG ]</span>
         </button>
 
-        {/* Brote Sorpresa - Prueba en Vivo Jurado */}
+        {/* Brote Sorpresa - Prueba en Vivo */}
         {onOpenSurpriseModal && (
           <button
             onClick={onOpenSurpriseModal}
             className="pipboy-action-btn btn-surprise"
-            title="Cargar escenarios de brote sorpresa en vivo para prueba de resiliencia del jurado"
+            title="Cargar escenarios de brote sorpresa en vivo para prueba de resiliencia del usuario"
           >
             <Zap size={12} className="text-amber" />
             <span className="btn-full-text">[ BROTE EN VIVO ]</span>

@@ -26,8 +26,14 @@
 
 ### B. AWS Budgets & Alarmas de Monitoreo
 * **Presupuesto Máximo Establecido:** **$5.00 USD**.
-* **Umbral de Alerta Temprana:** Alerta automática por correo electrónico al alcanzar el **80% ($4.00 USD)**.
-* **Costo de Alarma:** $0.00 USD (AWS incluye 2 presupuestos mensuales sin costo).
+* **3 Umbrales de Alerta Escalonados:**
+  1. **50% ($2.50 USD):** Notificación de advertencia temprana preventiva.
+  2. **80% ($4.00 USD):** Alerta crítica de atención operativa.
+  3. **100% ($5.00 USD):** Alerta de tope presupuestario.
+* **Estado Actual:** Todos los umbrales **No superados** (Gasto real acumulado: < $0.01 USD).
+* **Costo de Presupuesto:** $0.00 USD (AWS incluye presupuestos mensuales sin costo en Free Tier).
+
+![Evidencia de Alertas en AWS Budgets](aws-budgets.png)
 
 ---
 

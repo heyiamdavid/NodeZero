@@ -76,7 +76,7 @@ export default function KpiMetrics({ simResults }) {
         </div>
       </div>
 
-      {/* Callout Cuantitativo Directo para el Jurado Track B */}
+      {/* Callout Cuantitativo Directo Track B */}
       <div className="kpi-verdict-banner">
         <Award size={20} className="text-cyan" />
         <div className="banner-text">

@@ -123,7 +123,7 @@ export default function Navbar({
         <button
           onClick={onOpenSurprise}
           className="btn-action btn-surprise"
-          title="Prueba de Fuego: Responder al brote sorpresa del jurado en 5 minutos"
+          title="Prueba de Fuego: Responder al brote sorpresa en 5 minutos"
         >
           <Zap size={16} className="zap-icon" />
           <span>Brote Sorpresa</span>

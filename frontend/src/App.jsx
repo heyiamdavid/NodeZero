@@ -192,7 +192,7 @@ export default function App() {
     soundFx.playBiohazardAlert();
   };
 
-  // Carga de escenarios imprevistos en vivo (Prueba del Jurado)
+  // Carga de escenarios imprevistos en vivo (Prueba del Usuario)
   const handleApplySurprisePreset = (patch) => {
     setConfig((prev) => ({
       ...prev,

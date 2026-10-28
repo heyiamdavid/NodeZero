@@ -1,7 +1,7 @@
 # 🛡️ NodeZero
 > **Reto Track B: Comité de Contención Epidemiológica**  
 > **Hackathon AWS · Universidad Laica Eloy Alfaro de Manabí (ULEAM)**  
-> **Región AWS:** `us-east-1` | **Presupuesto AWS Budget:** `$5.00 USD` (Alerta activa al 80%)  
+> **Región AWS:** `us-east-1` | **Presupuesto AWS Budget:** `$5.00 USD` (3 Alertas escalonadas: 50%, 80%, 100%)  
 > **Despliegue Global CloudFront:** [https://d1vj2vln9zq5so.cloudfront.net/](https://d1vj2vln9zq5so.cloudfront.net/)
 
 ---
@@ -17,7 +17,7 @@ Ante recursos limitados (vacunas $K$ por día y presupuesto municipal restringid
 
 ## 🎯 2. Parámetros por Defecto y Reproducibilidad (Prueba de Fuego)
 
-Para reproducir exactamente los mismos resultados matemáticos ante el jurado:
+Para reproducir exactamente los mismos resultados matemáticos por el usuario:
 
 * **Semilla determinista por defecto:** `seed = 42` (Generador pseudoaleatorio Mulberry32: 100% de reproducibilidad).
 * **Punto de inicio (Epicentro):** `tarqui` (*Mercado Nuevo Tarqui*).
@@ -51,9 +51,9 @@ Para reproducir exactamente los mismos resultados matemáticos ante el jurado:
 
 ---
 
-## ⚡ 4. Adaptabilidad y Brote Sorpresa en Vivo (Evaluación del Jurado)
+## ⚡ 4. Adaptabilidad y Brote Sorpresa en Vivo (Prueba de Resiliencia)
 
-El jurado de Track B valora la capacidad del algoritmo para recalcular en vivo ante imprevistos y bloqueos reales. Desde la barra táctica superior o el menú de parámetros se accede directamente a la prueba de resiliencia:
+El sistema permite al usuario evaluar la capacidad del algoritmo para recalcular en vivo ante imprevistos y bloqueos reales. Desde la barra táctica superior o el menú de parámetros el usuario puede acceder directamente a la prueba de resiliencia:
 
 * El modal **`⚡ BROTE EN VIVO`** permite cargar en 1 clic 4 situaciones extremas:
   1. **Horda Hipercontagiosa:** La cepa duplica su transmisibilidad ($\beta = 0.72$, incubación reducida a 2 días).
@@ -80,11 +80,12 @@ Para evitar la pérdida accidental de datos o el estrés de reiniciar la configu
 
 ## 🏗️ 6. Arquitectura del Sistema en AWS (Zero-Server / Edge First)
 
-El sistema está diseñado bajo una arquitectura de alta resiliencia sin servidores de backend ni dependencias frágiles de bases de datos:
+El sistema está diseñado bajo una arquitectura de alta resiliencia sin servidores de backend tradicionales, utilizando exclusivamente los siguientes servicios de AWS:
 
-* **Frontend y Motor Autónomo:** SPA interactiva en **React 19 + Vite** con diseño táctico militar CRT de alta resolución y visualizador cartográfico vectorial SVG de la Bahía de Manta (con zoom y paneo interactivo acelerado por hardware a 60-120 FPS).
-* **Distribución Global CDN:** Alojado en **Amazon S3** y distribuido globalmente mediante **Amazon CloudFront** con HTTPS, compresión automática y caché en los Edge Locations de AWS.
-* **Tolerancia Total a Fallas de Red:** Al ejecutar el modelo estocático SEIR directamente en el navegador del cliente mediante algoritmos deterministas en JavaScript/Web APIs, la aplicación no sufre de tiempos de inicio en frío (*cold starts*) y puede operar al 100% incluso ante caídas de internet en el salón de evaluación.
+* **Amazon S3 Bucket:** Alojamiento estático de la Single Page Application (React 19 + Vite), empaquetada en un bundle ultra optimizado (~1.2 MB).
+* **Amazon CloudFront:** Red de distribución de contenido (CDN) global con certificado SSL/TLS (HTTPS), compresión en el Edge y mitigación DDoS, garantizando latencia mínima y 99.99% de disponibilidad.
+* **AWS Budgets:** Control preventivo de gasto con 3 umbrales de alerta configurados (50%, 80% y 100% de $5.00 USD).
+* **Motor Epidemiológico Client-Side Autónomo:** El modelo estocástico SEIR y la heurística de contención en anillo corren directamente en el navegador del usuario mediante JavaScript optimizado. Esto elimina tiempos de inicio en frío (*cold starts*), evita costos de cómputo en la nube y permite que la aplicación continúe operando al 100% incluso sin conexión a internet.
 
 Consulte los detalles complementarios en:
 * [Diagrama de Arquitectura SVG](docs/arquitectura.svg)
@@ -94,13 +95,14 @@ Consulte los detalles complementarios en:
 
 ## 💰 7. Declaración de Costos AWS
 
-* **Presupuesto AWS Budget:** **$5.00 USD** con alarma configurada al 80% ($4.00 USD).
+* **Presupuesto AWS Budget:** **$5.00 USD** con **3 alertas escalonadas**:
+  * 🟡 **50% ($2.50 USD):** Notificación preventiva temprana.
+  * 🟠 **80% ($4.00 USD):** Alerta crítica de supervisión.
+  * 🔴 **100% ($5.00 USD):** Alerta de tope presupuestario.
 * **Costo Operativo Mensual Estimado:** **$0.00 USD / mes** (100% cubierto por el AWS Free Tier de CloudFront y S3).
-* **Gasto Real durante el Desarrollo y Evaluación:** **< $0.01 USD**.
+* **Gasto Real durante el Desarrollo y Evaluación:** **< $0.01 USD** (Umbrales 100% no superados).
 
-<img width="1365" height="682" alt="Alerta de Presupuesto AWS" src="https://github.com/user-attachments/assets/69f219f8-52b4-4c1d-ae87-f1ed9b12314c" />
-
-<img width="1365" height="683" alt="Detalle de Costos AWS" src="https://github.com/user-attachments/assets/864d6684-344a-42de-aa23-447c84f67e67" />
+![Alertas de Presupuesto en AWS Budgets](docs/aws-budgets.png)
 
 ---
 

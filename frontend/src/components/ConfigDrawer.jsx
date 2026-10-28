@@ -79,7 +79,7 @@ export default function ConfigDrawer({
                   className="preset-chip chip-surprise-highlight"
                 >
                   <Zap size={14} className="text-amber shrink-0" />
-                  <span>Escenarios Brote Sorpresa (Jurado)</span>
+                  <span>Escenarios Brote Sorpresa (En Vivo)</span>
                 </button>
               )}
             </div>
@@ -189,7 +189,7 @@ export default function ConfigDrawer({
                 Aleatoria
               </button>
             </div>
-            <span className="drawer-hint">Misma semilla = exactamente el mismo resultado ante el jurado.</span>
+            <span className="drawer-hint">Misma semilla = exactamente el mismo resultado para el usuario.</span>
           </div>
 
           {/* Presupuesto */}

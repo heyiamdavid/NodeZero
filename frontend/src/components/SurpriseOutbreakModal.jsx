@@ -58,7 +58,7 @@ export default function SurpriseOutbreakModal({
             <div>
               <div className="modal-title">SIMULADOR DE BROTE SORPRESA (PRUEBA EN VIVO)</div>
               <div className="modal-sub">
-                Reto Track B: Demostración en vivo ante el jurado en 5 minutos para evaluar resiliencia
+                Reto Track B: Demostración en vivo en 5 minutos para evaluar resiliencia ante el usuario
               </div>
             </div>
           </div>
@@ -71,7 +71,7 @@ export default function SurpriseOutbreakModal({
           <div className="surprise-alert-box">
             <Zap size={15} className="text-amber shrink-0" />
             <span>
-              <strong>Criterio del Jurado (25% de la nota):</strong> Durante la demo, el jurado cambiará
+              <strong>Prueba de Resiliencia:</strong> En cualquier momento, el usuario puede cambiar
               las condiciones del brote para probar la resiliencia de su equipo. Seleccione un escenario
               sorpresa para recalcular y generar la nueva recomendación óptima en menos de 3 segundos.
             </span>
