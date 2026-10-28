@@ -170,7 +170,7 @@ export default function ComparisonModal({
 
         <div className="modal-footer">
           <div className="comp-footer-note square-note flex items-center gap-1.5">
-            <Pin size={13} className="text-cyan flex-shrink-0" />
+            <Pin size={13} className="text-cyan shrink-0" />
             <span>
               <strong>[ CRITERIO TRACK B ]</strong> Telemetría comparativa con números exactos para el jurado evaluador.
             </span>

@@ -78,7 +78,10 @@
 .modal-catalog {
   max-width: 920px;
   max-height: 85vh;
+  background: #080d1a !important;
   border-color: rgba(239, 68, 68, 0.4);
+  contain: layout;
+  transform: translateZ(0);
 }
 
 .catalog-filters-bar {
@@ -132,6 +135,9 @@
   display: flex;
   gap: 6px;
   overflow-x: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  will-change: scroll-position;
   padding-bottom: 4px;
 }
 
@@ -165,6 +171,9 @@
   align-items: center;
   gap: 8px;
   overflow-x: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  will-change: scroll-position;
 }
 
 .danger-lbl {
@@ -202,6 +211,10 @@
   gap: 14px;
   padding: 20px;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  will-change: scroll-position;
+  transform: translateZ(0);
 }
 
 .no-results-box {

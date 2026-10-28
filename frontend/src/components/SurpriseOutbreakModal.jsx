@@ -107,7 +107,7 @@ export default function SurpriseOutbreakModal({
 
         <div className="modal-footer">
           <div className="footer-hint">
-            <span className="flex items-center gap-1.5"><Lightbulb size={14} className="text-amber flex-shrink-0" /><span>Al aplicar cualquier preset</span></span>, la semilla actual se conserva para garantizar total reproducibilidad.
+            <span className="flex items-center gap-1.5"><Lightbulb size={14} className="text-amber shrink-0" /><span>Al aplicar cualquier preset</span></span>, la semilla actual se conserva para garantizar total reproducibilidad.
           </div>
           <button onClick={onClose} className="btn-secondary">
             Cerrar

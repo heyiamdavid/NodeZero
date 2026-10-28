@@ -82,7 +82,7 @@ export default function GameBottomBar({
 
       {/* Banner de Impacto Cuantitativo Directo */}
       <div className="game-impact-banner pipboy-impact-holotape" title="Impacto del modelo Track B">
-        <Award size={15} className="pipboy-impact-icon flex-shrink-0" />
+        <Award size={15} className="pipboy-impact-icon shrink-0" />
         <div className="impact-text-group">
           <span className="impact-main">
             <strong>TELEMETRÍA TRACK B:</strong> <span className="pip-highlight font-bold">+{metrics.livesSavedVsNone?.toLocaleString()} VIDAS SALVADAS</span> VS NO VACUNAR

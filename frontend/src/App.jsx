@@ -11,7 +11,6 @@ import { soundFx } from './utils/soundFx';
 import './App.css';
 
 export default function App() {
-  const [seed, setSeed] = useState(42);
   const [config, setConfig] = useState({
     seed: 42,
     days: 40,
@@ -25,6 +24,14 @@ export default function App() {
     budgetLimit: 250000,
     costPerDose: 12,
   });
+
+  const seed = config.seed;
+  const setSeed = (newSeed) => {
+    setConfig((prev) => ({
+      ...prev,
+      seed: typeof newSeed === 'function' ? newSeed(prev.seed) : newSeed,
+    }));
+  };
 
   const [currentDay, setCurrentDay] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -64,11 +71,6 @@ export default function App() {
       return next;
     });
   };
-
-  // Sincronizar semilla con la configuración
-  useEffect(() => {
-    setConfig((prev) => ({ ...prev, seed }));
-  }, [seed]);
 
   // Ejecución determinista del modelo epidemiológico
   const simResults = useMemo(() => {

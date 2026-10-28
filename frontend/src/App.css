@@ -937,8 +937,12 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-height: 70vh;
+  max-height: 76vh;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  will-change: scroll-position;
+  transform: translateZ(0);
 }
 
 .surprise-alert-box {
@@ -1395,15 +1399,29 @@
   letter-spacing: 0.6px;
 }
 
-/* 3. Plague Inc. Map Bubbles Animation */
+/* 3. Plague Inc. Map Bubbles Animation (Optimizado sin saltos de transformación) */
 .plague-bubble-group {
   cursor: pointer;
-  filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.7));
-  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  filter: drop-shadow(0 0 6px rgba(239, 68, 68, 0.7));
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+
+.plague-bubble-group .bubble-circle {
+  transition: r 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), stroke-width 0.2s ease;
 }
 
 .plague-bubble-group:hover {
-  transform: scale(1.25);
+  filter: drop-shadow(0 0 12px rgba(255, 60, 60, 1)) brightness(1.25);
+}
+
+.plague-bubble-red:hover .bubble-circle {
+  r: 12px;
+  stroke-width: 2px;
+}
+
+.plague-bubble-blue:hover .bubble-circle {
+  r: 10.5px;
+  stroke-width: 2px;
 }
 
 .biohazard-pulse-ring {
@@ -2192,6 +2210,7 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.75);
+  -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   z-index: 1000;
   display: flex;
@@ -2201,28 +2220,31 @@
 }
 
 .modal-window {
-  background: rgba(4, 14, 7, 0.98);
+  background: #040e07;
   border: 2px solid var(--primary-color);
   border-radius: 0 !important;
   box-shadow: 
     0 20px 60px rgba(0, 0, 0, 0.95),
-    0 0 30px var(--primary-faint),
-    inset 0 0 20px rgba(26, 255, 116, 0.08);
+    0 0 30px var(--primary-faint);
   color: var(--text-primary);
   font-family: var(--font-body);
   position: relative;
   overflow: hidden;
+  contain: layout;
+  transform: translateZ(0);
 }
 
 /* Square Retro Terminal Frame & Corners */
 .modal-terminal-square {
   border-radius: 0 !important;
   border: 2px solid var(--primary-color) !important;
+  background: #040e07 !important;
   box-shadow:
     0 0 0 1px #000000,
     0 25px 70px rgba(0, 0, 0, 0.98),
-    0 0 30px var(--primary-faint),
-    inset 0 0 30px rgba(0, 0, 0, 0.85) !important;
+    0 0 30px var(--primary-faint) !important;
+  contain: layout;
+  transform: translateZ(0);
 }
 
 .terminal-corner {
@@ -2263,11 +2285,11 @@
 
 .modal-amber-square {
   border-color: #ffb020 !important;
+  background: #080501 !important;
   box-shadow:
     0 0 0 1px #000000,
     0 25px 70px rgba(0, 0, 0, 0.98),
-    0 0 35px rgba(255, 176, 32, 0.25),
-    inset 0 0 30px rgba(0, 0, 0, 0.85) !important;
+    0 0 35px rgba(255, 176, 32, 0.25) !important;
 }
 
 .modal-amber-square .terminal-corner {
@@ -2329,6 +2351,9 @@
 .modal-fh-coin {
   max-width: 640px;
   width: 100%;
+  background: #080501 !important;
+  contain: layout;
+  transform: translateZ(0);
 }
 
 .fh-header {
@@ -2354,6 +2379,10 @@
   flex-direction: column;
   align-items: center;
   gap: 16px;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  will-change: scroll-position;
+  transform: translateZ(0);
 }
 
 .fh-lore-box {
@@ -2379,6 +2408,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  contain: layout paint;
+  transform: translateZ(0);
 }
 
 .square-stage {
@@ -2783,6 +2814,7 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   z-index: 100;
   display: flex;
@@ -2793,12 +2825,14 @@
   width: 400px;
   max-width: 90vw;
   height: 100vh;
-  background: rgba(4, 14, 7, 0.98);
+  background: #040e07;
   border-left: 2px solid var(--primary-color);
   box-shadow: -10px 0 30px rgba(0, 0, 0, 0.9), 0 0 25px var(--primary-faint);
   display: flex;
   flex-direction: column;
   animation: slide-in 0.25s ease-out;
+  contain: layout;
+  transform: translateZ(0);
 }
 
 @keyframes slide-in {
@@ -2856,6 +2890,10 @@
   flex: 1;
   padding: 18px;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  will-change: scroll-position;
+  transform: translateZ(0);
   display: flex;
   flex-direction: column;
   gap: 16px;

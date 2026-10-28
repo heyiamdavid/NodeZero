@@ -169,13 +169,13 @@ export default function DiseaseCatalogModal({
                       <strong>Síntomas:</strong> {disease.symptoms}
                     </div>
                     <div className="detail-line context-highlight">
-                      <span className="flex items-center gap-1"><MapPin size={13} className="text-cyan flex-shrink-0" /><strong>Realidad en Manta:</strong></span> {disease.manabiContext}
+                      <span className="flex items-center gap-1"><MapPin size={13} className="text-cyan shrink-0" /><strong>Realidad en Manta:</strong></span> {disease.manabiContext}
                     </div>
                   </div>
 
                   <div className="disease-card-footer">
                     <div className="footer-strategy-hint">
-                      <span className="flex items-center gap-1.5"><Lightbulb size={13} className="text-amber flex-shrink-0" /><em>Estrategia sugerida:</em></span> {disease.recommendedStrategy}
+                      <span className="flex items-center gap-1.5"><Lightbulb size={13} className="text-amber shrink-0" /><em>Estrategia sugerida:</em></span> {disease.recommendedStrategy}
                     </div>
 
                     <button
@@ -207,7 +207,7 @@ export default function DiseaseCatalogModal({
         {/* Pie del Modal */}
         <div className="modal-footer">
           <div className="footer-hint">
-            <span className="flex items-center gap-1.5"><Lightbulb size={14} className="text-amber flex-shrink-0" /><span>Al seleccionar cualquier patógeno</span></span>, el motor ajusta la tasa de contagio (β), días de incubación y calibración para Manta.
+            <span className="flex items-center gap-1.5"><Lightbulb size={14} className="text-amber shrink-0" /><span>Al seleccionar cualquier patógeno</span></span>, el motor ajusta la tasa de contagio (β), días de incubación y calibración para Manta.
           </div>
           <button onClick={onClose} className="btn-secondary">
             Cerrar

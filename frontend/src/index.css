@@ -51,7 +51,6 @@
   /* CRT Screen Parameters */
   --crt-scanline-color: rgba(0, 0, 0, 0.35);
   --crt-flicker-duration: 0.15s;
-  scrollbar-color: var(--primary-color) var(--background-color);
 }
 
 /* =====================================================================
@@ -85,7 +84,6 @@
   --text-secondary: rgba(255, 176, 32, 0.8);
   --text-muted: rgba(255, 176, 32, 0.5);
   --pip-text-shadow: 0 0 5px rgba(255, 176, 32, 0.65), 0 0 10px rgba(255, 176, 32, 0.3);
-  scrollbar-color: var(--primary-color) var(--background-color);
 }
 
 [data-pip-theme="cyan"] {
@@ -115,7 +113,6 @@
   --text-secondary: rgba(0, 240, 255, 0.8);
   --text-muted: rgba(0, 240, 255, 0.5);
   --pip-text-shadow: 0 0 5px rgba(0, 240, 255, 0.65), 0 0 10px rgba(0, 240, 255, 0.3);
-  scrollbar-color: var(--primary-color) var(--background-color);
 }
 
 /* Base Reset & CRT Hardware Simulation */
@@ -140,10 +137,10 @@ body {
   letter-spacing: 0.25px;
 }
 
-/* Custom Tactical Scrollbars */
+/* Custom Tactical Scrollbars (High-performance GPU rendering) */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
@@ -154,11 +151,24 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--primary-color);
   border-radius: 0px;
-  box-shadow: 0 0 6px var(--primary-glow);
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-bright);
+}
+
+/* Aceleración y suavizado de scroll global en todos los contenedores tácticos */
+.modal-body,
+.drawer-body,
+.catalog-cards-grid,
+.filter-pills-row,
+.danger-filters-row,
+.report-paper,
+.comp-cards-grid {
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  will-change: scroll-position;
+  transform: translateZ(0);
 }
 
 /* =====================================================================
@@ -173,6 +183,7 @@ body {
   pointer-events: none;
   z-index: 6; /* Por encima del canvas del mapa SVG (z-index: 1), por debajo de tarjetas flotantes (z-index: 20) */
   overflow: hidden;
+  contain: strict;
 }
 
 /* 1. Líneas de escaneo CRT en el mapa */
@@ -211,6 +222,7 @@ body {
   background-size: 100% 80px;
   animation: pipboyRoll 10s linear infinite;
   opacity: 0.55;
+  will-change: transform;
 }
 
 @keyframes pipboyRoll {

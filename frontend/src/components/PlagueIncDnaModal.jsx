@@ -207,7 +207,7 @@ export default function PlagueIncDnaModal({
 
         <div className="modal-footer">
           <div className="footer-hint-text">
-            <span className="flex items-center gap-1.5"><Activity size={14} className="text-cyan flex-shrink-0" /><em>Dinámica de Grafo:</em></span> Cada parámetro altera las ecuaciones diferenciales del grafo en tiempo real.
+            <span className="flex items-center gap-1.5"><Activity size={14} className="text-cyan shrink-0" /><em>Dinámica de Grafo:</em></span> Cada parámetro altera las ecuaciones diferenciales del grafo en tiempo real.
           </div>
           <button onClick={onClose} className="btn-action btn-surprise">
             Entendido · Volver al Mapa

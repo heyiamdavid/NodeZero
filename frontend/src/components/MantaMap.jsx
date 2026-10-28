@@ -6,19 +6,17 @@ import {
   Skull,
   AlertTriangle,
   HeartPulse,
-  Navigation,
   Maximize2,
   Minimize2,
   ZoomIn,
   ZoomOut,
   RotateCcw,
-  Layers,
   MapPin,
   Move,
   X,
   Store,
-  Palmtree,
-  GraduationCap,
+  Anchor,
+  Microscope,
   Bus,
   Sailboat,
   Factory,
@@ -70,7 +68,9 @@ export default function MantaMap({
     setPan({ x: 0, y: 0 });
   };
 
-  // Manejadores de Arrastre (Pan)
+  // Manejadores de Arrastre (Pan) de Alto Rendimiento con rAF
+  const rafRef = useRef(null);
+
   const handleMouseDown = (e) => {
     if (e.button !== 0) return; // Solo clic izquierdo
     setIsDragging(true);
@@ -79,13 +79,21 @@ export default function MantaMap({
 
   const handleMouseMove = (e) => {
     if (!isDragging) return;
-    setPan({
-      x: e.clientX - dragStart.x,
-      y: e.clientY - dragStart.y,
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      setPan({
+        x: clientX - dragStart.x,
+        y: clientY - dragStart.y,
+      });
     });
   };
 
-  const handleMouseUp = () => setIsDragging(false);
+  const handleMouseUp = () => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    setIsDragging(false);
+  };
 
   const handleWheel = (e) => {
     // Zoom suave con la rueda del ratón
@@ -150,6 +158,8 @@ export default function MantaMap({
           style={{
             transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
             transformOrigin: 'center center',
+            transition: isDragging ? 'none' : 'transform 0.15s ease-out',
+            willChange: 'transform',
           }}
         >
           <defs>
@@ -366,7 +376,7 @@ export default function MantaMap({
                 className="svg-node-group"
                 style={{ cursor: 'pointer' }}
               >
-                {/* Alerta perimetral fija si hay foco infeccioso (sin círculos que se van) */}
+                {/* Alerta perimetral fija si hay foco infeccioso */}
                 {state.I > 30 && !isSelected && (
                   <circle
                     r={radius + 5}
@@ -375,6 +385,7 @@ export default function MantaMap({
                     strokeWidth="2"
                     strokeDasharray="4 3"
                     opacity="0.85"
+                    pointerEvents="none"
                   />
                 )}
 
@@ -388,6 +399,7 @@ export default function MantaMap({
                       stroke="var(--primary-bright)"
                       strokeWidth="2.5"
                       className="node-selected-outline"
+                      pointerEvents="none"
                     />
                     {/* Anillo interior punteado ajustado */}
                     <circle
@@ -396,9 +408,10 @@ export default function MantaMap({
                       stroke="var(--primary-color)"
                       strokeWidth="1.5"
                       strokeDasharray="5 2.5"
+                      pointerEvents="none"
                     />
                     {/* Retículas angulares de encuadre en las esquinas */}
-                    <g className="tactical-reticle-corners" stroke="var(--primary-bright)" strokeWidth="2.5" fill="none">
+                    <g className="tactical-reticle-corners" stroke="var(--primary-bright)" strokeWidth="2.5" fill="none" pointerEvents="none">
                       <path d={`M ${-(radius + 12)} ${-(radius + 5)} L ${-(radius + 12)} ${-(radius + 12)} L ${-(radius + 5)} ${-(radius + 12)}`} />
                       <path d={`M ${radius + 5} ${-(radius + 12)} L ${radius + 12} ${-(radius + 12)} L ${radius + 12} ${-(radius + 5)}`} />
                       <path d={`M ${radius + 12} ${radius + 5} L ${radius + 12} ${radius + 12} L ${radius + 5} ${radius + 12}`} />
@@ -416,6 +429,7 @@ export default function MantaMap({
                     strokeWidth="2"
                     strokeDasharray="4 2"
                     opacity="0.8"
+                    pointerEvents="none"
                   />
                 )}
 
@@ -429,11 +443,11 @@ export default function MantaMap({
                   filter={filterGlow}
                 />
 
-                {/* Ícono representativo de la zona */}
-                <g transform="translate(-7, -18)" stroke="#ffffff" fill="none" opacity="0.95">
+                {/* Ícono táctico representativo de la zona (Microscopio para ULEAM, Ancla para Centro) */}
+                <g transform="translate(-7, -18)" stroke="#ffffff" fill="none" opacity="0.95" pointerEvents="none">
                   {node.id === 'tarqui' ? <Store size={14} /> :
-                   node.id === 'manta_centro' ? <Palmtree size={14} /> :
-                   node.id === 'uleam' ? <GraduationCap size={14} /> :
+                   node.id === 'manta_centro' ? <Anchor size={14} /> :
+                   node.id === 'uleam' ? <Microscope size={14} /> :
                    node.id === 'el_palmar' ? <Bus size={14} /> :
                    node.id === 'san_mateo' ? <Sailboat size={14} /> :
                    node.id === 'los_esteros' ? <Factory size={14} /> : <Home size={14} />}
@@ -447,42 +461,49 @@ export default function MantaMap({
                   fontSize="12"
                   fontWeight="800"
                   fontFamily="Share Tech Mono"
+                  pointerEvents="none"
                 >
                   {state.I > 999 ? `${(state.I / 1000).toFixed(1)}k` : state.I}
                 </text>
 
-                {/* Burbuja Biohazard Roja con badge firme */}
+                {/* Burbuja Biohazard Roja (Ojo/Alerta) con contenedor desacoplado anti-jitter */}
                 {state.I > 5 && (
-                  <g
-                    className="plague-bubble-group plague-bubble-red"
-                    transform={`translate(${radius * 0.75}, ${-radius * 0.75})`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      soundFx.playBubblePop();
-                      setSelectedNodeId(node.id);
-                    }}
-                  >
-                    <circle r="10" fill="#dc2626" stroke="#ffffff" strokeWidth="1.5" />
-                    <g transform="translate(-5.5, -5.5)">
-                      <Biohazard size={11} className="text-white" />
+                  <g transform={`translate(${radius * 0.75}, ${-radius * 0.75})`}>
+                    <g
+                      className="plague-bubble-group plague-bubble-red"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        soundFx.playBubblePop();
+                        setSelectedNodeId(node.id);
+                      }}
+                    >
+                      {/* Área de impacto generosa invisible para estabilidad de hover */}
+                      <circle r="15" fill="transparent" />
+                      <circle r="10" className="bubble-circle" fill="#dc2626" stroke="#ffffff" strokeWidth="1.5" />
+                      <g transform="translate(-5.5, -5.5)" pointerEvents="none">
+                        <Biohazard size={11} className="text-white" />
+                      </g>
                     </g>
                   </g>
                 )}
 
-                {/* Burbuja Azul de Vacuna / Inmunizados */}
+                {/* Burbuja Azul de Vacuna / Inmunizados con contenedor desacoplado */}
                 {state.R > 200 && (
-                  <g
-                    className="plague-bubble-group plague-bubble-blue"
-                    transform={`translate(${-radius * 0.75}, ${-radius * 0.75})`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      soundFx.playCureChime();
-                      setSelectedNodeId(node.id);
-                    }}
-                  >
-                    <circle r="8.5" fill="#0891b2" stroke="#ffffff" strokeWidth="1.5" />
-                    <g transform="translate(-5, -5)">
-                      <Syringe size={10} className="text-white" />
+                  <g transform={`translate(${-radius * 0.75}, ${-radius * 0.75})`}>
+                    <g
+                      className="plague-bubble-group plague-bubble-blue"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        soundFx.playCureChime();
+                        setSelectedNodeId(node.id);
+                      }}
+                    >
+                      {/* Área de impacto generosa invisible para estabilidad de hover */}
+                      <circle r="13" fill="transparent" />
+                      <circle r="8.5" className="bubble-circle" fill="#0891b2" stroke="#ffffff" strokeWidth="1.5" />
+                      <g transform="translate(-5, -5)" pointerEvents="none">
+                        <Syringe size={10} className="text-white" />
+                      </g>
                     </g>
                   </g>
                 )}
@@ -496,6 +517,7 @@ export default function MantaMap({
                   fontWeight="700"
                   letterSpacing="0.4"
                   className="node-svg-label"
+                  pointerEvents="none"
                 >
                   {node.name.split(' (')[0]}
                 </text>

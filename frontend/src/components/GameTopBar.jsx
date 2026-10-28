@@ -1,5 +1,5 @@
 import React from 'react';
-import { Play, Pause, RotateCcw, Volume2, VolumeX, Sliders, Award, Dice5, Biohazard, Coins } from './Icons';
+import { Play, Pause, RotateCcw, Volume2, VolumeX, Sliders, Award, Biohazard, Coins } from './Icons';
 
 export default function GameTopBar({
   currentDay,

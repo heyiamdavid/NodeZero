@@ -187,6 +187,8 @@
     inset 0 0 80px rgba(0, 0, 0, 0.95),
     inset 0 0 15px var(--primary-faint);
   cursor: grab;
+  contain: layout style;
+  touch-action: none;
 }
 
 .map-canvas-wrapper:active {
@@ -196,9 +198,9 @@
 .manta-tactical-svg {
   width: 100%;
   height: 100%;
-  transition: transform 0.15s ease-out;
   -webkit-user-select: none;
   user-select: none;
+  will-change: transform;
 }
 
 /* Capas flotantes y overlays */

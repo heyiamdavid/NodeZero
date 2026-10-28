@@ -68,7 +68,7 @@ export default function NewsTicker({ currentDay, activeStrategy, simResults }) {
 
       <div className="ticker-content" key={headlineIndex}>
         <span className="ticker-headline-text pipboy-glow-text flex items-center gap-1.5">
-          <ActiveIcon size={13} className="text-terminal-green flex-shrink-0" />
+          <ActiveIcon size={13} className="text-terminal-green shrink-0" />
           <span>&gt; {activeHeadline.text}</span>
           <span className="pipboy-cursor">_</span>
         </span>

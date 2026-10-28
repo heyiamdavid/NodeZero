@@ -155,7 +155,7 @@ export default function FearAndHungerCoin({ isOpen, onClose, onCoinResult }) {
             <div
               className={`fh-verdict-box square-box ${coinResult === userChoice ? 'verdict-success' : 'verdict-doom'}`}
             >
-              <div className="verdict-icon flex-shrink-0">
+              <div className="verdict-icon shrink-0">
                 {coinResult === userChoice ? (
                   <Sparkles size={26} className="text-emerald" />
                 ) : (
@@ -177,7 +177,7 @@ export default function FearAndHungerCoin({ isOpen, onClose, onCoinResult }) {
 
           {/* Contraste Educativo para el Reto Track B */}
           <div className="fh-track-b-note square-note">
-            <Shield size={16} className="text-cyan flex-shrink-0" />
+            <Shield size={16} className="text-cyan shrink-0" />
             <div>
               <strong>[ POR QUÉ NODEZERO SUPERA AL AZAR ]</strong> En este simulador, la Línea Base 2 representa
               este lanzamiento de monedas constante. El Protocolo NodeZero elimina la suerte usando{' '}
