@@ -27,16 +27,11 @@ import {
 
 export default function MantaMap({
   currentDayData,
-  activeStrategy,
   selectedNodeId,
   setSelectedNodeId,
-  activeDisease,
 }) {
   const [hoveredNodeId, setHoveredNodeId] = useState(null);
   const [isCardDismissed, setIsCardDismissed] = useState(false);
-
-  // Estados de control de tamaño interactivo ("ajustar tamaño a voluntad")
-  const [mapHeight, setMapHeight] = useState(480); // Altura en píxeles
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Estados de Zoom & Pan interactivo
@@ -46,8 +41,8 @@ export default function MantaMap({
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
   // Capas visuales activables
-  const [showEdges, setShowEdges] = useState(true);
-  const [showLandmarks, setShowLandmarks] = useState(true);
+  const showEdges = true;
+  const showLandmarks = true;
 
   const wrapperRef = useRef(null);
 

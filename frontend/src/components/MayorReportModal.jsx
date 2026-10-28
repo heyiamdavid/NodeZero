@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, FileText, Check, Printer, Copy, AlertCircle, MapPin, Shield, DollarSign } from './Icons';
+import React, { useState, useMemo } from 'react';
+import { X, FileText, Check, Printer, Copy, AlertCircle, MapPin, Shield } from './Icons';
 import { MANTA_NODES } from '../data/mantaNetwork';
 
 export default function MayorReportModal({
@@ -10,17 +10,19 @@ export default function MayorReportModal({
 }) {
   const [copied, setCopied] = useState(false);
 
+  const reportDate = useMemo(() => {
+    return new Date().toLocaleDateString('es-EC', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  }, []);
+
   if (!isOpen || !simResults || !simResults.nodezero) return null;
 
   const { metrics, none, nodezero } = simResults;
   const epicenter = MANTA_NODES.find((n) => n.id === config.patientZeroNode) || MANTA_NODES[0];
-
-  const reportDate = new Date().toLocaleDateString('es-EC', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
 
   const handleCopyText = () => {
     const text = `

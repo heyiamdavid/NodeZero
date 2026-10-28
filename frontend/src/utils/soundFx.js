@@ -24,6 +24,11 @@ class SoundEffectsEngine {
     return this.isMuted;
   }
 
+  setMuted(muted) {
+    this.isMuted = Boolean(muted);
+    return this.isMuted;
+  }
+
   // Sonido icónico de pop de burbuja infecciosa (Plague Inc. Bubble Pop)
   playBubblePop() {
     if (this.isMuted) return;

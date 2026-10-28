@@ -6,23 +6,39 @@ import GameBottomBar from './components/GameBottomBar';
 import FearAndHungerCoin from './components/FearAndHungerCoin';
 import ConfigDrawer from './components/ConfigDrawer';
 import ComparisonModal from './components/ComparisonModal';
+import SurpriseOutbreakModal from './components/SurpriseOutbreakModal';
 import { runComparativeSimulation } from './simulation/engine';
 import { soundFx } from './utils/soundFx';
 import './App.css';
 
+// Configuración por defecto oficial del Reto Track B AWS Hackathon
+const DEFAULT_CONFIG = {
+  seed: 42,
+  days: 40,
+  beta: 0.38,
+  incubationDays: 3,
+  recoveryDays: 14,
+  dailyVaccines: 600,
+  vaccineEfficacy: 0.95,
+  patientZeroNode: 'tarqui',
+  initialZombies: 5,
+  budgetLimit: 250000,
+  costPerDose: 12,
+};
+
 export default function App() {
-  const [config, setConfig] = useState({
-    seed: 42,
-    days: 40,
-    beta: 0.38,
-    incubationDays: 3,
-    recoveryDays: 14,
-    dailyVaccines: 600,
-    vaccineEfficacy: 0.95,
-    patientZeroNode: 'tarqui',
-    initialZombies: 5,
-    budgetLimit: 250000,
-    costPerDose: 12,
+  // 1. Estado persistido de configuración epidemiológica
+  const [config, setConfig] = useState(() => {
+    try {
+      const saved = localStorage.getItem('nodezero_config');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return { ...DEFAULT_CONFIG, ...parsed };
+      }
+    } catch (err) {
+      console.warn('Error al leer configuración en caché:', err);
+    }
+    return DEFAULT_CONFIG;
   });
 
   const seed = config.seed;
@@ -33,26 +49,112 @@ export default function App() {
     }));
   };
 
-  const [currentDay, setCurrentDay] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [playbackSpeed, setPlaybackSpeed] = useState(1);
-  const [activeStrategy, setActiveStrategy] = useState('nodezero');
-  const [selectedNodeId, setSelectedNodeId] = useState('tarqui');
+  // 2. Estado persistido del reproductor y día actual
+  const [currentDay, setCurrentDay] = useState(() => {
+    try {
+      const saved = localStorage.getItem('nodezero_current_day');
+      if (saved !== null) {
+        const num = Number(saved);
+        if (!isNaN(num) && num >= 0 && num <= 40) return num;
+      }
+    } catch {}
+    return 0;
+  });
 
-  // Modales y Drawers no sobrecargados
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const [playbackSpeed, setPlaybackSpeed] = useState(() => {
+    try {
+      const saved = localStorage.getItem('nodezero_playback_speed');
+      if (saved) {
+        const num = Number(saved);
+        if ([1, 2, 5].includes(num)) return num;
+      }
+    } catch {}
+    return 1;
+  });
+
+  // 3. Estrategia activa y nodo seleccionado (persistidos en caché)
+  const [activeStrategy, setActiveStrategy] = useState(() => {
+    try {
+      const saved = localStorage.getItem('nodezero_strategy');
+      if (saved && ['nodezero', 'none', 'random'].includes(saved)) {
+        return saved;
+      }
+    } catch {}
+    return 'nodezero';
+  });
+
+  const [selectedNodeId, setSelectedNodeId] = useState(() => {
+    try {
+      const saved = localStorage.getItem('nodezero_selected_node');
+      if (saved) return saved;
+    } catch {}
+    return 'tarqui';
+  });
+
+  // 4. Modales y menús tácticos
   const [isCoinOpen, setIsCoinOpen] = useState(false);
   const [isConfigOpen, setIsConfigOpen] = useState(false);
   const [isComparisonOpen, setIsComparisonOpen] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isSurpriseOpen, setIsSurpriseOpen] = useState(false);
 
-  // Estado de terminal CRT (Scanlines y color de fósforo)
+  // 5. Preferencias audiovisuales persistidas
+  const [isMuted, setIsMuted] = useState(() => {
+    try {
+      const saved = localStorage.getItem('nodezero_sound_muted');
+      const muted = saved === 'true';
+      soundFx.setMuted(muted);
+      return muted;
+    } catch {}
+    return false;
+  });
+
   const [crtEnabled, setCrtEnabled] = useState(() => {
     const saved = localStorage.getItem('nodezero_crt');
     return saved !== null ? saved === 'true' : true;
   });
+
   const [pipTheme, setPipTheme] = useState(() => {
     return localStorage.getItem('nodezero_theme') || 'green';
   });
+
+  // Efectos de sincronización automática con la caché del navegador (localStorage)
+  useEffect(() => {
+    try {
+      localStorage.setItem('nodezero_config', JSON.stringify(config));
+    } catch {}
+  }, [config]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('nodezero_current_day', String(currentDay));
+    } catch {}
+  }, [currentDay]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('nodezero_playback_speed', String(playbackSpeed));
+    } catch {}
+  }, [playbackSpeed]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('nodezero_strategy', activeStrategy);
+    } catch {}
+  }, [activeStrategy]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('nodezero_selected_node', selectedNodeId);
+    } catch {}
+  }, [selectedNodeId]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('nodezero_sound_muted', String(isMuted));
+    } catch {}
+  }, [isMuted]);
 
   const handleToggleCrt = () => {
     setCrtEnabled((prev) => {
@@ -72,7 +174,33 @@ export default function App() {
     });
   };
 
-  // Ejecución determinista del modelo epidemiológico
+  // Restablecer parámetros a los valores oficiales de Track B y limpiar caché
+  const handleRestoreDefaults = () => {
+    setConfig(DEFAULT_CONFIG);
+    setActiveStrategy('nodezero');
+    setCurrentDay(0);
+    setPlaybackSpeed(1);
+    setSelectedNodeId('tarqui');
+    try {
+      localStorage.removeItem('nodezero_config');
+      localStorage.removeItem('nodezero_strategy');
+      localStorage.removeItem('nodezero_current_day');
+      localStorage.removeItem('nodezero_playback_speed');
+      localStorage.removeItem('nodezero_selected_node');
+    } catch {}
+    soundFx.playBiohazardAlert();
+  };
+
+  // Carga de escenarios imprevistos en vivo (Prueba del Jurado)
+  const handleApplySurprisePreset = (patch) => {
+    setConfig((prev) => ({
+      ...prev,
+      ...patch,
+    }));
+    soundFx.playBiohazardAlert();
+  };
+
+  // Ejecución determinista del modelo epidemiológico local
   const simResults = useMemo(() => {
     return runComparativeSimulation(config);
   }, [config]);
@@ -144,6 +272,7 @@ export default function App() {
         onOpenCoinModal={() => setIsCoinOpen(true)}
         onOpenConfigDrawer={() => setIsConfigOpen(true)}
         onOpenComparisonModal={() => setIsComparisonOpen(true)}
+        onOpenSurpriseModal={() => setIsSurpriseOpen(true)}
         isMuted={isMuted}
         onToggleSound={handleToggleSound}
         crtEnabled={crtEnabled}
@@ -163,7 +292,6 @@ export default function App() {
       <main className="game-map-stage">
         <MantaMap
           currentDayData={currentDayData}
-          activeStrategy={activeStrategy}
           selectedNodeId={selectedNodeId}
           setSelectedNodeId={setSelectedNodeId}
         />
@@ -201,6 +329,8 @@ export default function App() {
         setConfig={setConfig}
         seed={seed}
         setSeed={setSeed}
+        onRestoreDefaults={handleRestoreDefaults}
+        onOpenSurprise={() => setIsSurpriseOpen(true)}
       />
 
       <ComparisonModal
@@ -209,6 +339,13 @@ export default function App() {
         simResults={simResults}
         currentDay={currentDay}
         onSelectDay={(day) => setCurrentDay(day)}
+      />
+
+      <SurpriseOutbreakModal
+        isOpen={isSurpriseOpen}
+        onClose={() => setIsSurpriseOpen(false)}
+        currentConfig={config}
+        onApplyPreset={handleApplySurprisePreset}
       />
     </div>
   );

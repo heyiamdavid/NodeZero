@@ -3073,5 +3073,57 @@
   text-shadow: none;
 }
 
+.btn-reset-drawer {
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(255, 51, 51, 0.08);
+  border: 1px dashed rgba(255, 51, 51, 0.5);
+  color: var(--pip-red);
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+
+.btn-reset-drawer:hover {
+  background: var(--pip-red);
+  color: #000000;
+  border-style: solid;
+  text-shadow: none;
+}
+
+.chip-surprise-highlight {
+  background: rgba(255, 176, 32, 0.12);
+  color: var(--pip-amber);
+  border-color: rgba(255, 176, 32, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chip-surprise-highlight:hover {
+  background: var(--pip-amber);
+  color: #000000;
+  text-shadow: none;
+}
+
+.pipboy-action-btn.btn-surprise {
+  border-color: rgba(255, 176, 32, 0.4);
+  color: var(--pip-amber);
+}
+
+.pipboy-action-btn.btn-surprise:hover {
+  background: var(--pip-amber);
+  color: #000000;
+  border-color: var(--pip-amber);
+}
+
 
 

@@ -9,6 +9,8 @@ export default function ConfigDrawer({
   setConfig,
   seed,
   setSeed,
+  onRestoreDefaults,
+  onOpenSurprise,
 }) {
   if (!isOpen) return null;
 
@@ -67,6 +69,19 @@ export default function ConfigDrawer({
               >
                 Escasez Extrema (200 vac.)
               </button>
+              {onOpenSurprise && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    onOpenSurprise();
+                  }}
+                  className="preset-chip chip-surprise-highlight"
+                >
+                  <Zap size={14} className="text-amber shrink-0" />
+                  <span>Escenarios Brote Sorpresa (Jurado)</span>
+                </button>
+              )}
             </div>
           </div>
 
@@ -199,6 +214,17 @@ export default function ConfigDrawer({
         </div>
 
         <div className="drawer-footer">
+          {onRestoreDefaults && (
+            <button
+              type="button"
+              onClick={onRestoreDefaults}
+              className="btn-reset-drawer"
+              title="Restablecer todos los parámetros guardados en caché a la configuración oficial del Reto Track B"
+            >
+              <RotateCcw size={13} />
+              <span>RESTABLECER PARÁMETROS OFICIALES TRACK B</span>
+            </button>
+          )}
           <button onClick={onClose} className="btn-done-drawer">
             Listo · Continuar Simulación
           </button>

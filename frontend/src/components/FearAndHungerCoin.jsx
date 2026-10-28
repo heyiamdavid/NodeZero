@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Skull, Shield, Coins, Sparkles } from './Icons';
 import { soundFx } from '../utils/soundFx';
 
@@ -6,8 +6,32 @@ export default function FearAndHungerCoin({ isOpen, onClose, onCoinResult }) {
   const [userChoice, setUserChoice] = useState('cara'); // 'cara' | 'cruz'
   const [isFlipping, setIsFlipping] = useState(false);
   const [coinResult, setCoinResult] = useState(null); // 'cara' | 'cruz'
-  const [history, setHistory] = useState([]);
-  const [luckScore, setLuckScore] = useState({ won: 0, total: 0 });
+  const [history, setHistory] = useState(() => {
+    try {
+      const saved = localStorage.getItem('nodezero_fh_history');
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return [];
+  });
+  const [luckScore, setLuckScore] = useState(() => {
+    try {
+      const saved = localStorage.getItem('nodezero_fh_score');
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return { won: 0, total: 0 };
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('nodezero_fh_history', JSON.stringify(history));
+    } catch {}
+  }, [history]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('nodezero_fh_score', JSON.stringify(luckScore));
+    } catch {}
+  }, [luckScore]);
 
   if (!isOpen) return null;
 

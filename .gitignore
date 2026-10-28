@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Production build
+dist/
+frontend/dist/
+dist-ssr/
+
+# Local env & cache
+.env.local
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
