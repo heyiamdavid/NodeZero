@@ -1,7 +1,7 @@
 # 🛡️ NodeZero
 > **Reto Track B: Comité de Contención Epidemiológica**  
 > **Hackathon AWS · Universidad Laica Eloy Alfaro de Manabí (ULEAM)**  
-> **Región AWS:** `us-east-1` | **Presupuesto AWS Budget:** `$15.00 USD` (3 Alertas escalonadas: 50%, 80%, 100%)  
+> **Región AWS:** `us-east-2` | **Presupuesto AWS Budget:** `$15.00 USD` (3 Alertas escalonadas: 50%, 80%, 100%)  
 > **Despliegue Global CloudFront:** [https://d1vj2vln9zq5so.cloudfront.net/](https://d1vj2vln9zq5so.cloudfront.net/)
 
 ---
